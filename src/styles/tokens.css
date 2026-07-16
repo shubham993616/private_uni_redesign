@@ -1,0 +1,92 @@
+/* ============================================================================
+   DESIGN TOKENS — "Counsel" design system (Vidyarthi Mitra)
+   Single source of truth for color, radius, elevation and motion values.
+   Components must reference these variables (or the Tailwind tokens mapped to
+   the same values in tailwind.config.js) — never raw hex values.
+   Light theme on :root, dark theme on .dark.
+   ========================================================================== */
+
+:root {
+  /* ── Brand (one orange, rationed to ~5% of any viewport) ── */
+  --brand-50:  #FFF7ED;
+  --brand-100: #FFEDD5;
+  --brand-200: #FED7AA;
+  --brand-300: #FDBA74;
+  --brand-400: #FB923C;
+  --brand-500: #F97316; /* graphic accents only — never text on white */
+  --brand-600: #EA580C; /* THE action color: primary buttons, active states */
+  --brand-700: #C2410C; /* hover/pressed + the only orange allowed as text on white */
+  --brand-800: #9A3412;
+  --brand-900: #7C2D12;
+
+  /* ── Amber — the commerce channel (Sponsored, tiers, stars). Never CTAs. ── */
+  --amber-graphic: #F59E0B;
+  --amber-text:    #B45309;
+  --amber-tint:    #FFFBEB;
+
+  /* ── Ink / neutrals (structure and authority) ── */
+  --ink-900: #0F172A;
+  --ink-800: #1E293B;
+  --ink-700: #334155;
+  --neutral-500: #64748B; /* minimum text color on white */
+  --neutral-400: #94A3B8; /* graphics only */
+  --neutral-300: #CBD5E1;
+  --neutral-200: #E2E8F0;
+  --neutral-100: #F1F5F9;
+  --neutral-50:  #F8FAFC;
+
+  /* ── Semantic ── */
+  --success: #10B981; --success-text: #047857; --success-tint: #ECFDF5;
+  --warning: #F59E0B; --warning-text: #B45309; --warning-tint: #FFFBEB;
+  --error:   #EF4444; --error-text:   #B91C1C; --error-tint:   #FEF2F2;
+  --info:    #3B82F6; --info-text:    #1D4ED8; --info-tint:    #EFF6FF;
+
+  /* ── Surfaces (theme-resolved) ── */
+  --surface-page:   #FFFFFF;
+  --surface-subtle: #F8FAFC;
+  --surface-card:   #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --border-default: #E2E8F0;
+  --text-heading:   #0F172A;
+  --text-body:      #334155;
+  --text-muted:     #64748B;
+
+  /* ── Radius map (shape encodes role) ── */
+  --radius-inline: 6px;   /* chips-inline, small controls */
+  --radius-control: 10px; /* buttons, inputs */
+  --radius-card: 16px;    /* cards, modals, panels */
+  --radius-xl: 24px;      /* feature surfaces, hero media */
+
+  /* ── Elevation (the only three shadows) ── */
+  --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+  --shadow-card-hover: 0 10px 30px -10px rgba(15, 23, 42, 0.15);
+  --shadow-modal: 0 24px 60px -12px rgba(15, 23, 42, 0.30);
+
+  /* ── Motion ── */
+  --duration-state: 150ms;  /* color/state changes */
+  --duration-move: 250ms;   /* movement, elevation */
+  --duration-overlay: 400ms;/* overlays, page-level */
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-move: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  --surface-page:   #020817;
+  --surface-subtle: #0B1220;
+  --surface-card:   #0F172A;
+  --surface-raised: #1E293B;
+  --border-default: #1E293B;
+  --text-heading:   #F8FAFC;
+  --text-body:      #CBD5E1;
+  --text-muted:     #94A3B8;
+
+  --amber-tint:   rgba(245, 158, 11, 0.10);
+  --success-tint: rgba(16, 185, 129, 0.12);
+  --warning-tint: rgba(245, 158, 11, 0.12);
+  --error-tint:   rgba(239, 68, 68, 0.12);
+  --info-tint:    rgba(59, 130, 246, 0.12);
+
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 10px 30px -10px rgba(0, 0, 0, 0.55);
+  --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,28 @@
+/* ============================================================================
+   Vidyarthi Mitra — style entry point ("Counsel" design system)
+   tokens (CSS variables) → typography scale → globals (restyled legacy
+   classes + utilities) imported ahead of the Tailwind layers. All values
+   trace back to src/styles/tokens.css and tailwind.config.js — no raw hex
+   in components.
+   ========================================================================== */
+
+@import "leaflet/dist/leaflet.css";
+@import "./styles/tokens.css";
+@import "./styles/typography.css";
+@import "./styles/globals.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-light-bg text-light-text font-sans antialiased transition-colors duration-300;
+  }
+  .dark body, body.dark {
+    @apply bg-dark-bg text-dark-text;
+  }
+  h1, h2, h3, h4 {
+    @apply text-light-text dark:text-dark-text;
+  }
+}

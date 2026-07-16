@@ -1,0 +1,76 @@
+/* ============================================================================
+   TYPOGRAPHY SCALE — "Counsel" design system
+   Modular scale (1.25 ratio, 16px base). Use these classes instead of ad-hoc
+   text-* combinations so hierarchy stays identical on every page.
+   Rules: max three type levels per viewport · 12px absolute floor ·
+   tabular figures on ALL data · buttons never uppercase.
+   ========================================================================== */
+
+/* Display / Hero H1 — one per page, maximum. Serif variant for marketing heroes. */
+.text-display {
+  @apply text-[32px] leading-[40px] md:text-5xl md:leading-[56px] font-extrabold tracking-[-0.02em] text-light-text dark:text-dark-text;
+}
+.text-display-serif {
+  @apply text-[32px] leading-[40px] md:text-5xl md:leading-[56px] font-serif font-bold tracking-[-0.02em] text-light-text dark:text-dark-text;
+}
+
+/* Page Heading (H1) */
+.text-h1 {
+  @apply text-[26px] leading-[34px] md:text-[32px] md:leading-10 font-bold tracking-[-0.015em] text-light-text dark:text-dark-text;
+}
+
+/* Section Heading (H2) */
+.text-h2 {
+  @apply text-xl leading-7 md:text-2xl md:leading-8 font-bold tracking-[-0.01em] text-light-text dark:text-dark-text;
+}
+
+/* Subsection (H3) — card groups, form sections, modal titles */
+.text-h3 {
+  @apply text-lg leading-7 font-semibold text-light-text dark:text-dark-text;
+}
+
+/* Card Title */
+.text-card-title {
+  @apply text-base leading-6 font-semibold text-light-text dark:text-dark-text;
+}
+
+/* Body — all reading content (16/26) */
+.text-body {
+  @apply text-base leading-[26px] font-normal text-slate-700 dark:text-slate-300;
+}
+
+/* Supporting — metadata, table cells, helper text (14/22) */
+.text-support {
+  @apply text-sm leading-[22px] text-light-muted dark:text-dark-muted;
+}
+
+/* Label / Eyebrow — 12/16, semibold. Eyebrows uppercase; form labels sentence case. */
+.text-eyebrow {
+  @apply text-xs leading-4 font-semibold uppercase tracking-[0.06em] text-link dark:text-primary-400;
+}
+.text-label {
+  @apply text-sm leading-5 font-medium text-slate-700 dark:text-slate-300;
+}
+
+/* Caption — 12px is the absolute floor. */
+.text-caption {
+  @apply text-xs leading-[18px] text-light-muted dark:text-dark-muted;
+}
+
+/* Stat / Data display — tabular figures so numbers align (28/34). */
+.text-stat {
+  @apply text-[28px] leading-[34px] font-bold tracking-[-0.01em] tabular-nums text-light-text dark:text-dark-text;
+}
+.text-stat-sm {
+  @apply text-lg leading-6 font-bold tabular-nums text-light-text dark:text-dark-text;
+}
+
+/* Data values inside cards/tables — always tabular. */
+.text-data {
+  @apply tabular-nums font-semibold text-light-text dark:text-dark-text;
+}
+
+/* Long-form prose width guard (~70ch). */
+.prose-measure {
+  max-width: 70ch;
+}
