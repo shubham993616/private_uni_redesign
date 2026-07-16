@@ -1,7 +1,7 @@
 export function FormField({ label, children, className = '' }) {
   return (
     <label className={`block ${className}`}>
-      <span className="text-sm font-medium block mb-1.5">{label}</span>
+      <span className="text-label block mb-1.5">{label}</span>
       {children}
     </label>
   );
@@ -29,7 +29,7 @@ export function CheckboxField({ label, checked, onChange }) {
   return (
     <label className="flex items-center gap-2 cursor-pointer">
       <input type="checkbox" checked={checked} onChange={onChange} className="w-4 h-4 rounded border-light-border accent-primary" />
-      <span className="text-sm">{label}</span>
+      <span className="text-label">{label}</span>
     </label>
   );
 }

@@ -792,7 +792,7 @@ export default function UniversitiesManager() {
       label: 'University',
       render: (university) => (
         <div className="flex items-center gap-3 min-w-[220px]">
-          <div className="h-11 w-11 rounded-2xl border border-light-border dark:border-dark-border bg-white dark:bg-dark-bg flex items-center justify-center overflow-hidden shrink-0">
+          <div className="h-11 w-11 rounded-xl border border-light-border dark:border-dark-border bg-white dark:bg-dark-bg flex items-center justify-center overflow-hidden shrink-0">
             {university.logoUrl ? (
               <img src={university.logoUrl} alt={university.name} className="h-full w-full object-contain p-1.5" />
             ) : (
@@ -802,15 +802,15 @@ export default function UniversitiesManager() {
           <div>
             <p className="font-semibold text-light-text dark:text-dark-text">{university.name}</p>
             <div className="flex items-center gap-2 flex-wrap">
-              <p className="text-xs text-light-muted">{university.universityCode || 'No code set'}</p>
+              <p className="text-caption">{university.universityCode || 'No code set'}</p>
               {university.isSponsored && (
-                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                  university.sponsorTier === 'platinum' ? 'bg-purple-500/10 text-purple-500' :
-                  university.sponsorTier === 'gold'     ? 'bg-amber-500/10 text-amber-500' :
-                  university.sponsorTier === 'silver'   ? 'bg-slate-400/10 text-slate-400' :
-                                                          'bg-orange-500/10 text-orange-500'
+                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-[0.06em] ${
+                  university.sponsorTier === 'platinum' ? 'bg-slate-500/10 text-ink-700 dark:text-slate-300' :
+                  university.sponsorTier === 'gold'     ? 'bg-accent/10 text-accent-dark dark:text-accent-300' :
+                  university.sponsorTier === 'silver'   ? 'bg-slate-400/10 text-slate-500 dark:text-slate-400' :
+                                                          'bg-primary/10 text-link dark:text-primary-300'
                 }`}>
-                  <Star className="w-2.5 h-2.5" />
+                  <Star className="w-2.5 h-2.5" aria-hidden="true" />
                   {university.sponsorTier}
                 </span>
               )}
@@ -825,7 +825,7 @@ export default function UniversitiesManager() {
       render: (university) => (
         <div>
           <p>{university.city}, {university.state}</p>
-          <p className="text-xs text-light-muted">{university.address || 'Address not added'}</p>
+          <p className="text-caption">{university.address || 'Address not added'}</p>
         </div>
       ),
     },
@@ -855,7 +855,7 @@ export default function UniversitiesManager() {
       render: (university) => (
         <div className="space-y-1">
           <p className="font-medium">{university.naacGrade || 'NA'}</p>
-          <p className="text-xs text-light-muted">NIRF: {university.nirfRank || 'NA'}</p>
+          <p className="text-caption tabular-nums">NIRF: {university.nirfRank || 'NA'}</p>
         </div>
       ),
     },
@@ -870,15 +870,15 @@ export default function UniversitiesManager() {
   ];
 
   if (loading) {
-    return <div className="text-center py-12 text-light-muted">Loading universities...</div>;
+    return <div className="text-center py-12 text-support">Loading universities...</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-light-text dark:text-dark-text">University Management</h2>
-          <p className="mt-1 text-sm text-light-muted dark:text-dark-muted">
+          <h2 className="text-h2">University Management</h2>
+          <p className="mt-1 text-support">
             Manual-first catalogue management with inline course creation for normal, foreign, and twinning universities.
           </p>
         </div>
@@ -907,16 +907,16 @@ export default function UniversitiesManager() {
         {statCards(items).map((card) => {
           const Icon = card.icon;
           return (
-            <div key={card.label} className="card p-5 bg-gradient-to-br from-white to-orange-50/70 dark:from-dark-card dark:to-dark-card">
+            <div key={card.label} className="card p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-light-muted dark:text-dark-muted">
+                  <p className="text-eyebrow !text-light-muted dark:!text-dark-muted">
                     {card.label}
                   </p>
-                  <p className="mt-3 text-3xl font-bold text-light-text dark:text-dark-text">{card.value}</p>
+                  <p className="mt-3 text-stat">{card.value}</p>
                 </div>
-                <div className="rounded-2xl bg-primary/10 p-3 text-link">
-                  <Icon className="w-5 h-5" />
+                <div className="rounded-xl bg-primary/10 p-3 text-primary">
+                  <Icon className="w-5 h-5" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -925,15 +925,15 @@ export default function UniversitiesManager() {
       </div>
 
       {showForm && (
-        <form onSubmit={(event) => save({ event, targetStatus: form.status })} className="card p-6 md:p-8 space-y-8 shadow-2xl">
+        <form onSubmit={(event) => save({ event, targetStatus: form.status })} className="card p-6 md:p-8 space-y-8">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="text-xl font-bold text-light-text dark:text-dark-text">{editId ? 'Edit University' : 'Create University'}</h3>
-              <p className="text-sm text-light-muted dark:text-dark-muted">
+              <h3 className="text-h3">{editId ? 'Edit University' : 'Create University'}</h3>
+              <p className="text-support">
                 Add the university and its courses together so the team never has to manage separate course uploads. Drafts stay hidden from the public site until published.
               </p>
             </div>
-            <div className="inline-flex rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-link">
+            <div className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-eyebrow">
               {editId ? `Editing ${form.status || 'published'}` : 'New Catalogue Entry'}
             </div>
           </div>
@@ -945,10 +945,10 @@ export default function UniversitiesManager() {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveFormTab(tab.id)}
-                className={`px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] border-b-2 transition-all ${
+                className={`px-4 py-2 text-eyebrow border-b-2 transition-colors duration-150 ${
                   activeFormTab === tab.id
-                    ? 'border-primary text-link font-bold'
-                    : 'border-transparent text-light-muted dark:text-dark-muted hover:text-light-text dark:hover:text-dark-text'
+                    ? 'border-primary !text-link dark:!text-primary-300'
+                    : 'border-transparent !text-light-muted dark:!text-dark-muted hover:!text-light-text dark:hover:!text-dark-text'
                 }`}
               >
                 <span className="inline-flex items-center gap-2">
@@ -956,7 +956,7 @@ export default function UniversitiesManager() {
                   {validationSummary[tab.id]?.complete ? (
                     <CheckCircle2 className="w-3.5 h-3.5" />
                   ) : validationSummary[tab.id]?.requiredMissing?.length ? (
-                    <AlertCircle className="w-3.5 h-3.5 text-orange-500" />
+                    <AlertCircle className="w-3.5 h-3.5 text-warning" aria-hidden="true" />
                   ) : null}
                 </span>
               </button>
@@ -1030,7 +1030,7 @@ export default function UniversitiesManager() {
               <TextInput value={form.address} onChange={(event) => upd('address', event.target.value)} />
             </FormField>
 
-            <div className="rounded-[1.75rem] border border-dashed border-primary/30 bg-primary/5 p-4 text-sm text-link">
+            <div className="rounded-card border border-dashed border-primary/30 bg-primary/5 p-4 text-sm text-link dark:text-primary-300">
               {isDraft
                 ? 'Draft mode is active. You can save with only the essential fields and complete the rest later.'
                 : 'Published records should have valid location details and at least one course so they appear correctly on the public site.'}
@@ -1065,23 +1065,23 @@ export default function UniversitiesManager() {
             </FormField>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-5 space-y-3">
-                <p className="text-sm font-bold text-light-text dark:text-dark-text">Logo Preview</p>
-                <div className="flex h-32 items-center justify-center rounded-[1.5rem] bg-light-card/60 dark:bg-dark-card/50">
+              <div className="rounded-card border border-light-border dark:border-dark-border p-5 space-y-3">
+                <p className="text-card-title text-sm">Logo Preview</p>
+                <div className="flex h-32 items-center justify-center rounded-xl bg-light-card/60 dark:bg-dark-card/50">
                   {form.logoUrl ? (
                     <img src={form.logoUrl} alt="Logo preview" className="max-h-24 max-w-full object-contain" />
                   ) : (
-                    <span className="text-xs font-bold text-light-muted dark:text-dark-muted">Add a logo URL to preview it here</span>
+                    <span className="text-caption font-medium">Add a logo URL to preview it here</span>
                   )}
                 </div>
               </div>
-              <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-5 space-y-3">
-                <p className="text-sm font-bold text-light-text dark:text-dark-text">Banner Preview</p>
-                <div className="flex h-32 items-center justify-center overflow-hidden rounded-[1.5rem] bg-light-card/60 dark:bg-dark-card/50">
+              <div className="rounded-card border border-light-border dark:border-dark-border p-5 space-y-3">
+                <p className="text-card-title text-sm">Banner Preview</p>
+                <div className="flex h-32 items-center justify-center overflow-hidden rounded-xl bg-light-card/60 dark:bg-dark-card/50">
                   {form.bannerImageUrl ? (
                     <img src={form.bannerImageUrl} alt="Banner preview" className="h-full w-full object-cover" />
                   ) : (
-                    <span className="text-xs font-bold text-light-muted dark:text-dark-muted">Add a banner URL to preview it here</span>
+                    <span className="text-caption font-medium">Add a banner URL to preview it here</span>
                   )}
                 </div>
               </div>
@@ -1091,8 +1091,8 @@ export default function UniversitiesManager() {
           {/* Tab 3: Stats & Approvals */}
           <div className={activeFormTab === 'stats' ? 'space-y-6' : 'hidden'}>
             <div className="grid gap-6 xl:grid-cols-[1.1fr_1fr]">
-              <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-5 space-y-4">
-                <p className="text-sm font-bold text-light-text dark:text-dark-text">Approvals</p>
+              <div className="rounded-card border border-light-border dark:border-dark-border p-5 space-y-4">
+                <p className="text-card-title text-sm">Approvals</p>
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {Object.keys(form.approvals).map((key) => (
                     <CheckboxField
@@ -1105,37 +1105,37 @@ export default function UniversitiesManager() {
                 </div>
               </div>
 
-              <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-5 space-y-4">
-                <p className="text-sm font-bold text-light-text dark:text-dark-text">Stats</p>
+              <div className="rounded-card border border-light-border dark:border-dark-border p-5 space-y-4">
+                <p className="text-card-title text-sm">Stats</p>
                 <div className="grid gap-4 md:grid-cols-2">
                   <FormField label="Total Students">
                     <div className="space-y-2">
                       <TextInput value={form.stats.totalStudents} onChange={(event) => updNested('stats', 'totalStudents', event.target.value)} placeholder="e.g. 8000 or 8000-10000" />
-                      <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                      <p className="text-caption">{RANGE_FIELD_HELP}</p>
                     </div>
                   </FormField>
                   <FormField label="Campus Acres">
                     <div className="space-y-2">
                       <TextInput value={form.stats.campusSizeAcres} onChange={(event) => updNested('stats', 'campusSizeAcres', event.target.value)} placeholder="e.g. 25 or 25-35" />
-                      <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                      <p className="text-caption">{RANGE_FIELD_HELP}</p>
                     </div>
                   </FormField>
                   <FormField label="Avg Package LPA">
                     <div className="space-y-2">
                       <TextInput value={form.stats.avgPackageLPA} onChange={(event) => updNested('stats', 'avgPackageLPA', event.target.value)} placeholder="e.g. 5.2 or 4.5-6.0" />
-                      <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                      <p className="text-caption">{RANGE_FIELD_HELP}</p>
                     </div>
                   </FormField>
                   <FormField label="Highest Package LPA">
                     <div className="space-y-2">
                       <TextInput value={form.stats.highestPackageLPA} onChange={(event) => updNested('stats', 'highestPackageLPA', event.target.value)} placeholder="e.g. 18 or 18-22" />
-                      <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                      <p className="text-caption">{RANGE_FIELD_HELP}</p>
                     </div>
                   </FormField>
                   <FormField label="Placement %">
                     <div className="space-y-2">
                       <TextInput value={form.stats.placementPercentage} onChange={(event) => updNested('stats', 'placementPercentage', event.target.value)} placeholder="e.g. 78 or 78-85" />
-                      <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                      <p className="text-caption">{RANGE_FIELD_HELP}</p>
                     </div>
                   </FormField>
                 </div>
@@ -1210,14 +1210,14 @@ export default function UniversitiesManager() {
 
           {/* Tab 5: Courses */}
           <div className={activeFormTab === 'courses' ? 'space-y-6' : 'hidden'}>
-            <div className="rounded-[2rem] border border-light-border dark:border-dark-border p-5 md:p-6 space-y-5">
+            <div className="rounded-card border border-light-border dark:border-dark-border p-5 md:p-6 space-y-5">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h4 className="text-lg font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-link" />
+                  <h4 className="text-h3 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-primary" aria-hidden="true" />
                     Courses Inside University
                   </h4>
-                  <p className="text-sm text-light-muted dark:text-dark-muted">
+                  <p className="text-support">
                     Build the hierarchy directly here: Stream -&gt; Base Course -&gt; Universities.
                   </p>
                 </div>
@@ -1233,16 +1233,16 @@ export default function UniversitiesManager() {
                 </div>
               </div>
 
-              <div className="rounded-[1.5rem] border border-dashed border-primary/30 bg-primary/5 p-4 space-y-4">
+              <div className="rounded-xl border border-dashed border-primary/30 bg-primary/5 p-4 space-y-4">
                 <div>
-                  <p className="text-sm font-bold text-light-text dark:text-dark-text">Fast Add Shortcuts</p>
-                  <p className="text-xs text-light-muted dark:text-dark-muted mt-1">Use presets for common bundles or paste multiple course lines in one shot.</p>
+                  <p className="text-card-title text-sm">Fast Add Shortcuts</p>
+                  <p className="text-caption mt-1">Use presets for common bundles or paste multiple course lines in one shot.</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <button type="button" onClick={() => applyCoursePreset('engineering')} className="rounded-full bg-white dark:bg-dark-card px-4 py-2 text-xs font-bold text-link shadow-sm">Engineering Preset</button>
-                  <button type="button" onClick={() => applyCoursePreset('management')} className="rounded-full bg-white dark:bg-dark-card px-4 py-2 text-xs font-bold text-link shadow-sm">Management Preset</button>
-                  <button type="button" onClick={() => applyCoursePreset('law')} className="rounded-full bg-white dark:bg-dark-card px-4 py-2 text-xs font-bold text-link shadow-sm">Law Preset</button>
-                  <button type="button" onClick={() => applyCoursePreset('commerceIt')} className="rounded-full bg-white dark:bg-dark-card px-4 py-2 text-xs font-bold text-link shadow-sm">Commerce / IT Preset</button>
+                  <button type="button" onClick={() => applyCoursePreset('engineering')} className="rounded-full bg-white dark:bg-dark-card border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-link dark:text-primary-300 shadow-card hover:bg-primary/10 transition-colors duration-150">Engineering Preset</button>
+                  <button type="button" onClick={() => applyCoursePreset('management')} className="rounded-full bg-white dark:bg-dark-card border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-link dark:text-primary-300 shadow-card hover:bg-primary/10 transition-colors duration-150">Management Preset</button>
+                  <button type="button" onClick={() => applyCoursePreset('law')} className="rounded-full bg-white dark:bg-dark-card border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-link dark:text-primary-300 shadow-card hover:bg-primary/10 transition-colors duration-150">Law Preset</button>
+                  <button type="button" onClick={() => applyCoursePreset('commerceIt')} className="rounded-full bg-white dark:bg-dark-card border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-link dark:text-primary-300 shadow-card hover:bg-primary/10 transition-colors duration-150">Commerce / IT Preset</button>
                 </div>
                 <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
                   <div className="space-y-2">
@@ -1252,7 +1252,7 @@ export default function UniversitiesManager() {
                       className="min-h-[140px]"
                       placeholder={`Engineering | UG | B.Tech | Computer Science | 4 | 120-180 | 225000-275000 | JEE Main, MHT CET | 10+2 with PCM\nManagement | PG | MBA | Finance | 2 | 60 | 450000 | CAT, XAT | Graduation with 50%`}
                     />
-                    <p className="text-xs text-light-muted dark:text-dark-muted">{BULK_COURSE_HELP}</p>
+                    <p className="text-caption">{BULK_COURSE_HELP}</p>
                   </div>
                   <div className="flex lg:flex-col gap-2">
                     <button type="button" onClick={applyBulkCourses} className="btn-primary text-sm px-4">Add Bulk Rows</button>
@@ -1263,23 +1263,23 @@ export default function UniversitiesManager() {
 
               <div className="space-y-4">
                 {form.courses.map((course, index) => (
-                  <div key={`${course._id || 'new'}-${index}`} className="rounded-[1.5rem] border border-light-border dark:border-dark-border p-4 md:p-5 space-y-4 bg-light-card/30 dark:bg-dark-card/30">
+                  <div key={`${course._id || 'new'}-${index}`} className="rounded-xl border border-light-border dark:border-dark-border p-4 md:p-5 space-y-4 bg-light-card/30 dark:bg-dark-card/30">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="text-sm font-bold text-light-text dark:text-dark-text">Course #{index + 1}</div>
+                      <div className="text-card-title text-sm tabular-nums">Course #{index + 1}</div>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => cloneCourse(index)}
-                          className="rounded-xl p-2 text-light-muted hover:bg-primary/10 hover:text-link flex items-center gap-1 text-xs font-bold"
+                          className="rounded-btn p-2 text-light-muted dark:text-dark-muted hover:bg-primary/10 hover:text-link flex items-center gap-1 text-xs font-semibold transition-colors duration-150"
                           title="Clone this course details"
                         >
-                          <Copy className="w-3.5 h-3.5" />
+                          <Copy className="w-3.5 h-3.5" aria-hidden="true" />
                           Clone
                         </button>
                         <button
                           type="button"
                           onClick={() => removeCourse(index)}
-                          className="rounded-xl p-2 text-light-muted hover:bg-red-50 hover:text-red-500"
+                          className="rounded-btn p-2 text-light-muted dark:text-dark-muted hover:bg-error-tint dark:hover:bg-red-900/20 hover:text-error transition-colors duration-150"
                           aria-label={`Remove course ${index + 1}`}
                         >
                           <X className="w-4 h-4" />
@@ -1323,13 +1323,13 @@ export default function UniversitiesManager() {
                       <FormField label="Total Seats">
                         <div className="space-y-2">
                           <TextInput value={course.totalSeats} onChange={(event) => updCourse(index, 'totalSeats', event.target.value)} placeholder="e.g. 60 or 60-120" />
-                          <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                          <p className="text-caption">{RANGE_FIELD_HELP}</p>
                         </div>
                       </FormField>
                       <FormField label="Fees Per Year">
                         <div className="space-y-2">
                           <TextInput value={course.feesPerYear} onChange={(event) => updCourse(index, 'feesPerYear', event.target.value)} placeholder="e.g. 120000 or 120000-180000" />
-                          <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                          <p className="text-caption">{RANGE_FIELD_HELP}</p>
                         </div>
                       </FormField>
                       <FormField label="Entrance Exams">
@@ -1358,12 +1358,12 @@ export default function UniversitiesManager() {
 
           {/* Tab 6: Sponsorship */}
           <div className={activeFormTab === 'sponsorship' ? 'space-y-6' : 'hidden'}>
-            <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-6 space-y-6 bg-white dark:bg-dark-card shadow-sm">
-              <h4 className="text-lg font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-amber-500" />
+            <div className="rounded-card border border-light-border dark:border-dark-border p-6 space-y-6 bg-white dark:bg-dark-card shadow-card">
+              <h4 className="text-h3 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-accent-dark dark:text-accent-300" aria-hidden="true" />
                 Sponsorship Settings (Phase 1 SaaS MVP)
               </h4>
-              <p className="text-sm text-light-muted dark:text-dark-muted">
+              <p className="text-support">
                 Configure monetization, visibility boosts, and search placements for this partner university.
               </p>
 
@@ -1411,16 +1411,16 @@ export default function UniversitiesManager() {
                   )}
                 </div>
 
-                <div className="p-5 bg-amber-500/5 border border-dashed border-amber-500/30 rounded-2xl space-y-3">
-                  <p className="flex items-center gap-1.5 text-sm font-bold text-amber-600 dark:text-amber-400"><Zap className="w-4 h-4" aria-hidden="true" /> Search Priority Boosting</p>
-                  <p className="text-xs text-light-muted dark:text-dark-muted">
+                <div className="p-5 bg-accent/5 border border-dashed border-accent/30 rounded-card space-y-3">
+                  <p className="flex items-center gap-1.5 text-sm font-semibold text-accent-dark dark:text-accent-300"><Zap className="w-4 h-4" aria-hidden="true" /> Search Priority Boosting</p>
+                  <p className="text-caption">
                     When active, this university will rank ahead of organic listings in searches.
                   </p>
-                  <ul className="text-xs text-light-muted dark:text-dark-muted space-y-1">
+                  <ul className="text-caption space-y-1">
                     <li className="flex items-start gap-1.5"><Crown className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden="true" /><span><strong>Platinum:</strong> Slot #1 in all searches. 300 leads/mo. Homepage hero + state takeover.</span></li>
-                    <li className="flex items-start gap-1.5"><Medal className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-500" aria-hidden="true" /><span><strong>Gold:</strong> Top-3 placement in state. 120 leads/mo. Homepage Featured Section.</span></li>
+                    <li className="flex items-start gap-1.5"><Medal className="w-3.5 h-3.5 mt-0.5 shrink-0 text-accent" aria-hidden="true" /><span><strong>Gold:</strong> Top-3 placement in state. 120 leads/mo. Homepage Featured Section.</span></li>
                     <li className="flex items-start gap-1.5"><Medal className="w-3.5 h-3.5 mt-0.5 shrink-0 text-slate-400" aria-hidden="true" /><span><strong>Silver:</strong> Priority placement under Gold. 50 leads/mo. Full media views.</span></li>
-                    <li className="flex items-start gap-1.5"><Medal className="w-3.5 h-3.5 mt-0.5 shrink-0 text-orange-500" aria-hidden="true" /><span><strong>Bronze:</strong> Basic visibility boost above organic. 20 leads/mo.</span></li>
+                    <li className="flex items-start gap-1.5"><Medal className="w-3.5 h-3.5 mt-0.5 shrink-0 text-primary" aria-hidden="true" /><span><strong>Bronze:</strong> Basic visibility boost above organic. 20 leads/mo.</span></li>
                   </ul>
                 </div>
               </div>
@@ -1429,7 +1429,7 @@ export default function UniversitiesManager() {
 
           {/* Tab 7: SEO */}
           <div className={activeFormTab === 'seo' ? 'space-y-6' : 'hidden'}>
-            <div className="rounded-[1.75rem] border border-dashed border-primary/30 bg-primary/5 p-4 text-sm text-link">
+            <div className="rounded-card border border-dashed border-primary/30 bg-primary/5 p-4 text-sm text-link dark:text-primary-300">
               Leave any field blank to use an automatic, SEO-friendly default generated from the
               university name, type and location. Fill a field only when you want to override it.
             </div>
@@ -1442,7 +1442,7 @@ export default function UniversitiesManager() {
                     onChange={(event) => updNested('seo', 'seoTitle', event.target.value)}
                     placeholder={form.name ? `${form.name} — ${getDisplayType(form)} University in ${form.city || 'City'}, ${form.state || 'State'}` : 'Auto from name, type & location'}
                   />
-                  <p className="text-xs text-light-muted dark:text-dark-muted">Aim for 50–60 characters. Blank = auto.</p>
+                  <p className="text-caption">Aim for 50–60 characters. Blank = auto.</p>
                 </div>
               </FormField>
               <FormField label="Index Status">
@@ -1455,7 +1455,7 @@ export default function UniversitiesManager() {
                       { value: 'noindex', label: 'No-index — keep out of Google (stays live)' },
                     ]}
                   />
-                  <p className="text-xs text-light-muted dark:text-dark-muted">Use No-index to hide a page from search without unpublishing it.</p>
+                  <p className="text-caption">Use No-index to hide a page from search without unpublishing it.</p>
                 </div>
               </FormField>
             </div>
@@ -1468,7 +1468,7 @@ export default function UniversitiesManager() {
                   className="min-h-[90px]"
                   placeholder="Blank = auto-generated from the university description."
                 />
-                <p className="text-xs text-light-muted dark:text-dark-muted">Aim for 140–160 characters. Blank = auto.</p>
+                <p className="text-caption">Aim for 140–160 characters. Blank = auto.</p>
               </div>
             </FormField>
 
@@ -1480,8 +1480,8 @@ export default function UniversitiesManager() {
               />
             </FormField>
 
-            <div className="rounded-[1.75rem] border border-light-border dark:border-dark-border p-5 space-y-4">
-              <p className="text-sm font-bold text-light-text dark:text-dark-text">Social Share (Open Graph / Twitter Card)</p>
+            <div className="rounded-card border border-light-border dark:border-dark-border p-5 space-y-4">
+              <p className="text-card-title text-sm">Social Share (Open Graph / Twitter Card)</p>
               <div className="grid gap-6 md:grid-cols-2">
                 <FormField label="Share Title">
                   <TextInput
@@ -1507,7 +1507,7 @@ export default function UniversitiesManager() {
                 />
               </FormField>
               {form.seo.ogImage && (
-                <div className="flex h-32 items-center justify-center overflow-hidden rounded-[1.5rem] bg-light-card/60 dark:bg-dark-card/50">
+                <div className="flex h-32 items-center justify-center overflow-hidden rounded-xl bg-light-card/60 dark:bg-dark-card/50">
                   <img src={form.seo.ogImage} alt="Share preview" className="h-full w-full object-cover" />
                 </div>
               )}
@@ -1515,14 +1515,14 @@ export default function UniversitiesManager() {
           </div>
 
           {/* Form Wizard Navigation Buttons & Submit Actions */}
-          <div className="sticky bottom-4 z-10 rounded-[1.75rem] border border-light-border dark:border-dark-border bg-white/95 dark:bg-dark-card/95 p-4 shadow-2xl backdrop-blur">
-            <div className="mb-3 flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.18em] text-light-muted dark:text-dark-muted">
+          <div className="sticky bottom-4 z-10 rounded-card border border-light-border dark:border-dark-border bg-white/95 dark:bg-dark-card/95 p-4 shadow-modal backdrop-blur">
+            <div className="mb-3 flex flex-wrap gap-3 text-eyebrow !text-light-muted dark:!text-dark-muted">
               {formTabs.map((tab) => (
                 <div key={tab.id} className="inline-flex items-center gap-2">
                   {validationSummary[tab.id]?.complete ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-success" aria-hidden="true" />
                   ) : validationSummary[tab.id]?.requiredMissing?.length ? (
-                    <AlertCircle className="w-3.5 h-3.5 text-orange-500" />
+                    <AlertCircle className="w-3.5 h-3.5 text-warning" aria-hidden="true" />
                   ) : (
                     <span className="w-3.5 h-3.5 rounded-full border border-light-border dark:border-dark-border" />
                   )}
@@ -1596,8 +1596,8 @@ export default function UniversitiesManager() {
       <div className="card p-5 space-y-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">Manage Universities</h3>
-            <p className="text-sm text-light-muted dark:text-dark-muted">
+            <h3 className="text-h3">Manage Universities</h3>
+            <p className="text-support">
               Review records, clean inactive entries, and take bulk actions from one table.
             </p>
           </div>
@@ -1616,10 +1616,10 @@ export default function UniversitiesManager() {
               <button
                 key={filter.value}
                 onClick={() => setFilterType(filter.value)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] transition-all ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-colors duration-150 ${
                   filterType === filter.value
-                    ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                    : 'bg-light-card dark:bg-dark-card text-light-muted dark:text-dark-muted'
+                    ? 'bg-primary text-white'
+                    : 'bg-light-card dark:bg-dark-card text-light-muted dark:text-dark-muted hover:text-light-text dark:hover:text-dark-text'
                 }`}
               >
                 {filter.icon && <filter.icon className="w-3.5 h-3.5" aria-hidden="true" />}
@@ -1629,19 +1629,19 @@ export default function UniversitiesManager() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-dashed border-primary/20 bg-primary/5 px-4 py-3">
-          <span className="text-sm font-bold text-link">{selectedCount} selected</span>
+        <div className="flex flex-wrap items-center gap-3 rounded-card border border-dashed border-primary/20 bg-primary/5 px-4 py-3">
+          <span className="text-sm font-semibold text-link dark:text-primary-300 tabular-nums">{selectedCount} selected</span>
           <button
             onClick={handleBulkDelete}
             disabled={!selectedCount}
-            className="rounded-xl bg-red-500 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-btn bg-error px-4 py-2 text-xs font-semibold text-white hover:bg-red-600 transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Delete Selected
           </button>
           <button
             onClick={() => setSelectedIds([])}
             disabled={!selectedCount}
-            className="rounded-xl border border-light-border dark:border-dark-border px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-light-muted dark:text-dark-muted disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-btn border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-light-muted dark:text-dark-muted hover:bg-light-card dark:hover:bg-dark-card transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Clear Selection
           </button>
@@ -1661,26 +1661,27 @@ export default function UniversitiesManager() {
           }}
           actions={(university) => (
             <>
-              <button onClick={() => duplicateUniversity(university._id)} className="p-2 rounded-xl hover:bg-primary/10 text-link" title="Duplicate as draft">
-                <Copy className="w-4 h-4" />
+              <button onClick={() => duplicateUniversity(university._id)} aria-label="Duplicate as draft" className="p-2 rounded-btn hover:bg-primary/10 text-link dark:text-primary-300 transition-colors duration-150" title="Duplicate as draft">
+                <Copy className="w-4 h-4" aria-hidden="true" />
               </button>
-              <button onClick={() => edit(university)} className="p-2 rounded-xl hover:bg-light-card dark:hover:bg-dark-card">
-                <Pencil className="w-4 h-4" />
+              <button onClick={() => edit(university)} aria-label="Edit university" className="p-2 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150">
+                <Pencil className="w-4 h-4" aria-hidden="true" />
               </button>
               {isSuperAdmin && (
                 <button
                   onClick={() => openSponsorModal(university)}
-                  className={`p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/10 ${
-                    university.isSponsored ? 'text-amber-500 font-bold' : 'text-light-muted dark:text-dark-muted'
+                  aria-label="Manage sponsorship"
+                  className={`p-2 rounded-btn hover:bg-amber-50 dark:hover:bg-amber-900/10 transition-colors duration-150 ${
+                    university.isSponsored ? 'text-accent' : 'text-light-muted dark:text-dark-muted'
                   }`}
                   title="Manage Sponsorship"
                 >
-                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" aria-hidden="true" />
                 </button>
               )}
               {canDelete && (
-                <button onClick={() => del(university._id)} className="p-2 rounded-xl hover:bg-red-50 text-red-500">
-                  <Trash2 className="w-4 h-4" />
+                <button onClick={() => del(university._id)} aria-label="Delete university" className="p-2 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150">
+                  <Trash2 className="w-4 h-4" aria-hidden="true" />
                 </button>
               )}
             </>
@@ -1690,19 +1691,20 @@ export default function UniversitiesManager() {
 
       {/* Quick Sponsorship Settings Modal */}
       {sponsorModalUni && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-sm p-4">
-          <div className="card w-full max-w-md bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-2xl shadow-2xl p-6 relative animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="card w-full max-w-md rounded-card shadow-modal p-6 relative animate-in fade-in duration-200">
             <button
               onClick={closeSponsorModal}
-              className="absolute top-4 right-4 p-2 rounded-xl hover:bg-light-card dark:hover:bg-dark-card text-light-muted dark:text-dark-muted transition-all"
+              aria-label="Close"
+              className="absolute top-4 right-4 p-2 rounded-btn hover:bg-light-card dark:hover:bg-dark-border text-light-muted dark:text-dark-muted transition-colors duration-150"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
 
-            <h3 className="flex items-center gap-2 text-lg font-bold text-light-text dark:text-dark-text mb-2">
-              <Star className="w-5 h-5" aria-hidden="true" /> Sponsorship Settings
+            <h3 className="flex items-center gap-2 text-h3 mb-2">
+              <Star className="w-5 h-5 text-accent" aria-hidden="true" /> Sponsorship Settings
             </h3>
-            <p className="text-xs text-light-muted dark:text-dark-muted mb-6">
+            <p className="text-caption mb-6">
               Quickly manage sponsorship status for <strong>{sponsorModalUni.name}</strong>.
             </p>
 
@@ -1752,14 +1754,14 @@ export default function UniversitiesManager() {
                 <button
                   type="button"
                   onClick={closeSponsorModal}
-                  className="rounded-xl border border-light-border dark:border-dark-border px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-light-muted dark:text-dark-muted hover:bg-light-card dark:hover:bg-dark-card transition-all"
+                  className="rounded-btn border border-light-border dark:border-dark-border px-4 py-2 text-xs font-semibold text-light-muted dark:text-dark-muted hover:bg-light-card dark:hover:bg-dark-card transition-colors duration-150"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={sponsorModalSaving}
-                  className="rounded-xl bg-primary px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white hover:bg-primary/95 transition-all shadow-md shadow-primary/10 disabled:opacity-50"
+                  className="rounded-btn bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary-dark transition-colors duration-150 disabled:opacity-50"
                 >
                   {sponsorModalSaving ? 'Saving...' : 'Save Settings'}
                 </button>

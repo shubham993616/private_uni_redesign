@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, CheckCircle2, MessageSquare, Clock, Globe } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'react-hot-toast';
+import Container from '../components/layout/Container';
+import { Card, Badge, Button, Input, Select, Textarea } from '../components/ui';
 
 const officeLocations = [
   {
@@ -32,27 +34,27 @@ const officeLocations = [
 const infoCards = [
   {
     icon: Phone,
-    title: 'Call Us',
+    title: 'Call us',
     lines: ['+91 77200 25900', '+91 77200 81400'],
-    color: 'bg-blue-500/10 text-blue-600',
+    color: 'bg-info/10 text-info',
   },
   {
     icon: Mail,
-    title: 'Email Us',
+    title: 'Email us',
     lines: ['contact@vidyarthimitra.org', 'info@vidyarthimitra.org'],
-    color: 'bg-primary/10 text-link',
+    color: 'bg-primary/10 text-primary',
   },
   {
     icon: Clock,
-    title: 'Working Hours',
+    title: 'Working hours',
     lines: ['Mon – Sat: 9:00 AM – 7:00 PM', 'Sunday: Closed'],
-    color: 'bg-amber-500/10 text-amber-600',
+    color: 'bg-warning/10 text-warning-text dark:text-warning',
   },
   {
     icon: Globe,
     title: 'Website',
     lines: ['vidyarthimitra.org'],
-    color: 'bg-emerald-500/10 text-emerald-600',
+    color: 'bg-success/10 text-success-text dark:text-success',
   },
 ];
 
@@ -83,7 +85,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-[#f8fafc] dark:bg-dark-bg min-h-screen pb-20 md:pb-0">
+    <div className="bg-light-card dark:bg-dark-bg min-h-screen pb-20 md:pb-0">
       <Seo
         title="Contact Us | Vidyarthi Mitra – Pune & Mumbai Office"
         description="Get in touch with Vidyarthi Mitra. Visit our Pune or Mumbai offices, call us, or send a message. We're here to help you find the right career path."
@@ -92,25 +94,23 @@ export default function Contact() {
 
       {/* Hero */}
       <div className="relative bg-slate-900 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary-dark/20 to-slate-900/40" />
-        <div className="absolute inset-0" style={{backgroundImage:'radial-gradient(circle at 20% 50%, rgba(var(--color-primary-rgb),0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.1) 0%, transparent 50%)'}} />
-        <div className="relative max-w-7xl mx-auto px-4 py-24 text-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary-dark/20 to-slate-900/40" aria-hidden="true" />
+        <Container className="relative py-16 md:py-24 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6">
-              <MessageSquare className="w-3.5 h-3.5 text-accent" /> We're here to help
-            </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-4">
-              Contact <span className="text-accent italic">Us</span>
+            <p className="text-eyebrow !text-primary-300 mb-4 inline-flex items-center gap-2">
+              <MessageSquare className="w-4 h-4" aria-hidden="true" /> We're here to help
+            </p>
+            <h1 className="text-display-serif !text-white mb-4">
+              Contact <span className="text-primary-300">Us</span>
             </h1>
-            <p className="text-lg text-white/60 max-w-xl mx-auto font-medium">
+            <p className="text-body !text-white/70 max-w-xl mx-auto">
               Have questions about admissions, courses, or our services? Reach out and our team will respond promptly.
             </p>
           </motion.div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#f8fafc] dark:from-dark-bg to-transparent" />
+        </Container>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-16 space-y-20">
+      <Container className="py-16 space-y-16">
 
         {/* Info Cards */}
         <motion.div
@@ -118,66 +118,67 @@ export default function Contact() {
           className="grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           {infoCards.map((card) => (
-            <div key={card.title} className="bg-white dark:bg-dark-card rounded-[2rem] p-6 border border-slate-100 dark:border-white/5 shadow-sm text-center group hover:-translate-y-1 transition-transform">
-              <div className={`w-14 h-14 rounded-2xl ${card.color} flex items-center justify-center mx-auto mb-4`}>
-                <card.icon className="w-6 h-6" />
+            <Card key={card.title} className="p-6 text-center">
+              <div className={`w-12 h-12 rounded-xl ${card.color} flex items-center justify-center mx-auto mb-4`}>
+                <card.icon className="w-6 h-6" aria-hidden="true" />
               </div>
-              <h3 className="font-bold text-sm text-slate-800 dark:text-white uppercase tracking-widest mb-3">{card.title}</h3>
+              <h3 className="text-card-title mb-2">{card.title}</h3>
               {card.lines.map((l) => (
-                <p key={l} className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed break-all">{l}</p>
+                <p key={l} className="text-support break-all">{l}</p>
               ))}
-            </div>
+            </Card>
           ))}
         </motion.div>
 
         {/* Office Cards + Map */}
-        <div className="space-y-12">
-          <h2 className="text-3xl font-serif font-bold text-slate-900 dark:text-white text-center">
-            Our <span className="text-link">Offices</span>
-          </h2>
+        <div>
+          <div className="text-center mb-12">
+            <p className="text-eyebrow mb-3">Visit us</p>
+            <h2 className="text-h2 font-serif">Our Offices</h2>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {officeLocations.map((office, i) => (
               <motion.div
                 key={office.city}
                 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
-                className="bg-white dark:bg-dark-card rounded-[2rem] overflow-hidden border border-slate-100 dark:border-white/5 shadow-lg"
               >
-                {/* Map */}
-                <div className="h-52 overflow-hidden">
-                  <iframe
-                    src={office.mapSrc}
-                    width="100%" height="100%" style={{ border: 0 }}
-                    allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                    title={`${office.city} office map`}
-                  />
-                </div>
-                <div className="p-8 space-y-5">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20">
-                    <MapPin className="w-3.5 h-3.5 text-accent" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-accent">{office.city}</span>
+                <Card className="overflow-hidden h-full">
+                  {/* Map */}
+                  <div className="h-52 overflow-hidden">
+                    <iframe
+                      src={office.mapSrc}
+                      width="100%" height="100%" style={{ border: 0 }}
+                      allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                      title={`${office.city} office map`}
+                    />
                   </div>
-                  <div className="space-y-2">
-                    {office.addresses.map((addr, ai) => (
-                      <div key={ai} className="flex gap-3 text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-                        <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                        <span>{addr}</span>
-                      </div>
-                    ))}
+                  <div className="p-6 space-y-4">
+                    <Badge variant="brand">
+                      <MapPin className="w-3.5 h-3.5" aria-hidden="true" /> {office.city}
+                    </Badge>
+                    <div className="space-y-2">
+                      {office.addresses.map((addr, ai) => (
+                        <div key={ai} className="flex gap-3 text-support">
+                          <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" aria-hidden="true" />
+                          <span>{addr}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-2 pt-3 border-t border-light-border dark:border-dark-border">
+                      {office.phones.map((p) => (
+                        <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="flex items-center gap-3 text-support hover:text-link transition-colors">
+                          <Phone className="w-4 h-4 text-primary shrink-0" aria-hidden="true" /> {p}
+                        </a>
+                      ))}
+                      {office.emails.map((em) => (
+                        <a key={em} href={`mailto:${em}`} className="flex items-center gap-3 text-support hover:text-link transition-colors break-all">
+                          <Mail className="w-4 h-4 text-primary shrink-0" aria-hidden="true" /> {em}
+                        </a>
+                      ))}
+                    </div>
                   </div>
-                  <div className="space-y-2 pt-2 border-t border-slate-50 dark:border-white/5">
-                    {office.phones.map((p) => (
-                      <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 hover:text-link transition-colors font-medium">
-                        <Phone className="w-4 h-4 text-link shrink-0" /> {p}
-                      </a>
-                    ))}
-                    {office.emails.map((em) => (
-                      <a key={em} href={`mailto:${em}`} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 hover:text-link transition-colors font-medium break-all">
-                        <Mail className="w-4 h-4 text-link shrink-0" /> {em}
-                      </a>
-                    ))}
-                  </div>
-                </div>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -186,81 +187,68 @@ export default function Contact() {
         {/* Contact Form */}
         <motion.div
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-dark-card rounded-[2rem] border border-slate-100 dark:border-white/5 shadow-lg overflow-hidden"
         >
-          <div className="grid md:grid-cols-5">
-            {/* Left panel */}
-            <div className="md:col-span-2 bg-slate-900 p-10 md:p-14 flex flex-col justify-between">
-              <div>
-                <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent text-xs font-bold uppercase tracking-widest mb-8">Send a Message</span>
-                <h3 className="text-3xl font-serif font-bold text-white mb-4">Let's talk about your future</h3>
-                <p className="text-white/60 text-sm font-medium leading-relaxed">
-                  Whether you need help choosing a course, understanding admission processes, or finding the right university — we're just a message away.
-                </p>
-              </div>
-              <div className="mt-12 space-y-4">
-                {[
-                  { icon: Phone, text: '+91 77200 25900' },
-                  { icon: Mail, text: 'contact@vidyarthimitra.org' },
-                  { icon: MapPin, text: 'Pune & Mumbai, Maharashtra' },
-                ].map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-3 text-white/70 text-sm font-medium">
-                    <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4 text-accent" />
-                    </div>
-                    {text}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right form */}
-            <div className="md:col-span-3 p-10 md:p-14">
-              {sent ? (
-                <div className="h-full flex flex-col items-center justify-center text-center py-16">
-                  <div className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6">
-                    <CheckCircle2 className="w-10 h-10 text-emerald-500" />
-                  </div>
-                  <h3 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-3">Message Sent!</h3>
-                  <p className="text-slate-500 font-medium mb-8">Our team will get back to you within 24 hours.</p>
-                  <button onClick={() => setSent(false)} className="px-8 py-3 bg-primary text-white rounded-2xl font-bold text-sm hover:bg-primary-dark transition-colors">
-                    Send Another
-                  </button>
+          <Card className="overflow-hidden">
+            <div className="grid md:grid-cols-5">
+              {/* Left panel */}
+              <div className="md:col-span-2 bg-primary-dark p-8 md:p-10 flex flex-col justify-between text-white">
+                <div>
+                  <p className="text-eyebrow !text-white/80 mb-4">Send a message</p>
+                  <h3 className="text-h2 !text-white mb-3">Let's talk about your future</h3>
+                  <p className="text-support !text-white/75">
+                    Whether you need help choosing a course, understanding admission processes, or finding the right university — we're just a message away.
+                  </p>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Full Name *</label>
-                      <input
+                <div className="mt-12 space-y-4">
+                  {[
+                    { icon: Phone, text: '+91 77200 25900' },
+                    { icon: Mail, text: 'contact@vidyarthimitra.org' },
+                    { icon: MapPin, text: 'Pune & Mumbai, Maharashtra' },
+                  ].map(({ icon: Icon, text }) => (
+                    <div key={text} className="flex items-center gap-3 text-support !text-white/85">
+                      <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4 text-white" aria-hidden="true" />
+                      </div>
+                      {text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right form */}
+              <div className="md:col-span-3 p-6 md:p-10">
+                {sent ? (
+                  <div className="h-full flex flex-col items-center justify-center text-center py-16">
+                    <div className="w-16 h-16 rounded-full bg-success-tint dark:bg-success/10 flex items-center justify-center mb-6">
+                      <CheckCircle2 className="w-8 h-8 text-success" aria-hidden="true" />
+                    </div>
+                    <h3 className="text-h3 mb-2">Message sent!</h3>
+                    <p className="text-support mb-6">Our team will get back to you within 24 hours.</p>
+                    <Button onClick={() => setSent(false)}>Send another</Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <Input
+                        label="Full name *"
                         name="name" value={form.name} onChange={handleChange} required
                         placeholder="Your name"
-                        className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
                       />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Email *</label>
-                      <input
+                      <Input
+                        label="Email *"
                         name="email" value={form.email} onChange={handleChange} required type="email"
                         placeholder="your@email.com"
-                        className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
                       />
                     </div>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Phone</label>
-                      <input
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <Input
+                        label="Phone"
                         name="phone" value={form.phone} onChange={handleChange}
                         placeholder="+91 00000 00000"
-                        className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
                       />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Subject *</label>
-                      <select
+                      <Select
+                        label="Subject *"
                         name="subject" value={form.subject} onChange={handleChange} required
-                        className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-white/10 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
                       >
                         <option value="" disabled>Select a topic *</option>
                         <option>Admission Enquiry</option>
@@ -270,34 +258,24 @@ export default function Contact() {
                         <option>Technical Support</option>
                         <option>Partnership / Advertisement</option>
                         <option>Other</option>
-                      </select>
+                      </Select>
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Message *</label>
-                    <textarea
+                    <Textarea
+                      label="Message *"
                       name="message" value={form.message} onChange={handleChange} required rows={5}
                       placeholder="Tell us how we can help you..."
-                      className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition resize-none"
                     />
-                  </div>
-                  <button
-                    type="submit" disabled={sending}
-                    className="w-full flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-primary to-primary-light text-white rounded-2xl font-bold text-sm uppercase tracking-widest hover:opacity-90 transition-opacity shadow-xl shadow-primary/30 disabled:opacity-60"
-                  >
-                    {sending ? (
-                      <><div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Sending...</>
-                    ) : (
-                      <><Send className="w-4 h-4" /> Send Message</>
-                    )}
-                  </button>
-                </form>
-              )}
+                    <Button type="submit" size="lg" loading={sending} className="w-full">
+                      <Send className="w-4 h-4" aria-hidden="true" /> Send message
+                    </Button>
+                  </form>
+                )}
+              </div>
             </div>
-          </div>
+          </Card>
         </motion.div>
 
-      </div>
+      </Container>
     </div>
   );
 }

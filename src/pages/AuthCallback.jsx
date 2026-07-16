@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -46,10 +47,11 @@ export default function AuthCallback() {
   }, [completeGoogleAuth, navigate, searchParams]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center bg-light-card dark:bg-dark-bg px-4">
       <div className="card p-8 w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-3">Completing Sign-In</h1>
-        <p className="text-sm text-light-muted dark:text-dark-muted">
+        <Loader2 className="w-6 h-6 animate-spin text-primary mx-auto mb-4" aria-hidden="true" />
+        <h1 className="text-h2 mb-3">Completing sign-in</h1>
+        <p className="text-support">
           Please wait while we finish your Google authentication.
         </p>
       </div>

@@ -1,6 +1,3 @@
-
-
-
 import { startTransition, useDeferredValue, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,6 +16,7 @@ import { useAiChat } from '../context/AiChatContext';
 import UniversityLogo from '../components/common/UniversityLogo';
 import LeadCaptureModal from '../components/university/LeadCaptureModal';
 import HeroBannerSlider from '../components/ads/HeroBannerSlider';
+import WelcomeSearchModal from '../components/home/WelcomeSearchModal';
 import SponsoredUniversities from '../components/ads/SponsoredUniversities';
 import SidebarAds from '../components/ads/SidebarAds';
 import { EmptyState, Card } from '../components/ui';
@@ -90,9 +88,6 @@ const featuredUniversities = [
   { name: 'Thakur College of Engineering & Technology', slug: 'thakur-college-of-engineering-and-technology', location: 'Mumbai, Maharashtra', accent: 'from-sky-950 via-blue-800 to-cyan-500', image: 'https://images.shiksha.com/mediadata/images/1489300063phpA1CPrW.jpeg' },
   { _id: '6a3391b806c08386a299b207', name: 'O.P. Jindal University', slug: 'op-jindal-university', location: 'Raigarh, Chhattisgarh', accent: 'from-slate-950 via-slate-700 to-amber-500', image: 'https://educationpost.in/_next/image?url=https%3A%2F%2Fapi.educationpost.in%2Fs3-images%2F1747130783336-OP%20Jindal%20University.jpg&w=3840&q=75' },
 ];
-
-
-
 
 const HOME_CACHE_KEY = 'vm_home_cache';
 const HOME_CACHE_TTL_MS = 5 * 60 * 1000;
@@ -718,7 +713,7 @@ export default function Home() {
           onClick={() => handleTile(tile)}
           className={`group relative overflow-hidden ${
             i === 0 ? "h-72" : "h-36"
-          }`}ā
+          }`}
         >
           <img
             src={tile.img}
@@ -1097,6 +1092,8 @@ export default function Home() {
       </section>
 
       {/* ==================== MODALS ==================== */}
+      {/* First-visit AI-counsellor intake — self-managing via localStorage. */}
+      <WelcomeSearchModal />
       <PersonalizedSearchModal open={showPersonalized} onClose={() => setShowPersonalized(false)} />
 
       {/* Feedback modal */}

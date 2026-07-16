@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Trash2, Star, MessageSquare, Share2, GitCompare, Download, FileText, ExternalLink, Heart } from 'lucide-react';
 import { calculateFitScore } from '../../utils/fitScore';
 import { getUniversityDisplayType } from '../../utils/universityType';
+import { Badge } from '../ui';
 
 function StarRating({ value = 0, onChange }) {
   const [hover, setHover] = useState(0);
@@ -11,8 +12,9 @@ function StarRating({ value = 0, onChange }) {
       {[1,2,3,4,5].map(n => (
         <button key={n} onClick={() => onChange(n)}
           onMouseEnter={() => setHover(n)} onMouseLeave={() => setHover(0)}
-          className="text-yellow-400 hover:scale-110 transition-transform">
-          <Star className="w-4 h-4" fill={(hover||value)>=n?'currentColor':'none'} />
+          aria-label={`Rate ${n} star${n > 1 ? 's' : ''}`}
+          className="text-accent transition-colors duration-150">
+          <Star className="w-4 h-4" fill={(hover||value)>=n?'currentColor':'none'} aria-hidden="true" />
         </button>
       ))}
     </div>
@@ -38,11 +40,12 @@ export default function SavedColleges({ savedUnis, ratings, notes, compareList, 
 
   if (savedUnis.length === 0) return (
     <div className="card p-12 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-primary-50 dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
-        <GitCompare className="w-8 h-8 text-link" />
+      <div className="w-14 h-14 rounded-2xl bg-light-card dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
+        <GitCompare className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
       </div>
-      <p className="text-light-muted mb-4">No saved colleges yet. Browse and bookmark your favourites!</p>
-      <Link to="/universities" className="btn-primary text-sm">Browse Colleges</Link>
+      <h3 className="text-h3 mb-1">No saved colleges yet</h3>
+      <p className="text-support mb-5">Browse and bookmark your favourites!</p>
+      <Link to="/universities" className="btn-primary text-sm">Browse colleges</Link>
     </div>
   );
 
@@ -61,7 +64,7 @@ export default function SavedColleges({ savedUnis, ratings, notes, compareList, 
   return (
     <div className="space-y-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <h2 className="text-xl font-bold flex items-center gap-2">Saved Colleges <span className="badge badge-orange">{savedUnis.length}</span></h2>
+        <h2 className="text-h2 flex items-center gap-2">Saved colleges <Badge variant="brand">{savedUnis.length}</Badge></h2>
         <div className="flex flex-wrap items-center gap-3">
           <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="input-field !py-2 !w-auto text-sm">
             <option value="fitScore">Sort by Fit Score</option>
@@ -85,56 +88,49 @@ export default function SavedColleges({ savedUnis, ratings, notes, compareList, 
         const fitScore = calculateFitScore(u, userPrefs);
         const displayType = getUniversityDisplayType(u);
         return (
-        <div key={u._id} className={`card p-5 space-y-4 transition-all relative ${isFav ? 'border-primary/30 shadow-lg' : 'hover:shadow-lg'}`}>
+        <div key={u._id} className={`card p-5 space-y-4 transition-all duration-150 relative hover:shadow-card-hover ${isFav ? 'border-primary/30' : ''}`}>
           {/* Favorite Pin */}
-          <button 
+          <button
             onClick={() => toggleFavorite(u._id)}
-            className={`absolute top-4 right-4 p-2 rounded-full z-10 transition-colors ${isFav ? 'bg-red-50 text-red-500' : 'bg-light-bg text-light-muted hover:bg-red-50 hover:text-red-400 dark:bg-dark-border'}`}
+            aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+            className={`absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full z-10 transition-colors duration-150 ${isFav ? 'bg-error-tint text-error dark:bg-red-900/20 dark:text-red-400' : 'bg-light-card text-light-muted hover:bg-error-tint hover:text-error dark:bg-dark-border dark:text-dark-muted'}`}
           >
-            <Heart className="w-4 h-4" fill={isFav ? "currentColor" : "none"} />
+            <Heart className="w-4 h-4" fill={isFav ? "currentColor" : "none"} aria-hidden="true" />
           </button>
-          
-          {fitScore > 50 && (
-             <div className="absolute top-0 right-16 bg-primary/10 text-link text-[10px] font-bold px-3 py-1 rounded-bl-xl border-b border-l border-primary/20">
-                {fitScore}% MATCH
-             </div>
-          )}
 
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Logo placeholder */}
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-link font-bold text-lg shrink-0 ${isFav ? 'bg-primary/20' : 'bg-primary-50 dark:bg-dark-border'}`}>
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-link dark:text-primary-300 font-bold text-lg shrink-0 ${isFav ? 'bg-primary/20' : 'bg-primary-50 dark:bg-dark-border'}`}>
               {u.name?.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
-                  <Link to={`/universities/${u.slug}`} className="font-semibold hover:text-link transition-colors line-clamp-1">
+                  <Link to={`/universities/${u.slug}`} className="text-card-title hover:text-link dark:hover:text-primary-300 transition-colors line-clamp-1">
                     {u.name}
                   </Link>
-                  <p className="text-sm text-light-muted flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3 h-3" />{u.city}, {u.state}
+                  <p className="text-support flex items-center gap-1 mt-0.5">
+                    <MapPin className="w-3 h-3" aria-hidden="true" />{u.city}, {u.state}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-1.5 items-center">
-                  <div className="flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg shadow-primary/20">
-                    {calculateFitScore(u, userPrefs)}% Match
-                  </div>
-                  <span className="badge badge-orange">{displayType}</span>
+                <div className="flex flex-wrap gap-1.5 items-center pr-10">
+                  <Badge variant="brand" className="tabular-nums">{fitScore}% match</Badge>
+                  <Badge variant="neutral">{displayType}</Badge>
                   {u.naacGrade && <span className="badge badge-green">NAAC {u.naacGrade}</span>}
-                  {u.nirfRank && <span className="badge badge-blue">NIRF #{u.nirfRank}</span>}
+                  {u.nirfRank && <span className="badge badge-blue tabular-nums">NIRF #{u.nirfRank}</span>}
                 </div>
               </div>
 
               {/* Rating */}
               <div className="flex items-center gap-2 mt-3">
-                <span className="text-xs text-light-muted">Your Rating:</span>
+                <span className="text-caption">Your rating:</span>
                 <StarRating value={ratings[u._id] || 0} onChange={r => onRating(u._id, r)} />
-                {ratings[u._id] && <span className="text-xs text-yellow-500 font-semibold">{ratings[u._id]}/5</span>}
+                {ratings[u._id] && <span className="text-caption font-semibold tabular-nums">{ratings[u._id]}/5</span>}
               </div>
 
               {/* Note preview */}
               {notes[u._id] && activeNote !== u._id && (
-                <p className="text-xs text-light-muted mt-2 italic border-l-2 border-primary pl-2 line-clamp-2">
+                <p className="text-caption mt-2 border-l-2 border-primary pl-2 line-clamp-2">
                   {notes[u._id]}
                 </p>
               )}
@@ -180,12 +176,12 @@ export default function SavedColleges({ savedUnis, ratings, notes, compareList, 
               <Share2 className="w-3 h-3" /> Share
             </button>
             <button onClick={() => onShareWA(u)}
-              className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1 text-green-600 border-green-400 hover:bg-green-50">
-              <Share2 className="w-3 h-3" /> WhatsApp
+              className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1 !text-success-text !border-success/40 hover:!bg-success-tint hover:!text-success-text dark:!text-emerald-300 dark:hover:!bg-emerald-900/20">
+              <Share2 className="w-3 h-3" aria-hidden="true" /> WhatsApp
             </button>
             <button onClick={() => onRemove(u._id)}
-              className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1 text-red-500 border-red-300 hover:bg-red-50 ml-auto">
-              <Trash2 className="w-3 h-3" /> Remove
+              className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1 !text-error-text !border-error/40 hover:!bg-error-tint hover:!text-error-text dark:!text-red-400 dark:hover:!bg-red-900/20 ml-auto">
+              <Trash2 className="w-3 h-3" aria-hidden="true" /> Remove
             </button>
           </div>
         </div>

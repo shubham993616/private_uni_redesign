@@ -3,16 +3,16 @@ import { Users, Building2, BookOpen, FileText, Newspaper, HelpCircle } from 'luc
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
 
-function StatCard({ icon: Icon, label, value, color = 'text-link' }) {
+function StatCard({ icon: Icon, label, value, color = 'text-primary' }) {
   return (
     <div className="card p-5">
       <div className="flex items-center gap-3">
         <div className={`p-2.5 rounded-xl bg-primary/10 ${color}`}>
-          <Icon className="w-5 h-5" />
+          <Icon className="w-5 h-5" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-2xl font-bold">{value ?? '—'}</p>
-          <p className="text-xs text-light-muted dark:text-dark-muted">{label}</p>
+          <p className="text-stat">{value ?? '—'}</p>
+          <p className="text-caption">{label}</p>
         </div>
       </div>
     </div>
@@ -30,8 +30,8 @@ export default function AdminOverview() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="text-center py-20 text-light-muted">Loading dashboard...</div>;
-  if (!data) return <div className="text-center py-20 text-light-muted">Failed to load dashboard data.</div>;
+  if (loading) return <div className="text-center py-20 text-support">Loading dashboard...</div>;
+  if (!data) return <div className="text-center py-20 text-support">Failed to load dashboard data.</div>;
 
   const { stats, recentUsers, recentQuestions, recentNews } = data;
 
@@ -50,17 +50,17 @@ export default function AdminOverview() {
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="card p-5">
-          <h3 className="font-semibold mb-4">Recent Users</h3>
+          <h3 className="text-h3 mb-4">Recent Users</h3>
           <div className="space-y-3">
             {(recentUsers || []).map(u => (
               <div key={u._id} className="flex items-center justify-between text-sm">
                 <div>
                   <p className="font-medium">{u.name}</p>
-                  <p className="text-xs text-light-muted">{u.email}</p>
+                  <p className="text-caption">{u.email}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`badge ${u.role === 'admin' ? 'badge-orange' : 'badge-blue'}`}>{u.role}</span>
-                  {u.isEmailVerified && <span className="badge badge-green text-[10px]">verified</span>}
+                  {u.isEmailVerified && <span className="badge badge-green text-xs">verified</span>}
                 </div>
               </div>
             ))}
@@ -68,13 +68,13 @@ export default function AdminOverview() {
         </div>
 
         <div className="card p-5">
-          <h3 className="font-semibold mb-4">Recent News</h3>
+          <h3 className="text-h3 mb-4">Recent News</h3>
           <div className="space-y-3">
             {(recentNews || []).map(n => (
               <div key={n._id} className="flex items-center justify-between text-sm">
                 <div>
                   <p className="font-medium line-clamp-1">{n.title}</p>
-                  <p className="text-xs text-light-muted">{n.source} · {new Date(n.publishedAt).toLocaleDateString()}</p>
+                  <p className="text-caption">{n.source} · {new Date(n.publishedAt).toLocaleDateString()}</p>
                 </div>
                 <span className="badge badge-blue">{n.category}</span>
               </div>

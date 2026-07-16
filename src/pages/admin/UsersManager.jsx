@@ -29,7 +29,7 @@ export default function UsersManager() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold">Users</h2>
+      <h2 className="text-h2">Users</h2>
       <DataTable data={users} columns={[
         { key: 'name', label: 'Name', render: u => <span className="font-medium">{u.name}</span> },
         { key: 'email', label: 'Email' },
@@ -38,7 +38,7 @@ export default function UsersManager() {
             value={u.role} 
             disabled={!canDelete}
             onChange={e => updateUser(u._id, { role: e.target.value })} 
-            className="text-xs border rounded px-2 py-1 bg-transparent disabled:opacity-75 disabled:cursor-not-allowed"
+            className="text-xs border border-light-border dark:border-dark-border rounded-btn px-2 py-1 bg-transparent focus:ring-2 focus:ring-primary disabled:opacity-75 disabled:cursor-not-allowed"
           >
             <option value="user">User</option>
             <option value="admin">Admin</option>
@@ -50,8 +50,8 @@ export default function UsersManager() {
       ]}
       actions={u => (
         canDelete ? (
-          <button type="button" onClick={() => deleteUser(u._id)} className="inline-flex items-center justify-center rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-red-600 hover:bg-red-100">
-            <Trash2 className="w-4 h-4" />
+          <button type="button" onClick={() => deleteUser(u._id)} aria-label="Delete user" className="inline-flex items-center justify-center rounded-btn border border-red-200 dark:border-red-800 bg-error-tint dark:bg-red-900/20 px-3 py-2 text-error hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors duration-150">
+            <Trash2 className="w-4 h-4" aria-hidden="true" />
           </button>
         ) : null
       )}

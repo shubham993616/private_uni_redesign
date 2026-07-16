@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { Button, Input } from '../components/ui';
 
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
@@ -49,29 +50,59 @@ export default function VerifyEmail() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center bg-light-card dark:bg-dark-bg px-4">
       <div className="card p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-3">Verify Email</h1>
-        <p className="text-sm text-center text-light-muted dark:text-dark-muted mb-6">
-          Enter the 6-digit verification code sent to your email after signup.
-        </p>
+        <div className="text-center mb-6">
+          <h1 className="text-h2">Verify email</h1>
+          <p className="text-support mt-2">
+            Enter the 6-digit verification code sent to your email after signup.
+          </p>
+        </div>
         {codeFromQuery ? (
-          <p className="text-xs text-center text-link font-medium mb-4">
+          <p className="text-caption text-link font-medium text-center mb-4">
             Local mode code auto-filled for testing.
           </p>
         ) : null}
         <form onSubmit={handleVerify} className="space-y-4">
-          <input type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} className="input-field" required />
-          <input type="text" inputMode="numeric" maxLength={6} placeholder="6-digit verification code" value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, ''))} className="input-field tracking-[0.3em]" required />
-          <button type="submit" disabled={!isReady || loading} className="btn-primary w-full">
-            {loading ? 'Verifying...' : 'Verify Email'}
-          </button>
+          <div className="space-y-1.5">
+            <label htmlFor="verify-email" className="block text-label">Email address</label>
+            <Input
+              id="verify-email"
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="verify-code" className="block text-label">Verification code</label>
+            <Input
+              id="verify-code"
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="6-digit verification code"
+              value={code}
+              onChange={(event) => setCode(event.target.value.replace(/\D/g, ''))}
+              className="text-center text-lg font-semibold tracking-[0.3em] tabular-nums"
+              required
+            />
+          </div>
+          <Button type="submit" size="lg" disabled={!isReady} loading={loading} className="w-full">
+            Verify email
+          </Button>
         </form>
-        <button type="button" onClick={handleResend} disabled={resending} className="w-full mt-4 py-3 border border-light-border dark:border-dark-border rounded-xl font-medium hover:bg-light-card dark:hover:bg-dark-card transition text-sm">
-          {resending ? 'Sending...' : 'Resend Code'}
+        <button
+          type="button"
+          onClick={handleResend}
+          disabled={resending}
+          className="w-full h-12 mt-4 inline-flex items-center justify-center rounded-btn border border-light-border dark:border-dark-border text-sm font-semibold text-light-text dark:text-dark-text hover:bg-light-card dark:hover:bg-dark-card transition-colors duration-150 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+        >
+          {resending ? 'Sending...' : 'Resend code'}
         </button>
-        <p className="text-center text-sm mt-6 text-light-muted">
-          Already verified? <Link to="/login" className="text-link font-medium">Login</Link>
+        <p className="text-support text-center mt-6">
+          Already verified? <Link to="/login" className="text-link font-medium hover:underline">Login</Link>
         </p>
       </div>
     </div>

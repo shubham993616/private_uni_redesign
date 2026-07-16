@@ -1,6 +1,8 @@
 import Seo from '../components/common/Seo';
 import { motion } from 'framer-motion';
 import { Rocket, TrendingUp, Award, Users, BookOpen, Globe } from 'lucide-react';
+import Container from '../components/layout/Container';
+import { Card, Badge } from '../components/ui';
 
 const teamMembers = [
   {
@@ -38,15 +40,15 @@ const milestones = [
 ];
 
 const stats = [
-  { icon: Users, value: '1L+', label: 'Students Counselled' },
-  { icon: BookOpen, value: '700+', label: 'Universities Listed' },
-  { icon: Globe, value: '35+', label: 'States Covered' },
-  { icon: Award, value: '40+', label: 'Years of Experience' },
+  { icon: Users, value: '1L+', label: 'Students counselled' },
+  { icon: BookOpen, value: '700+', label: 'Universities listed' },
+  { icon: Globe, value: '35+', label: 'States covered' },
+  { icon: Award, value: '40+', label: 'Years of experience' },
 ];
 
 export default function About() {
   return (
-    <div className="bg-[#f8fafc] dark:bg-dark-bg min-h-screen pb-20 md:pb-0">
+    <div className="bg-light-card dark:bg-dark-bg min-h-screen pb-20 md:pb-0">
       <Seo
         title="About Us | Vidyarthi Mitra – Our Mission, Team & Story"
         description="Learn about Vidyarthi Mitra — India's trusted education portal. Our mission, vision, founding team, and milestones since 1981."
@@ -55,25 +57,23 @@ export default function About() {
 
       {/* Hero */}
       <div className="relative bg-slate-900 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary-dark/20 to-slate-900/40" />
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, rgba(99,102,241,0.12) 0%, transparent 55%)' }} />
-        <div className="relative max-w-7xl mx-auto px-4 py-28 text-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary-dark/20 to-slate-900/40" aria-hidden="true" />
+        <Container className="relative py-16 md:py-24 text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6">
-              <Rocket className="w-3.5 h-3.5 text-accent" /> Est. 1981
-            </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-4">
-              About <span className="text-accent italic">Vidyarthi Mitra</span>
+            <p className="text-eyebrow !text-primary-300 mb-4 inline-flex items-center gap-2">
+              <Rocket className="w-4 h-4" aria-hidden="true" /> Est. 1981
+            </p>
+            <h1 className="text-display-serif !text-white mb-4">
+              About <span className="text-primary-300">Vidyarthi Mitra</span>
             </h1>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto font-medium leading-relaxed">
+            <p className="text-body !text-white/70 max-w-2xl mx-auto">
               India's most trusted education platform — empowering students with precise, authentic, and up-to-date information on courses, colleges, admissions, and careers.
             </p>
           </motion.div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#f8fafc] dark:from-dark-bg to-transparent" />
+        </Container>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-16 space-y-24">
+      <Container className="py-16 space-y-16">
 
         {/* Stats */}
         <motion.div
@@ -81,110 +81,110 @@ export default function About() {
           className="grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           {stats.map((s) => (
-            <div key={s.label} className="bg-white dark:bg-dark-card rounded-[2rem] p-8 border border-slate-100 dark:border-white/5 shadow-sm text-center group hover:-translate-y-1 transition-transform">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <s.icon className="w-7 h-7 text-link" />
+            <Card key={s.label} className="p-6 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <s.icon className="w-6 h-6 text-primary" aria-hidden="true" />
               </div>
-              <p className="text-3xl font-serif font-bold text-slate-900 dark:text-white mb-1">{s.value}</p>
-              <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{s.label}</p>
-            </div>
+              <p className="text-stat mb-1">{s.value}</p>
+              <p className="text-support">{s.label}</p>
+            </Card>
           ))}
         </motion.div>
 
         {/* About Text */}
         <motion.div
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="bg-white dark:bg-dark-card rounded-[2rem] p-10 md:p-16 border border-slate-100 dark:border-white/5 shadow-sm"
         >
-          <h2 className="text-3xl font-serif font-bold text-slate-900 dark:text-white mb-8">
-            About <span className="text-link">VidyarthiMitra.org</span>
-          </h2>
-          <div className="space-y-5 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-[15px]">
-            <p>
-              <span className="text-link font-bold">VidyarthiMitra.org</span> is a search engine for precise, authentic, and up-to-date information on education, skills, and careers. We cover everything from Courses, Schools, and Colleges to admission procedures, Entrance Exams, College &amp; Rank predictors, Govt. &amp; Private Scholarships &amp; Schemes, Education Loans, and Jobs, both in India and abroad.
-            </p>
-            <p>
-              We believe that with the right guidance, every student can succeed. That's why VidyarthiMitra.org serves as a one-stop solution for students and parents seeking the latest educational and career information. Our platform is designed to help you secure admission to top colleges, careers, or courses that align with your aspirations.
-            </p>
-            <p>
-              Our comprehensive services include <strong>Option Form Filling Assistance</strong> for courses like BE/BTech, BPharm, MBBS, BDS, BAMS, BHMS, MBA, and more. <strong>Admission Guidance</strong> with insights on cut-offs and required documents. <strong>Regular Updates</strong> on admission schedules, and <strong>Post-Admission Support</strong> including help with hostel arrangements and classes in Nominal Fees. We also offer <strong>Counselling &amp; Information</strong> from KG to PG, <strong>Career Aptitude Tests &amp; Mock Exams</strong>, <strong>Job &amp; Skill Training</strong>, and <strong>Study Abroad Guidance</strong>.
-            </p>
-            <p>
-              Additionally, we are proud to introduce our <strong>Career Book</strong> and <strong>E-Paper</strong>, designed to benefit the student community by providing valuable insights and information on career planning and opportunities.
-            </p>
-            <p className="text-sm text-slate-400 italic">
-              www.vidyarthimitra.org is the property of <span className="font-bold text-link">Sankshemam Foundation &amp; Sankshemam Seva Private Ltd.</span>
-            </p>
-          </div>
+          <Card className="p-6 md:p-10">
+            <h2 className="text-h2 mb-6">
+              About <span className="text-link">VidyarthiMitra.org</span>
+            </h2>
+            <div className="space-y-4 max-w-prose">
+              <p className="text-body">
+                <span className="text-link font-semibold">VidyarthiMitra.org</span> is a search engine for precise, authentic, and up-to-date information on education, skills, and careers. We cover everything from Courses, Schools, and Colleges to admission procedures, Entrance Exams, College &amp; Rank predictors, Govt. &amp; Private Scholarships &amp; Schemes, Education Loans, and Jobs, both in India and abroad.
+              </p>
+              <p className="text-body">
+                We believe that with the right guidance, every student can succeed. That's why VidyarthiMitra.org serves as a one-stop solution for students and parents seeking the latest educational and career information. Our platform is designed to help you secure admission to top colleges, careers, or courses that align with your aspirations.
+              </p>
+              <p className="text-body">
+                Our comprehensive services include <strong>Option Form Filling Assistance</strong> for courses like BE/BTech, BPharm, MBBS, BDS, BAMS, BHMS, MBA, and more. <strong>Admission Guidance</strong> with insights on cut-offs and required documents. <strong>Regular Updates</strong> on admission schedules, and <strong>Post-Admission Support</strong> including help with hostel arrangements and classes in Nominal Fees. We also offer <strong>Counselling &amp; Information</strong> from KG to PG, <strong>Career Aptitude Tests &amp; Mock Exams</strong>, <strong>Job &amp; Skill Training</strong>, and <strong>Study Abroad Guidance</strong>.
+              </p>
+              <p className="text-body">
+                Additionally, we are proud to introduce our <strong>Career Book</strong> and <strong>E-Paper</strong>, designed to benefit the student community by providing valuable insights and information on career planning and opportunities.
+              </p>
+              <p className="text-support italic">
+                www.vidyarthimitra.org is the property of <span className="font-semibold text-link">Sankshemam Foundation &amp; Sankshemam Seva Private Ltd.</span>
+              </p>
+            </div>
+          </Card>
         </motion.div>
 
         {/* Mission & Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             {
               icon: Rocket,
-              title: 'MISSION',
-              color: 'from-primary to-primary-dark',
+              title: 'Mission',
+              panel: 'bg-primary-dark',
               text: 'We believe to provide students, parents, teachers and all other interested segments of the society with the most authentic, precise and up-to-date information about education & career in India and Abroad — genuine educational updates, career counselling and unmitigated news — thereby empowering them to make wiser decisions.',
             },
             {
               icon: TrendingUp,
-              title: 'VISION',
-              color: 'from-accent to-yellow-500',
+              title: 'Vision',
+              panel: 'bg-ink',
               text: 'We aim to transform the current educational scenario and to empower students to reach their maximum potential and make lifelong, responsible and meaningful career choices in a global and dynamic world.',
             },
           ].map((item) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className={`bg-gradient-to-br ${item.color} rounded-[2rem] p-10 md:p-12 text-white shadow-xl`}
+              className={`${item.panel} rounded-card p-8 text-white shadow-card`}
             >
-              <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8">
-                <item.icon className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-6">
+                <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
               </div>
-              <h3 className="text-2xl font-serif font-bold uppercase tracking-widest mb-5">{item.title}</h3>
-              <p className="text-white/85 font-medium leading-relaxed text-[15px]">{item.text}</p>
+              <h3 className="text-h3 !text-white mb-3">{item.title}</h3>
+              <p className="text-body !text-white/80">{item.text}</p>
             </motion.div>
           ))}
         </div>
 
         {/* Our Team */}
         <div>
-          <div className="text-center mb-16">
-            <span className="inline-block px-5 py-2 rounded-full bg-primary/10 text-link text-xs font-bold uppercase tracking-widest mb-4">The People Behind It</span>
-            <h2 className="text-4xl font-serif font-bold text-slate-900 dark:text-white">
-              Our <span className="text-link italic">Team</span>
-            </h2>
+          <div className="text-center mb-12">
+            <p className="text-eyebrow mb-3">The people behind it</p>
+            <h2 className="text-h2 font-serif">Our Team</h2>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-6">
             {teamMembers.map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
-                className="bg-white dark:bg-dark-card rounded-[2rem] p-10 md:p-14 border border-slate-100 dark:border-white/5 shadow-sm"
               >
-                <div className="flex flex-col md:flex-row gap-10">
-                  {/* Avatar */}
-                  <div className="shrink-0 flex flex-col items-center gap-4">
-                    <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-xl shadow-primary/30">
-                      <span className="text-4xl font-serif font-bold text-white">{member.initial}</span>
+                <Card className="p-6 md:p-10">
+                  <div className="flex flex-col md:flex-row gap-8">
+                    {/* Avatar */}
+                    <div className="shrink-0 flex flex-col items-center gap-4">
+                      <div className="w-24 h-24 rounded-card bg-primary flex items-center justify-center shadow-card">
+                        <span className="text-4xl font-serif font-bold text-white">{member.initial}</span>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-card-title">{member.name}</p>
+                        <p className="text-sm font-semibold text-link dark:text-primary-300">{member.role}</p>
+                        {member.qualifications && (
+                          <p className="text-caption mt-1">{member.qualifications}</p>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <p className="font-bold text-lg text-slate-900 dark:text-white">{member.name}</p>
-                      <p className="text-link font-bold text-sm">{member.role}</p>
-                      {member.qualifications && (
-                        <p className="text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">{member.qualifications}</p>
-                      )}
+                    {/* Bio */}
+                    <div className="space-y-4 max-w-prose">
+                      {member.bio.map((para, j) => (
+                        <p key={j} className="text-body">{para}</p>
+                      ))}
                     </div>
                   </div>
-                  {/* Bio */}
-                  <div className="space-y-4">
-                    {member.bio.map((para, j) => (
-                      <p key={j} className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-[15px]">{para}</p>
-                    ))}
-                  </div>
-                </div>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -192,18 +192,16 @@ export default function About() {
 
         {/* Milestones Timeline */}
         <div>
-          <div className="text-center mb-16">
-            <span className="inline-block px-5 py-2 rounded-full bg-accent/10 text-amber-600 text-xs font-bold uppercase tracking-widest mb-4">Our Journey</span>
-            <h2 className="text-4xl font-serif font-bold text-slate-900 dark:text-white">
-              Milestones &amp; <span className="text-accent italic">Achievements</span>
-            </h2>
+          <div className="text-center mb-12">
+            <p className="text-eyebrow mb-3">Our journey</p>
+            <h2 className="text-h2 font-serif">Milestones &amp; Achievements</h2>
           </div>
 
           <div className="relative">
             {/* Center line */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary to-accent/20 -translate-x-1/2" />
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-light-border dark:bg-dark-border -translate-x-1/2" aria-hidden="true" />
 
-            <div className="space-y-10">
+            <div className="space-y-8">
               {milestones.map((m, i) => (
                 <motion.div
                   key={m.year}
@@ -211,13 +209,13 @@ export default function About() {
                   className={`relative flex flex-col md:flex-row gap-6 items-center ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
                   {/* Card */}
-                  <div className="w-full md:w-[45%] bg-white dark:bg-dark-card rounded-[2rem] p-7 border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-lg transition-shadow">
-                    <span className="inline-block px-3 py-1 rounded-lg bg-primary/10 text-link text-[10px] font-bold uppercase tracking-widest mb-3">{m.label}</span>
-                    <p className="text-slate-600 dark:text-slate-300 font-medium text-sm leading-relaxed">{m.desc}</p>
-                  </div>
+                  <Card className="w-full md:w-[45%] p-6">
+                    <Badge variant="brand" className="mb-3">{m.label}</Badge>
+                    <p className="text-support">{m.desc}</p>
+                  </Card>
 
                   {/* Year bubble — center */}
-                  <div className="shrink-0 z-10 w-20 h-20 rounded-full border-4 border-white dark:border-dark-bg bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-xl shadow-primary/30 text-white font-bold text-xs text-center leading-tight px-1">
+                  <div className="shrink-0 z-10 w-20 h-20 rounded-full border-4 border-white dark:border-dark-bg bg-primary-dark flex items-center justify-center shadow-card text-white font-semibold text-xs text-center leading-tight px-1 tabular-nums">
                     {m.year}
                   </div>
 
@@ -229,7 +227,7 @@ export default function About() {
           </div>
         </div>
 
-      </div>
+      </Container>
     </div>
   );
 }

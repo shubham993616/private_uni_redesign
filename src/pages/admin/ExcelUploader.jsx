@@ -167,34 +167,34 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
       const { universities, courses } = previewData.bulkResults;
       return (
         <div className="mb-6 space-y-4">
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-            <h4 className="flex items-center gap-1.5 font-semibold text-green-800 mb-2"><CheckCircle2 className="w-4 h-4" aria-hidden="true" /> Bulk Upload Complete!</h4>
+          <div className="bg-success-tint dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-card p-4">
+            <h4 className="flex items-center gap-1.5 font-semibold text-success-text dark:text-green-300 mb-2"><CheckCircle2 className="w-4 h-4" aria-hidden="true" /> Bulk Upload Complete!</h4>
             <div className="grid grid-cols-2 gap-4 mt-2">
               <div>
-                <p className="font-medium text-gray-700">Universities:</p>
-                <ul className="text-sm mt-1 space-y-1">
-                  <li className="flex items-center gap-1.5 text-green-600"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Created: {universities.created}</li>
-                  <li className="flex items-center gap-1.5 text-blue-600"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Updated: {universities.updated}</li>
-                  <li className="flex items-center gap-1.5 text-yellow-600"><AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" /> Skipped: {universities.skipped}</li>
+                <p className="text-label">Universities:</p>
+                <ul className="text-sm tabular-nums mt-1 space-y-1">
+                  <li className="flex items-center gap-1.5 text-success-text dark:text-green-400"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Created: {universities.created}</li>
+                  <li className="flex items-center gap-1.5 text-info-text dark:text-blue-400"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Updated: {universities.updated}</li>
+                  <li className="flex items-center gap-1.5 text-warning-text dark:text-amber-300"><AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" /> Skipped: {universities.skipped}</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-gray-700">Courses:</p>
-                <ul className="text-sm mt-1 space-y-1">
-                  <li className="flex items-center gap-1.5 text-green-600"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Created: {courses.created}</li>
-                  <li className="flex items-center gap-1.5 text-blue-600"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Updated: {courses.updated}</li>
-                  <li className="flex items-center gap-1.5 text-yellow-600"><AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" /> Skipped: {courses.skipped}</li>
+                <p className="text-label">Courses:</p>
+                <ul className="text-sm tabular-nums mt-1 space-y-1">
+                  <li className="flex items-center gap-1.5 text-success-text dark:text-green-400"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Created: {courses.created}</li>
+                  <li className="flex items-center gap-1.5 text-info-text dark:text-blue-400"><Check className="w-3.5 h-3.5" aria-hidden="true" /> Updated: {courses.updated}</li>
+                  <li className="flex items-center gap-1.5 text-warning-text dark:text-amber-300"><AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" /> Skipped: {courses.skipped}</li>
                 </ul>
               </div>
             </div>
           </div>
           
           {previewData.errors && previewData.errors.length > 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <h4 className="font-semibold text-red-800 mb-2">Errors ({previewData.errors.length})</h4>
+            <div className="bg-error-tint dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-card p-4">
+              <h4 className="font-semibold text-error-text dark:text-red-300 mb-2">Errors ({previewData.errors.length})</h4>
               <ul className="list-disc list-inside space-y-1 max-h-40 overflow-auto">
                 {previewData.errors.slice(0, 10).map((err, i) => (
-                  <li key={i} className="text-sm text-red-700">{err.error || err}</li>
+                  <li key={i} className="text-sm text-error-text dark:text-red-400">{err.error || err}</li>
                 ))}
               </ul>
             </div>
@@ -209,68 +209,68 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
     return (
       <div className="mb-6 space-y-4">
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">{totalRows}</div>
-            <div className="text-sm text-gray-600">Total Rows</div>
+          <div className="bg-info-tint dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4 rounded-card">
+            <div className="text-stat !text-info-text dark:!text-blue-300">{totalRows}</div>
+            <div className="text-caption">Total Rows</div>
           </div>
-          <div className="bg-green-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">{validCount}</div>
-            <div className="text-sm text-gray-600">Valid Rows</div>
+          <div className="bg-success-tint dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-card">
+            <div className="text-stat !text-success-text dark:!text-green-300">{validCount}</div>
+            <div className="text-caption">Valid Rows</div>
           </div>
-          <div className="bg-red-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-red-600">{invalidCount}</div>
-            <div className="text-sm text-gray-600">Invalid Rows</div>
+          <div className="bg-error-tint dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-card">
+            <div className="text-stat !text-error-text dark:!text-red-300">{invalidCount}</div>
+            <div className="text-caption">Invalid Rows</div>
           </div>
         </div>
 
         {errors && errors.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h4 className="font-semibold text-red-800 mb-2">Errors ({errors.length})</h4>
+          <div className="bg-error-tint dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-card p-4">
+            <h4 className="font-semibold text-error-text dark:text-red-300 mb-2">Errors ({errors.length})</h4>
             <ul className="list-disc list-inside space-y-1 max-h-40 overflow-auto">
               {errors.slice(0, 10).map((err, i) => (
-                <li key={i} className="text-sm text-red-700">{err}</li>
+                <li key={i} className="text-sm text-error-text dark:text-red-400">{err}</li>
               ))}
               {errors.length > 10 && (
-                <li className="text-sm text-red-700">...and {errors.length - 10} more</li>
+                <li className="text-sm text-error-text dark:text-red-400">...and {errors.length - 10} more</li>
               )}
             </ul>
           </div>
         )}
 
         {warnings && warnings.length > 0 && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h4 className="font-semibold text-yellow-800 mb-2">Warnings ({warnings.length})</h4>
+          <div className="bg-warning-tint dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-card p-4">
+            <h4 className="font-semibold text-warning-text dark:text-amber-300 mb-2">Warnings ({warnings.length})</h4>
             <ul className="list-disc list-inside space-y-1 max-h-40 overflow-auto">
               {warnings.slice(0, 10).map((warn, i) => (
-                <li key={i} className="text-sm text-yellow-700">{warn}</li>
+                <li key={i} className="text-sm text-warning-text dark:text-amber-400">{warn}</li>
               ))}
             </ul>
           </div>
         )}
 
         {previewData.preview && previewData.preview.length > 0 && (
-          <div className="bg-white border rounded-lg overflow-hidden">
-            <h4 className="font-semibold p-3 bg-gray-50 border-b">Preview (First 5 rows)</h4>
+          <div className="bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-card shadow-card overflow-hidden">
+            <h4 className="text-card-title p-3 bg-light-card dark:bg-white/5 border-b border-light-border dark:border-dark-border">Preview (First 5 rows)</h4>
             <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
-                <thead className="bg-gray-50">
+              <table className="min-w-full text-sm tabular-nums">
+                <thead className="bg-light-card dark:bg-white/5">
                   <tr>
-                    <th className="px-3 py-2 text-left">Status</th>
+                    <th className="px-3 py-2 text-left text-eyebrow !text-light-muted dark:!text-dark-muted">Status</th>
                     {Object.keys(previewData.preview[0] || {})
                       .filter(k => !k.startsWith('_'))
                       .slice(0, 6)
                       .map(key => (
-                        <th key={key} className="px-3 py-2 text-left">{key}</th>
+                        <th key={key} className="px-3 py-2 text-left text-eyebrow !text-light-muted dark:!text-dark-muted">{key}</th>
                       ))}
                   </tr>
                 </thead>
                 <tbody>
                   {previewData.preview.slice(0, 5).map((row, i) => (
-                    <tr key={i} className={row._validation?.isValid ? '' : 'bg-red-50'}>
+                    <tr key={i} className={row._validation?.isValid ? '' : 'bg-error-tint dark:bg-red-900/20'}>
                       <td className="px-3 py-2">
                         {row._validation?.isValid
-                          ? <CheckCircle2 className="w-4 h-4 text-green-600" aria-label="Valid row" />
-                          : <XCircle className="w-4 h-4 text-red-600" aria-label="Invalid row" />}
+                          ? <CheckCircle2 className="w-4 h-4 text-success" aria-label="Valid row" />
+                          : <XCircle className="w-4 h-4 text-error" aria-label="Invalid row" />}
                       </td>
                       {Object.entries(row)
                         .filter(([k]) => !k.startsWith('_'))
@@ -303,11 +303,11 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
 
   if (step === 'complete') {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center">
-        <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-green-500" aria-hidden="true" />
-        <h3 className="text-xl font-semibold mb-2">Upload Complete!</h3>
-        <p className="text-gray-600 mb-4">Your data has been successfully imported.</p>
-        <button onClick={reset} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <div className="card p-8 text-center">
+        <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-success" aria-hidden="true" />
+        <h3 className="text-h3 mb-2">Upload Complete!</h3>
+        <p className="text-support mb-4">Your data has been successfully imported.</p>
+        <button onClick={reset} className="btn-primary text-sm">
           Upload Another File
         </button>
       </div>
@@ -315,12 +315,12 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-6 border-b">
-        <h2 className="text-xl font-semibold">
+    <div className="card">
+      <div className="p-6 border-b border-light-border dark:border-dark-border">
+        <h2 className="text-h3">
           Upload {type === 'universities' ? 'Universities' : 'Courses'} Data
         </h2>
-        <p className="text-gray-600 text-sm mt-1">
+        <p className="text-support mt-1">
           Upload Excel files with messy data — auto-detects headers and cleans values
         </p>
       </div>
@@ -328,7 +328,7 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
       <div className="p-6">
         {/* NEW: Bulk Mode Toggle */}
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">Upload Mode</label>
+          <label className="block text-label mb-2">Upload Mode</label>
           <div className="flex gap-4">
             <button
               type="button"
@@ -336,10 +336,10 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
                 setUseBulkMode(true);
                 reset();
               }}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-btn text-sm font-semibold transition-colors duration-150 ${
                 useBulkMode
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-primary text-white'
+                  : 'bg-light-card dark:bg-dark-card text-light-text dark:text-dark-text border border-light-border dark:border-dark-border hover:border-primary/40'
               }`}
             >
               <span className="inline-flex items-center gap-1.5"><RefreshCw className="w-4 h-4" aria-hidden="true" /> Bulk Upload (Both Sheets)</span>
@@ -350,16 +350,16 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
                 setUseBulkMode(false);
                 reset();
               }}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-btn text-sm font-semibold transition-colors duration-150 ${
                 !useBulkMode
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-primary text-white'
+                  : 'bg-light-card dark:bg-dark-card text-light-text dark:text-dark-text border border-light-border dark:border-dark-border hover:border-primary/40'
               }`}
             >
               <span className="inline-flex items-center gap-1.5"><FileText className="w-4 h-4" aria-hidden="true" /> Single Sheet Upload</span>
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-caption mt-2">
             {useBulkMode 
               ? 'Upload one file with both "Universities" and "Courses" sheets - they will be linked automatically'
               : 'Upload a single sheet (Universities OR Courses) from your Excel file'}
@@ -370,17 +370,17 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
           <>
             <div
               {...getRootProps()}
-              className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
-                ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}`}
+              className={`border-2 border-dashed rounded-card p-8 text-center cursor-pointer transition-colors duration-150
+                ${isDragActive ? 'border-primary bg-primary/10' : 'border-light-border dark:border-dark-border hover:border-primary/60'}`}
             >
               <input {...getInputProps()} />
-              <FileSpreadsheet className="w-12 h-12 mx-auto mb-2 text-gray-400" aria-hidden="true" />
+              <FileSpreadsheet className="w-12 h-12 mx-auto mb-2 text-light-muted dark:text-dark-muted" aria-hidden="true" />
               {isDragActive ? (
-                <p className="text-blue-600">Drop the Excel file here...</p>
+                <p className="text-link dark:text-primary-300">Drop the Excel file here...</p>
               ) : (
                 <>
-                  <p className="text-gray-600">Drag & drop an Excel file here, or click to select</p>
-                  <p className="text-gray-400 text-sm mt-1">Supports .xlsx, .xls, .csv (max 10MB)</p>
+                  <p className="text-body">Drag & drop an Excel file here, or click to select</p>
+                  <p className="text-support mt-1">Supports .xlsx, .xls, .csv (max 10MB)</p>
                 </>
               )}
             </div>
@@ -388,14 +388,14 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
             {/* Sheet selector - only for single sheet mode */}
             {!useBulkMode && sheetNames.length > 0 && (
               <div className="mt-4">
-                <label className="block text-sm font-medium mb-2">Select Sheet</label>
+                <label className="block text-label mb-2">Select Sheet</label>
                 <select
                   value={selectedSheet}
                   onChange={(e) => {
                     setSelectedSheet(e.target.value);
                     if (file) handlePreview(file, e.target.value);
                   }}
-                  className="border rounded-lg px-3 py-2 w-full"
+                  className="input-field"
                 >
                   {sheetNames.map((sheet, i) => (
                     <option key={i} value={sheet}>
@@ -415,11 +415,11 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
             {/* Only show import mode selector for single sheet mode */}
             {!previewData.bulkResults && (
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Import Mode</label>
+                <label className="block text-label mb-2">Import Mode</label>
                 <select 
                   value={uploadMode} 
                   onChange={(e) => setUploadMode(e.target.value)}
-                  className="border rounded-lg px-3 py-2 w-48"
+                  className="h-11 w-48 px-3.5 rounded-btn border border-light-border dark:border-dark-border bg-white dark:bg-dark-card text-light-text dark:text-dark-text outline-none focus:ring-2 focus:ring-primary transition-colors duration-150"
                 >
                   <option value="upsert">Update existing / Insert new</option>
                   <option value="insert">Insert only (skip existing)</option>
@@ -431,7 +431,7 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
               {previewData.bulkResults ? (
                 <button
                   onClick={() => setStep('complete')}
-                  className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
+                  className="btn-primary text-sm"
                 >
                   Continue
                 </button>
@@ -439,7 +439,7 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
                 <button
                   onClick={handleConfirm}
                   disabled={uploading || previewData.validCount === 0}
-                  className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+                  className="btn-primary text-sm"
                 >
                   {uploading ? `Importing... ${progress}%` : `Import ${previewData.validCount} Valid Rows`}
                 </button>
@@ -447,14 +447,14 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
               <button
                 onClick={reset}
                 disabled={uploading}
-                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300"
+                className="btn-outline text-sm disabled:opacity-50"
               >
                 Cancel
               </button>
             </div>
 
             {!previewData.bulkResults && previewData.invalidCount > 0 && (
-              <p className="flex items-center gap-1.5 text-sm text-red-600 mt-4">
+              <p className="flex items-center gap-1.5 text-sm text-error-text dark:text-red-400 mt-4">
                 <AlertTriangle className="w-4 h-4 shrink-0" aria-hidden="true" /> {previewData.invalidCount} rows have errors and will be skipped. Fix them in Excel and re-upload.
               </p>
             )}
@@ -463,13 +463,13 @@ const ExcelUploader = ({ onUploadComplete, type = 'universities' }) => {
 
         {uploading && step === 'upload' && (
           <div className="mt-4">
-            <div className="bg-gray-200 rounded-full h-2">
+            <div className="bg-light-card dark:bg-dark-border rounded-full h-2">
               <div 
-                className="bg-blue-600 rounded-full h-2 transition-all duration-300"
+                className="bg-primary rounded-full h-2 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="text-center text-sm text-gray-600 mt-2">Processing file... {progress}%</p>
+            <p className="text-center text-support tabular-nums mt-2">Processing file... {progress}%</p>
           </div>
         )}
       </div>

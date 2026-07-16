@@ -9,3 +9,8 @@ export { default as Modal } from './Modal';
 export { default as Tabs } from './Tabs';
 export { default as Dropdown } from './Dropdown';
 export { Skeleton, SkeletonText, UniversityCardSkeleton, UniversityGridSkeleton } from './Skeleton';
+export { Checkbox, Radio } from './Choice';
+export { default as Switch } from './Switch';
+export { default as RangeSlider } from './RangeSlider';
+export { default as FilterChip } from './FilterChip';
+export { default as Rating } from './Rating';

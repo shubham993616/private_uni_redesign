@@ -199,10 +199,10 @@ function ResultRow({ result, index }) {
   const isError = Boolean(result.error);
 
   return (
-    <div className={`rounded-xl border text-xs transition-colors ${
+    <div className={`rounded-xl border text-xs transition-colors duration-150 ${
       isError
-        ? 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20'
-        : 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20'
+        ? 'border-red-200 dark:border-red-800 bg-error-tint dark:bg-red-900/20'
+        : 'border-green-200 dark:border-green-800 bg-success-tint dark:bg-green-900/20'
     }`}>
       <div
         className="flex items-center justify-between gap-3 px-4 py-2.5 cursor-pointer"
@@ -210,8 +210,8 @@ function ResultRow({ result, index }) {
       >
         <div className="flex items-center gap-2">
           {isError
-            ? <XCircle className="w-4 h-4 text-red-500 shrink-0" />
-            : <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />}
+            ? <XCircle className="w-4 h-4 text-error shrink-0" aria-hidden="true" />
+            : <CheckCircle2 className="w-4 h-4 text-success shrink-0" aria-hidden="true" />}
           <span className={`font-semibold ${isError ? 'text-red-700 dark:text-red-300' : 'text-green-700 dark:text-green-300'}`}>
             Row {index + 1}
           </span>
@@ -230,7 +230,7 @@ function ResultRow({ result, index }) {
       </div>
       {isError && open && result.item && (
         <div className="px-4 pb-3">
-          <pre className="text-[10px] text-red-600 dark:text-red-400 bg-red-100/60 dark:bg-red-900/30 rounded-lg p-2 overflow-x-auto whitespace-pre-wrap">
+          <pre className="text-xs text-red-600 dark:text-red-400 bg-red-100/60 dark:bg-red-900/30 rounded-btn p-2 overflow-x-auto whitespace-pre-wrap">
             {JSON.stringify(result.item, null, 2)}
           </pre>
         </div>
@@ -337,8 +337,8 @@ export default function DataImportManager() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-light-text dark:text-dark-text">Data Import</h2>
-        <p className="mt-1 text-sm text-light-muted dark:text-dark-muted">
+        <h2 className="text-h2">Data Import</h2>
+        <p className="mt-1 text-support">
           Upload Excel or CSV files to bulk import university and course data. Download a template to get started.
         </p>
       </div>
@@ -353,24 +353,24 @@ export default function DataImportManager() {
               key={type.id}
               type="button"
               onClick={() => handleSwitchType(type.id)}
-              className={`text-left p-5 rounded-2xl border-2 transition-all space-y-2 ${
+              className={`text-left p-5 rounded-card border-2 transition-colors duration-150 space-y-2 ${
                 active
-                  ? 'border-primary bg-primary/5 shadow-sm'
+                  ? 'border-primary bg-primary/5'
                   : 'border-light-border dark:border-dark-border hover:border-primary/40 bg-white dark:bg-dark-card'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className={`rounded-xl p-2.5 ${active ? 'bg-primary text-white' : 'bg-primary/10 text-link'}`}>
-                  <Icon className="w-5 h-5" />
+                <div className={`rounded-xl p-2.5 ${active ? 'bg-primary text-white' : 'bg-primary/10 text-primary'}`}>
+                  <Icon className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className={`font-bold text-sm ${active ? 'text-link' : 'text-light-text dark:text-dark-text'}`}>
+                  <p className={`font-semibold text-sm ${active ? 'text-link dark:text-primary-300' : 'text-light-text dark:text-dark-text'}`}>
                     Import {type.label}
                   </p>
-                  {active && <p className="text-xs text-link/80 font-medium">Active</p>}
+                  {active && <p className="text-caption !text-link font-medium">Active</p>}
                 </div>
               </div>
-              <p className="text-xs text-light-muted dark:text-dark-muted leading-relaxed">
+              <p className="text-caption leading-relaxed">
                 {type.description}
               </p>
             </button>
@@ -379,8 +379,8 @@ export default function DataImportManager() {
       </div>
 
       {/* How-to info banner */}
-      <div className="flex items-start gap-3 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
-        <Info className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+      <div className="flex items-start gap-3 rounded-card bg-info-tint dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+        <Info className="w-5 h-5 text-info shrink-0 mt-0.5" aria-hidden="true" />
         <div className="space-y-1 text-sm text-blue-700 dark:text-blue-300">
           <p className="font-semibold">How bulk import works</p>
           <ol className="list-decimal list-inside space-y-0.5 text-xs text-blue-600 dark:text-blue-400">
@@ -394,13 +394,13 @@ export default function DataImportManager() {
       </div>
 
       {/* Main import card */}
-      <div className="card p-6 md:p-8 space-y-6 shadow-xl">
+      <div className="card p-6 md:p-8 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+            <h3 className="text-h3">
               Import {config.label}
             </h3>
-            <p className="text-xs text-light-muted dark:text-dark-muted mt-0.5">
+            <p className="text-caption mt-0.5">
               {parsedRows.length > 0
                 ? `${parsedRows.length} rows ready to import`
                 : 'Upload a spreadsheet to continue'}
@@ -428,8 +428,8 @@ export default function DataImportManager() {
         {parsedRows.length > 0 && !importResult && (
           <div className="flex items-center justify-between gap-4 pt-2">
             <div className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-amber-500" />
-              <p className="text-xs text-light-muted dark:text-dark-muted">
+              <AlertTriangle className="w-4 h-4 text-warning" aria-hidden="true" />
+              <p className="text-caption">
                 Review the preview above before importing. This action will <strong>upsert</strong> records.
               </p>
             </div>
@@ -458,10 +458,10 @@ export default function DataImportManager() {
 
       {/* Results */}
       {importResult && (
-        <div className="card p-6 md:p-8 space-y-5 shadow-xl">
+        <div className="card p-6 md:p-8 space-y-5">
           {/* Summary */}
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">Import Results</h3>
+            <h3 className="text-h3">Import Results</h3>
             <button type="button" onClick={resetAll} className="btn-outline text-xs flex items-center gap-1.5">
               <RefreshCw className="w-3.5 h-3.5" />
               Import Again
@@ -469,40 +469,40 @@ export default function DataImportManager() {
           </div>
 
           {importResult.error ? (
-            <div className="flex items-start gap-3 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
-              <XCircle className="w-5 h-5 text-red-500 shrink-0" />
+            <div className="flex items-start gap-3 rounded-card bg-error-tint dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
+              <XCircle className="w-5 h-5 text-error shrink-0" aria-hidden="true" />
               <p className="text-sm text-red-700 dark:text-red-300 font-medium">{importResult.error}</p>
             </div>
           ) : (
             <>
               <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 text-center">
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">{importResult.succeeded}</p>
+                <div className="rounded-card bg-success-tint dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 text-center">
+                  <p className="text-stat !text-green-600 dark:!text-green-400">{importResult.succeeded}</p>
                   <p className="text-xs font-semibold text-green-700 dark:text-green-300 mt-1">Succeeded</p>
                 </div>
-                <div className={`rounded-2xl border p-4 text-center ${
+                <div className={`rounded-card border p-4 text-center ${
                   importResult.failed > 0
-                    ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+                    ? 'bg-error-tint dark:bg-red-900/20 border-red-200 dark:border-red-800'
                     : 'bg-light-card dark:bg-dark-card border-light-border dark:border-dark-border'
                 }`}>
-                  <p className={`text-3xl font-bold ${importResult.failed > 0 ? 'text-red-600 dark:text-red-400' : 'text-light-muted'}`}>
+                  <p className={`text-stat ${importResult.failed > 0 ? '!text-red-600 dark:!text-red-400' : '!text-light-muted dark:!text-dark-muted'}`}>
                     {importResult.failed}
                   </p>
                   <p className={`text-xs font-semibold mt-1 ${importResult.failed > 0 ? 'text-red-700 dark:text-red-300' : 'text-light-muted'}`}>
                     Failed
                   </p>
                 </div>
-                <div className="rounded-2xl bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border p-4 text-center">
-                  <p className="text-3xl font-bold text-light-text dark:text-dark-text">
+                <div className="rounded-card bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border p-4 text-center">
+                  <p className="text-stat">
                     {(importResult.succeeded || 0) + (importResult.failed || 0)}
                   </p>
-                  <p className="text-xs font-semibold text-light-muted mt-1">Total Processed</p>
+                  <p className="text-caption font-semibold mt-1">Total Processed</p>
                 </div>
               </div>
 
               {importResult.errors?.length > 0 && (
                 <div className="space-y-3">
-                  <p className="text-sm font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+                  <p className="text-eyebrow !text-red-600 dark:!text-red-400">
                     Failed Rows ({importResult.errors.length})
                   </p>
                   <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
@@ -514,8 +514,8 @@ export default function DataImportManager() {
               )}
 
               {importResult.succeeded > 0 && importResult.failed === 0 && (
-                <div className="flex items-center gap-3 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
-                  <CheckCircle2 className="w-6 h-6 text-green-500 shrink-0" />
+                <div className="flex items-center gap-3 rounded-card bg-success-tint dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
+                  <CheckCircle2 className="w-6 h-6 text-success shrink-0" aria-hidden="true" />
                   <p className="text-sm font-semibold text-green-700 dark:text-green-300">
                     All {importResult.succeeded} records imported successfully! Head to the{' '}
                     {activeType === 'universities' ? 'Universities' : 'Courses'} manager to review them.
@@ -528,11 +528,11 @@ export default function DataImportManager() {
       )}
 
       {/* Column reference */}
-      <details className="card p-5 group shadow">
+      <details className="card p-5 group">
         <summary className="flex items-center justify-between cursor-pointer list-none">
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="w-4 h-4 text-link" />
-            <span className="text-sm font-bold text-light-text dark:text-dark-text">
+            <FileSpreadsheet className="w-4 h-4 text-primary" aria-hidden="true" />
+            <span className="text-card-title text-sm">
               Column Reference — {config.label}
             </span>
             <span className="badge badge-blue text-xs">{config.expectedHeaders.length} columns</span>
@@ -543,14 +543,14 @@ export default function DataImportManager() {
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-light-border dark:border-dark-border">
-                <th className="text-left py-2 pr-4 font-bold uppercase tracking-wider text-light-muted w-1/2">Excel Column Header</th>
-                <th className="text-left py-2 font-bold uppercase tracking-wider text-light-muted">Maps to DB Field</th>
+                <th className="text-left py-2 pr-4 text-eyebrow !text-light-muted dark:!text-dark-muted w-1/2">Excel Column Header</th>
+                <th className="text-left py-2 text-eyebrow !text-light-muted dark:!text-dark-muted">Maps to DB Field</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-light-border/40 dark:divide-dark-border/40">
               {Object.entries(activeType === 'universities' ? UNIVERSITY_COLUMN_MAP : COURSE_COLUMN_MAP).map(
                 ([col, field]) => (
-                  <tr key={col} className="hover:bg-light-card/50 dark:hover:bg-dark-card/50 transition-colors">
+                  <tr key={col} className="hover:bg-light-card dark:hover:bg-white/5 transition-colors duration-150">
                     <td className="py-2 pr-4 font-mono text-link font-semibold">{col}</td>
                     <td className="py-2 text-light-muted dark:text-dark-muted font-mono">{field}</td>
                   </tr>

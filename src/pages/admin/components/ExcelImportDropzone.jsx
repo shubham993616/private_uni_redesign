@@ -97,9 +97,9 @@ export default function ExcelImportDropzone({
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onClick={() => inputRef.current?.click()}
-          className={`relative flex flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed p-10 cursor-pointer transition-all select-none
+          className={`relative flex flex-col items-center justify-center gap-4 rounded-card border-2 border-dashed p-10 cursor-pointer transition-colors duration-150 select-none
             ${dragging
-              ? 'border-primary bg-primary/10 scale-[1.01]'
+              ? 'border-primary bg-primary/10'
               : 'border-light-border dark:border-dark-border bg-light-card/40 dark:bg-dark-card/40 hover:border-primary/60 hover:bg-primary/5'
             }`}
         >
@@ -110,13 +110,13 @@ export default function ExcelImportDropzone({
             className="hidden"
             onChange={(e) => handleFile(e.target.files[0])}
           />
-          <div className={`rounded-2xl p-4 transition-colors ${dragging ? 'bg-primary/20' : 'bg-primary/10'}`}>
-            <UploadCloud className={`w-10 h-10 transition-colors ${dragging ? 'text-link scale-110' : 'text-link/70'}`} />
+          <div className={`rounded-xl p-4 transition-colors duration-150 ${dragging ? 'bg-primary/20' : 'bg-primary/10'}`}>
+            <UploadCloud className={`w-10 h-10 transition-colors duration-150 ${dragging ? 'text-primary' : 'text-primary/70'}`} aria-hidden="true" />
           </div>
           <div className="text-center space-y-1">
-            <p className="font-bold text-light-text dark:text-dark-text">{label}</p>
-            <p className="text-sm text-light-muted dark:text-dark-muted">{hint}</p>
-            <p className="text-xs text-link font-semibold mt-2">Click to browse or drag &amp; drop</p>
+            <p className="text-card-title">{label}</p>
+            <p className="text-support">{hint}</p>
+            <p className="text-caption !text-link font-semibold mt-2">Click to browse or drag &amp; drop</p>
           </div>
 
           {onDownloadTemplate && (
@@ -125,14 +125,14 @@ export default function ExcelImportDropzone({
               onClick={(e) => { e.stopPropagation(); onDownloadTemplate(); }}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-link hover:underline mt-1"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
               Download sample template
             </button>
           )}
 
           {expectedHeaders?.length > 0 && (
             <div className="max-w-lg text-center">
-              <p className="text-xs text-light-muted dark:text-dark-muted">
+              <p className="text-caption">
                 <span className="font-semibold">Expected columns: </span>
                 {expectedHeaders.join(', ')}
               </p>
@@ -143,14 +143,14 @@ export default function ExcelImportDropzone({
 
       {/* Error */}
       {error && (
-        <div className="flex items-start gap-3 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
-          <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-card bg-error-tint dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
+          <AlertCircle className="w-5 h-5 text-error shrink-0 mt-0.5" aria-hidden="true" />
           <div className="flex-1">
-            <p className="text-sm font-semibold text-red-700 dark:text-red-400">Parse Error</p>
-            <p className="text-xs text-red-600 dark:text-red-400 mt-0.5">{error}</p>
+            <p className="text-sm font-semibold text-error-text dark:text-red-400">Parse Error</p>
+            <p className="text-xs text-error-text dark:text-red-400 mt-0.5">{error}</p>
           </div>
-          <button type="button" onClick={clearFile} className="text-red-400 hover:text-red-600">
-            <X className="w-4 h-4" />
+          <button type="button" onClick={clearFile} aria-label="Dismiss error" className="text-red-400 hover:text-red-600 transition-colors duration-150">
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -159,7 +159,7 @@ export default function ExcelImportDropzone({
       {file && rows.length > 0 && (
         <div className="space-y-4">
           {/* File chip */}
-          <div className="flex items-center justify-between gap-3 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3">
+          <div className="flex items-center justify-between gap-3 rounded-card bg-success-tint dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-green-100 dark:bg-green-900/40 p-2">
                 <FileSpreadsheet className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -176,23 +176,24 @@ export default function ExcelImportDropzone({
               <button
                 type="button"
                 onClick={clearFile}
-                className="rounded-lg p-1 hover:bg-green-100 dark:hover:bg-green-900/40 text-green-600 dark:text-green-400 transition-colors"
+                aria-label="Remove file"
+                className="rounded-btn p-1 hover:bg-green-100 dark:hover:bg-green-900/40 text-green-600 dark:text-green-400 transition-colors duration-150"
                 title="Remove file"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Preview table */}
-          <div className="rounded-2xl border border-light-border dark:border-dark-border overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 bg-light-card/60 dark:bg-dark-card/60 border-b border-light-border dark:border-dark-border">
+          <div className="rounded-card border border-light-border dark:border-dark-border bg-white dark:bg-dark-card shadow-card overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 bg-light-card/60 dark:bg-white/5 border-b border-light-border dark:border-dark-border">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-light-muted" />
-                <span className="text-xs font-bold uppercase tracking-wider text-light-muted dark:text-dark-muted">
+                <Eye className="w-4 h-4 text-light-muted" aria-hidden="true" />
+                <span className="text-eyebrow !text-light-muted dark:!text-dark-muted">
                   Data Preview
                 </span>
-                <span className="badge badge-blue text-xs">{rows.length} rows</span>
+                <span className="badge badge-blue text-xs tabular-nums">{rows.length} rows</span>
               </div>
               {totalPages > 1 && (
                 <div className="flex items-center gap-1">
@@ -200,35 +201,37 @@ export default function ExcelImportDropzone({
                     type="button"
                     disabled={page === 0}
                     onClick={() => setPage((p) => p - 1)}
-                    className="p-1 rounded-lg hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-40 disabled:cursor-not-allowed"
+                    aria-label="Previous preview page"
+                    className="p-1 rounded-btn hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-150"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                   </button>
-                  <span className="text-xs text-light-muted px-2">
+                  <span className="text-caption tabular-nums px-2">
                     {page + 1} / {totalPages}
                   </span>
                   <button
                     type="button"
                     disabled={page >= totalPages - 1}
                     onClick={() => setPage((p) => p + 1)}
-                    className="p-1 rounded-lg hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-40 disabled:cursor-not-allowed"
+                    aria-label="Next preview page"
+                    className="p-1 rounded-btn hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-150"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
               )}
             </div>
             <div className="overflow-x-auto max-h-72">
-              <table className="w-full text-xs">
+              <table className="w-full text-xs tabular-nums">
                 <thead className="sticky top-0 bg-light-card dark:bg-dark-card">
                   <tr>
-                    <th className="px-3 py-2 text-left font-bold uppercase tracking-wider text-light-muted dark:text-dark-muted border-b border-light-border dark:border-dark-border w-10">
+                    <th className="px-3 py-2 text-left text-eyebrow !text-light-muted dark:!text-dark-muted border-b border-light-border dark:border-dark-border w-10">
                       #
                     </th>
                     {headers.map((h) => (
                       <th
                         key={h}
-                        className="px-3 py-2 text-left font-bold uppercase tracking-wider text-light-muted dark:text-dark-muted border-b border-light-border dark:border-dark-border whitespace-nowrap"
+                        className="px-3 py-2 text-left text-eyebrow !text-light-muted dark:!text-dark-muted border-b border-light-border dark:border-dark-border whitespace-nowrap"
                       >
                         {h}
                       </th>
@@ -239,9 +242,9 @@ export default function ExcelImportDropzone({
                   {visibleRows.map((row, idx) => (
                     <tr
                       key={idx}
-                      className="border-b border-light-border/50 dark:border-dark-border/50 hover:bg-light-card/40 dark:hover:bg-dark-card/40 transition-colors"
+                      className="border-b border-light-border/50 dark:border-dark-border/50 hover:bg-light-card dark:hover:bg-white/5 transition-colors duration-150"
                     >
-                      <td className="px-3 py-2 text-light-muted font-mono">
+                      <td className="px-3 py-2 text-light-muted tabular-nums">
                         {page * PAGE_SIZE + idx + 1}
                       </td>
                       {headers.map((h) => (

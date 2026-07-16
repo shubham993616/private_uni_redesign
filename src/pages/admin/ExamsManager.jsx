@@ -46,13 +46,13 @@ export default function ExamsManager() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Exams ({items.length})</h2>
+        <h2 className="text-h2">Exams ({items.length})</h2>
         <button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyForm()); }} className="btn-primary text-sm flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</button>
       </div>
 
       {showForm && (
         <form onSubmit={save} className="card p-6 space-y-4">
-          <h3 className="font-semibold">{editId ? 'Edit' : 'New'} Exam</h3>
+          <h3 className="text-h3">{editId ? 'Edit' : 'New'} Exam</h3>
           <div className="grid md:grid-cols-2 gap-4">
             <FormField label="Name *"><TextInput value={form.name} onChange={e => upd('name', e.target.value)} required /></FormField>
             <FormField label="Short Name"><TextInput value={form.shortName} onChange={e => upd('shortName', e.target.value)} placeholder="e.g. JEE, NEET" /></FormField>
@@ -78,8 +78,8 @@ export default function ExamsManager() {
         { key: 'examDate', label: 'Date', render: e => e.examDate ? new Date(e.examDate).toLocaleDateString() : '-' },
       ]} searchFields={['name', 'shortName', 'conductingBody']} searchPlaceholder="Search exams..."
         actions={ex => (<>
-          <button onClick={() => edit(ex)} className="p-1.5 rounded-lg hover:bg-light-card"><Pencil className="w-4 h-4" /></button>
-          {canDelete && <button onClick={() => del(ex._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>}
+          <button onClick={() => edit(ex)} aria-label="Edit" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Pencil className="w-4 h-4" aria-hidden="true" /></button>
+          {canDelete && <button onClick={() => del(ex._id)} aria-label="Delete" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>}
         </>)}
       />
     </div>

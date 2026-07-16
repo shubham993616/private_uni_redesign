@@ -15,8 +15,9 @@ import UniversityLogo from '../components/common/UniversityLogo';
 import LeadCaptureModal from '../components/university/LeadCaptureModal';
 import Container from '../components/layout/Container';
 import { UniversityCard, ScholarshipCard, CourseCard } from '../components/cards';
-import { Button, Modal, Input, Textarea } from '../components/ui';
+import { Button, Badge, Modal, Input, Textarea, Rating } from '../components/ui';
 import { getUniversityDisplayType } from '../utils/universityType';
+import { getLocalUniversityBySlug, getNearbyUniversities } from '../data/universities';
 
 /**
  * University Detail — product-style detail experience.
@@ -64,6 +65,61 @@ const formatCurrencyMetric = (numericValue, labelValue, suffix = '') => {
   return `₹${numericValue}${suffix ? ` ${suffix}` : ''}`;
 };
 
+/**
+ * Map a local-catalogue record (src/data/universities.js) onto the API
+ * contract this page — and the brochure generator — reads. Used only when the
+ * API fetch fails or returns nothing.
+ */
+const adaptLocalUniversity = (u) => ({
+  ...u,
+  establishedYear: u.establishedYear || u.established,
+  bannerImageUrl: u.bannerImageUrl || u.bannerUrl,
+  address: u.address || u.contact?.address,
+  email: u.email || u.contact?.email,
+  phone: u.phone || u.contact?.phone,
+  topRecruiters: u.topRecruiters || u.placements?.recruiters || [],
+  approvals: Array.isArray(u.approvals)
+    ? Object.fromEntries(u.approvals.map((a) => [a, true]))
+    : u.approvals || {},
+  stats: {
+    ...u.stats,
+    placementPercentage:
+      u.stats?.placementPercentage ?? u.stats?.placementRate ?? u.placements?.placementRate,
+  },
+  courses: (u.courses || []).map((c, i) =>
+    typeof c === 'string'
+      ? { _id: `${u._id}-course-${i}`, name: c, entranceExams: u.entranceExams }
+      : c
+  ),
+  scholarships: (u.scholarships || []).map((s) => ({ ...s, description: s.description || s.benefit })),
+  admissions: {
+    ...u.admissions,
+    overview:
+      u.admissions?.overview ||
+      [
+        u.admissions?.session,
+        u.admissions?.status === 'closed'
+          ? 'Applications are closed for this session.'
+          : 'Applications are open — apply from the panel on this page.',
+      ].filter(Boolean).join(' — '),
+    process:
+      typeof u.admissions?.process === 'string'
+        ? u.admissions.process.split('→').map((step) => step.trim()).filter(Boolean)
+        : u.admissions?.process || [],
+    applicationEndDate: u.admissions?.applicationEndDate || u.admissions?.deadline,
+    acceptedExams: u.admissions?.acceptedExams || u.entranceExams || [],
+  },
+  campus: {
+    overview: u.campus?.overview || u.tagline,
+    hostelDetails:
+      u.campus?.hostelDetails ||
+      (u.hostel?.available
+        ? `${u.hostel.note || 'On-campus hostel available.'}${u.hostel.feesPerYear ? ` Approx. ₹${Number(u.hostel.feesPerYear).toLocaleString('en-IN')}/year.` : ''}`
+        : undefined),
+    galleryImages: u.campus?.galleryImages || u.gallery || [],
+  },
+});
+
 function SectionBlock({ id, title, children }) {
   return (
     <section id={id} className="scroll-mt-32 py-8 border-b border-light-border dark:border-dark-border last:border-0">
@@ -105,31 +161,48 @@ export default function UniversityDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
+    const applyUniversity = (u) => {
+      setError(null);
+      setUni(u);
+      setEditForm(u);
+      // Recently-viewed (device memory, cap 10) — preserved contract.
+      const prev = JSON.parse(localStorage.getItem('vm_recent') || '[]');
+      const entry = {
+        _id: u._id, name: u.name, slug: u.slug, state: u.state, city: u.city,
+        type: getUniversityDisplayType(u), naacGrade: u.naacGrade, nirfRank: u.nirfRank,
+      };
+      localStorage.setItem('vm_recent', JSON.stringify([entry, ...prev.filter((r) => r._id !== u._id)].slice(0, 10)));
+      if (u.isLocalRecord) {
+        setSimilarUnis(getNearbyUniversities({ state: u.state, city: u.city, excludeIds: [u._id] }));
+      } else if (u._id) {
+        api.get(`/universities/${u._id}/similar`).then((res) => setSimilarUnis(res.data.data || [])).catch(() => {});
+      }
+      // Deep-link: old tab index or section id via router state.
+      const t = location.state?.activeTab;
+      if (t !== undefined) {
+        const target = typeof t === 'number' ? SECTIONS[t]?.id : t;
+        if (target) setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' }), 150);
+      }
+    };
+    // Local-catalogue fallback: keeps detail pages browsable when the API is
+    // unreachable or has no record for this slug/id.
+    const applyLocalFallback = () => {
+      const local = getLocalUniversityBySlug(slug);
+      if (!local) return false;
+      applyUniversity(adaptLocalUniversity(local));
+      return true;
+    };
     api.get(`/universities/${slug}`) // server increments the view counter
       .then(({ data }) => {
         const u = data.data;
-        if (!u) { setError('University not found'); setUni(null); return; }
-        setError(null);
-        setUni(u);
-        setEditForm(u);
-        // Recently-viewed (device memory, cap 10) — preserved contract.
-        const prev = JSON.parse(localStorage.getItem('vm_recent') || '[]');
-        const entry = {
-          _id: u._id, name: u.name, slug: u.slug, state: u.state, city: u.city,
-          type: getUniversityDisplayType(u), naacGrade: u.naacGrade, nirfRank: u.nirfRank,
-        };
-        localStorage.setItem('vm_recent', JSON.stringify([entry, ...prev.filter((r) => r._id !== u._id)].slice(0, 10)));
-        if (u._id) {
-          api.get(`/universities/${u._id}/similar`).then((res) => setSimilarUnis(res.data.data || [])).catch(() => {});
+        if (!u) {
+          if (!applyLocalFallback()) { setError('University not found'); setUni(null); }
+          return;
         }
-        // Deep-link: old tab index or section id via router state.
-        const t = location.state?.activeTab;
-        if (t !== undefined) {
-          const target = typeof t === 'number' ? SECTIONS[t]?.id : t;
-          if (target) setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' }), 150);
-        }
+        applyUniversity(u);
       })
       .catch((err) => {
+        if (applyLocalFallback()) return;
         setError(err?.response?.status === 404 ? 'University not found' : 'Connect to backend to load data');
         setUni(null);
       })
@@ -398,9 +471,9 @@ export default function UniversityDetail() {
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                  <span className="badge bg-primary-50 dark:bg-primary/15 text-link dark:text-primary-300">{displayType}</span>
-                  {uni.naacGrade && <span className="badge bg-success-tint text-success-text dark:bg-success/15 dark:text-emerald-300">NAAC {uni.naacGrade}</span>}
-                  {uni.nirfRank && <span className="badge bg-light-card dark:bg-white/5 border border-light-border dark:border-dark-border text-data">NIRF #{uni.nirfRank}</span>}
+                  <Badge variant="brand">{displayType}</Badge>
+                  {uni.naacGrade && <Badge variant="success">NAAC {uni.naacGrade}</Badge>}
+                  {uni.nirfRank && <Badge variant="neutral" className="tabular-nums">NIRF #{uni.nirfRank}</Badge>}
                   {uni.isSponsored && (
                     <span className="badge bg-accent-50 text-accent-700 dark:bg-accent/20 dark:text-accent-300 border border-accent-200 dark:border-accent/30">Sponsored</span>
                   )}
@@ -413,6 +486,13 @@ export default function UniversityDetail() {
                     <span className="hidden sm:inline"> · Updated {new Date(uni.updatedAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
                   )}
                 </p>
+                {(uni.rating || uni.stats?.rating) && (
+                  <Rating
+                    value={uni.rating || uni.stats?.rating}
+                    count={uni.reviewsCount ?? (Array.isArray(uni.reviews) ? uni.reviews.length : undefined)}
+                    className="mt-2"
+                  />
+                )}
               </div>
             </div>
 
@@ -549,7 +629,7 @@ export default function UniversityDetail() {
                     {Object.entries(uni.approvals || {}).filter(([, v]) => v).map(([key]) => (
                       <div key={key} className="flex items-center gap-2 p-3 rounded-btn bg-success-tint dark:bg-success/10 border border-emerald-100 dark:border-emerald-500/20">
                         <CheckCircle2 className="w-4 h-4 text-success-text dark:text-emerald-300 shrink-0" aria-hidden="true" />
-                        <span className="text-xs font-bold uppercase tracking-wide text-success-text dark:text-emerald-300">{key}</span>
+                        <span className="text-xs font-semibold text-success-text dark:text-emerald-300">{key}</span>
                       </div>
                     ))}
                     {Object.values(uni.approvals || {}).every((v) => !v) && (
@@ -614,7 +694,7 @@ export default function UniversityDetail() {
                 )}
                 <div className="space-y-5">
                   <div className="p-5 rounded-card bg-warning-tint dark:bg-warning/10 border border-amber-100 dark:border-amber-500/20">
-                    <h3 className="text-xs font-bold uppercase tracking-wide text-warning-text dark:text-amber-300 mb-1.5 flex items-center gap-1.5">
+                    <h3 className="text-sm font-semibold text-warning-text dark:text-amber-300 mb-1.5 flex items-center gap-1.5">
                       <CalendarDays className="w-4 h-4" aria-hidden="true" /> Counselling & deadline
                     </h3>
                     <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -780,7 +860,7 @@ export default function UniversityDetail() {
           {deadline && daysLeft >= 0 && (
             <div className="hidden sm:block text-center shrink-0 pr-1">
               <p className="text-xs font-semibold text-warning-text tabular-nums">{daysLeft}d</p>
-              <p className="text-[11px] text-light-muted">left</p>
+              <p className="text-caption">left</p>
             </div>
           )}
           <Button size="lg" variant="outline" className="flex-1" onClick={() => openLead('brochure')}>Brochure</Button>

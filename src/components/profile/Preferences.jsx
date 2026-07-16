@@ -32,17 +32,17 @@ export default function Preferences({ profile, onSave }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Settings className="w-5 h-5 text-link" /> Preferences
+        <h2 className="text-h2 flex items-center gap-2">
+          <Settings className="w-5 h-5 text-primary" aria-hidden="true" /> Preferences
         </h2>
       </div>
 
       <form onSubmit={handleSubmit} className="card p-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Current Location */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-link" /> Current State
+          <div className="space-y-1.5">
+            <label className="text-label flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-primary" aria-hidden="true" /> Current state
             </label>
             <input
               type="text"
@@ -54,9 +54,9 @@ export default function Preferences({ profile, onSave }) {
           </div>
 
           {/* Academic Info */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-link" /> Preferred Stream
+          <div className="space-y-1.5">
+            <label className="text-label flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-primary" aria-hidden="true" /> Preferred stream
             </label>
             <select
               value={formData.stream}
@@ -74,9 +74,9 @@ export default function Preferences({ profile, onSave }) {
           </div>
 
           {/* Preferred States */}
-          <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-semibold flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-link" /> Preferred States for Education
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-label flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-primary" aria-hidden="true" /> Preferred states for education
             </label>
             <div className="flex gap-2">
               <input
@@ -96,14 +96,14 @@ export default function Preferences({ profile, onSave }) {
                   <button type="button" onClick={() => handleRemoveState(s)} className="hover:text-red-500" aria-label={`Remove ${s}`}>x</button>
                 </span>
               ))}
-              {formData.preferredStates.length === 0 && <p className="text-xs text-light-muted">No preferred states added.</p>}
+              {formData.preferredStates.length === 0 && <p className="text-caption">No preferred states added.</p>}
             </div>
           </div>
 
           {/* College Type */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold flex items-center gap-2">
-              <Building className="w-4 h-4 text-link" /> College Type
+          <div className="space-y-1.5">
+            <label className="text-label flex items-center gap-2">
+              <Building className="w-4 h-4 text-primary" aria-hidden="true" /> College type
             </label>
             <div className="flex gap-4 mt-2">
               {['private', 'deemed', 'both'].map(type => (
@@ -114,18 +114,18 @@ export default function Preferences({ profile, onSave }) {
                     value={type}
                     checked={formData.collegeType === type}
                     onChange={(e) => setFormData({ ...formData, collegeType: e.target.value })}
-                    className="text-link focus:ring-primary"
+                    className="accent-primary focus:ring-primary"
                   />
-                  <span className="text-sm capitalize">{type}</span>
+                  <span className="text-sm capitalize text-light-text dark:text-dark-text">{type}</span>
                 </label>
               ))}
             </div>
           </div>
 
           {/* Target Course */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-link" /> Preferred Course
+          <div className="space-y-1.5">
+            <label className="text-label flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-primary" aria-hidden="true" /> Preferred course
             </label>
             <input
               type="text"
@@ -139,7 +139,7 @@ export default function Preferences({ profile, onSave }) {
 
         <div className="pt-4 border-t border-light-border dark:border-dark-border">
           <button type="submit" className="btn-primary flex items-center gap-2 w-full md:w-auto justify-center">
-            <Save className="w-4 h-4" /> Save Preferences
+            <Save className="w-4 h-4" aria-hidden="true" /> Save preferences
           </button>
         </div>
       </form>

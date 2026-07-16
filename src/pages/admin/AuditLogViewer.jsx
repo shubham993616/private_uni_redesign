@@ -17,9 +17,9 @@ export default function AuditLogViewer() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <Shield className="w-5 h-5 text-link" />
-        <h2 className="text-xl font-bold">Audit Logs</h2>
-        <span className="text-sm text-light-muted">({total} total actions)</span>
+        <Shield className="w-5 h-5 text-primary" aria-hidden="true" />
+        <h2 className="text-h2">Audit Logs</h2>
+        <span className="text-support tabular-nums">({total} total actions)</span>
       </div>
       <DataTable data={logs} columns={[
         { key: 'userId', label: 'User', render: l => l.userId?.name || 'System' },

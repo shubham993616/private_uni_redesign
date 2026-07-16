@@ -28,7 +28,7 @@ export default function HeroBannerSlider({ page = 'home', interval = 6000 }) {
 
   return (
     <section className="max-w-7xl mx-auto px-4 pt-6">
-      <div className="relative overflow-hidden rounded-[2rem] shadow-lg group">
+      <div className="relative overflow-hidden rounded-card shadow-lg group">
         <AnimatePresence mode="wait">
           <motion.a
             key={banner._id}

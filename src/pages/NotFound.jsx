@@ -15,10 +15,10 @@ export default function NotFound() {
           </div>
         </div>
 
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+        <h1 className="text-h1 mb-3">
           Oops! Page not found
         </h1>
-        <p className="text-slate-500 dark:text-slate-400 mb-10 text-base leading-relaxed">
+        <p className="text-body !text-light-muted dark:!text-dark-muted mb-10">
           The page you're looking for doesn't exist or has been moved.<br />
           Let's get you back on track.
         </p>
@@ -34,7 +34,7 @@ export default function NotFound() {
           </Link>
         </div>
 
-        <button onClick={() => window.history.back()} className="mt-8 flex items-center gap-2 text-sm text-slate-400 hover:text-link transition-colors mx-auto">
+        <button onClick={() => window.history.back()} className="mt-8 flex items-center gap-2 text-support hover:text-link transition-colors mx-auto">
           <ArrowLeft className="w-4 h-4" />
           Go back
         </button>

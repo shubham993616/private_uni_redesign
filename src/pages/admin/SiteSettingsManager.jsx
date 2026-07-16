@@ -63,7 +63,7 @@ export default function SiteSettingsManager() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Site Settings</h2>
+        <h2 className="text-h2">Site Settings</h2>
         <button onClick={save} disabled={saving} className="btn-primary text-sm flex items-center gap-1.5">
           <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save All'}
         </button>
@@ -72,7 +72,7 @@ export default function SiteSettingsManager() {
       <div className="flex gap-2 overflow-x-auto pb-2">
         {categories.map(cat => (
           <button key={cat} onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap capitalize transition-colors ${activeCategory === cat ? 'bg-primary text-white' : 'bg-light-card dark:bg-dark-card hover:bg-primary/10'}`}>
+            className={`px-4 py-2 rounded-btn text-sm font-medium whitespace-nowrap capitalize transition-colors duration-150 ${activeCategory === cat ? 'bg-primary text-white' : 'bg-light-card dark:bg-dark-card hover:bg-primary/10'}`}>
             {cat}
           </button>
         ))}
@@ -88,7 +88,7 @@ export default function SiteSettingsManager() {
             ) : s.type === 'color' ? (
               <FormField label={s.label}>
                 <div className="flex gap-2 items-center">
-                  <input type="color" value={getValue(s.key, s.value) || '#6366f1'} onChange={e => setValue(s.key, e.target.value)} className="w-10 h-10 rounded border cursor-pointer" />
+                  <input type="color" value={getValue(s.key, s.value) || '#6366f1'} onChange={e => setValue(s.key, e.target.value)} className="w-10 h-10 rounded-btn border border-light-border dark:border-dark-border cursor-pointer" />
                   <TextInput value={getValue(s.key, s.value) || ''} onChange={e => setValue(s.key, e.target.value)} className="flex-1" />
                 </div>
               </FormField>

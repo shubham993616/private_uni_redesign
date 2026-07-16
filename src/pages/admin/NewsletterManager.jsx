@@ -20,10 +20,10 @@ export default function NewsletterManager() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold">Newsletter Subscribers</h2>
+      <h2 className="text-h2">Newsletter Subscribers</h2>
       <div className="flex gap-4">
-        <div className="card p-4 flex items-center gap-3"><Users className="w-5 h-5 text-link" /><div><p className="text-xl font-bold">{stats.total}</p><p className="text-xs text-light-muted">Total</p></div></div>
-        <div className="card p-4 flex items-center gap-3"><Users className="w-5 h-5 text-green-500" /><div><p className="text-xl font-bold">{stats.active}</p><p className="text-xs text-light-muted">Active</p></div></div>
+        <div className="card p-4 flex items-center gap-3"><Users className="w-5 h-5 text-primary" aria-hidden="true" /><div><p className="text-stat-sm">{stats.total}</p><p className="text-caption">Total</p></div></div>
+        <div className="card p-4 flex items-center gap-3"><Users className="w-5 h-5 text-success" aria-hidden="true" /><div><p className="text-stat-sm">{stats.active}</p><p className="text-caption">Active</p></div></div>
       </div>
       <DataTable data={items} columns={[
         { key: 'email', label: 'Email', render: s => <span className="font-medium">{s.email}</span> },
@@ -32,7 +32,7 @@ export default function NewsletterManager() {
         { key: 'subscribedAt', label: 'Subscribed', render: s => new Date(s.subscribedAt).toLocaleDateString() },
       ]} searchFields={['email']} searchPlaceholder="Search subscribers..."
         actions={(s) => (
-          canDelete && <button onClick={() => del(s._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>
+          canDelete && <button onClick={() => del(s._id)} aria-label="Remove subscriber" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>
         )}
       />
     </div>

@@ -1,6 +1,7 @@
 import Seo from '../components/common/Seo';
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
+import Container from '../components/layout/Container';
 
 const sections = [
   {
@@ -20,7 +21,7 @@ const sections = [
 
 export default function PrivacyPolicy() {
   return (
-    <div className="bg-[#f8fafc] dark:bg-dark-bg min-h-screen">
+    <div className="bg-light-card dark:bg-dark-bg min-h-screen">
       <Seo
         title="Privacy Policy | Vidyarthi Mitra"
         description="Read the Privacy Policy of Vidyarthi Mitra. Learn how we collect, use and protect your personal information."
@@ -30,44 +31,43 @@ export default function PrivacyPolicy() {
       {/* Hero */}
       <div className="relative bg-slate-900 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary-dark/20 to-slate-900/40" />
-        <div className="relative max-w-7xl mx-auto px-4 py-24 text-center">
+        <Container className="relative py-16 md:py-20 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6">
-              <Lock className="w-3.5 h-3.5 text-accent" /> Legal
-            </span>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-white">
-              Privacy <span className="text-accent italic">Policy</span>
+            <p className="text-eyebrow !text-primary-300 mb-4 inline-flex items-center gap-2">
+              <Lock className="w-4 h-4" aria-hidden="true" /> Legal
+            </p>
+            <h1 className="text-display-serif !text-white">
+              Privacy <span className="text-primary-300">Policy</span>
             </h1>
           </motion.div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#f8fafc] dark:from-dark-bg to-transparent" />
+        </Container>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-16">
+      <Container className="py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-dark-card rounded-[2rem] p-10 md:p-14 border border-slate-100 dark:border-white/5 shadow-sm space-y-10"
+          className="max-w-prose mx-auto bg-white dark:bg-dark-card rounded-card p-6 md:p-10 border border-light-border dark:border-dark-border shadow-card space-y-8"
         >
           {/* Intro */}
-          <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-[15px]">{sections[0].intro}</p>
+          <p className="text-body">{sections[0].intro}</p>
 
           {/* Sections */}
           {sections.slice(1).map((s) => (
-            <div key={s.title} className="border-t border-slate-100 dark:border-white/5 pt-8">
-              <h2 className="text-lg font-bold text-link uppercase tracking-wider mb-4">{s.title}</h2>
+            <div key={s.title} className="border-t border-light-border dark:border-dark-border pt-6">
+              <h2 className="text-h3 mb-3">{s.title}</h2>
               <div className="space-y-4">
                 {(s.content || '').split('\n\n').map((para, i) => (
-                  <p key={i} className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-[15px]">{para}</p>
+                  <p key={i} className="text-body">{para}</p>
                 ))}
               </div>
             </div>
           ))}
 
-          <p className="text-xs text-slate-400 font-bold uppercase tracking-widest border-t border-slate-100 dark:border-white/5 pt-6">
+          <p className="text-caption border-t border-light-border dark:border-dark-border pt-6">
             Last updated: 2024 · VidyarthiMitra.org
           </p>
         </motion.div>
-      </div>
+      </Container>
     </div>
   );
 }

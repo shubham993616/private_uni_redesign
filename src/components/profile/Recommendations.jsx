@@ -2,14 +2,17 @@ import { Link } from 'react-router-dom';
 import { MapPin, Bookmark, Lightbulb, ExternalLink, Sparkles } from 'lucide-react';
 import { calculateFitScore } from '../../utils/fitScore';
 import { getUniversityDisplayType, getUniversityTypeValue } from '../../utils/universityType';
+import { Badge } from '../ui';
 
 export default function Recommendations({ recommendations, onSave, userPrefs }) {
   if (!userPrefs?.preferredStates?.length && !userPrefs?.collegeType) {
     return (
       <div className="card p-12 text-center">
-        <Lightbulb className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
-        <h3 className="font-bold text-lg mb-2">Set Your Preferences First</h3>
-        <p className="text-light-muted text-sm">Go to the Preferences tab and fill in your preferred state and college type to get smart recommendations.</p>
+        <div className="w-14 h-14 rounded-2xl bg-light-card dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
+          <Lightbulb className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
+        </div>
+        <h3 className="text-h3 mb-1">Set your preferences first</h3>
+        <p className="text-support max-w-md mx-auto">Go to the Preferences tab and fill in your preferred state and college type to get smart recommendations.</p>
       </div>
     );
   }
@@ -17,8 +20,10 @@ export default function Recommendations({ recommendations, onSave, userPrefs }) 
   if (recommendations.length === 0) {
     return (
       <div className="card p-12 text-center">
-        <Lightbulb className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
-        <p className="text-light-muted">No new recommendations - you have already saved all matching colleges.</p>
+        <div className="w-14 h-14 rounded-2xl bg-light-card dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
+          <Lightbulb className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
+        </div>
+        <p className="text-support">No new recommendations - you have already saved all matching colleges.</p>
       </div>
     );
   }
@@ -40,54 +45,58 @@ export default function Recommendations({ recommendations, onSave, userPrefs }) 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-2">
-        <Lightbulb className="w-5 h-5 text-yellow-400" />
-        <h2 className="text-xl font-bold">Recommended for you</h2>
-        <span className="badge badge-orange">{recommendations.length} found</span>
+        <Lightbulb className="w-5 h-5 text-primary" aria-hidden="true" />
+        <h2 className="text-h2">Recommended for you</h2>
+        <Badge variant="brand" className="tabular-nums">{recommendations.length} found</Badge>
       </div>
-      <p className="text-sm text-light-muted">Handpicked selections based on your preferences, courses, and location.</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+      <p className="text-support">Handpicked selections based on your preferences, courses, and location.</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         {sortedRecs.map((university) => {
           const score = calculateFitScore(university, userPrefs);
           const displayType = getUniversityDisplayType(university);
 
           return (
-            <div key={university._id} className="card p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 relative overflow-hidden">
+            <div key={university._id} className="card p-5 transition-all duration-150 hover:shadow-card-hover hover:-translate-y-0.5 relative">
               {score > 60 && (
-                <div className="absolute top-0 right-0 bg-yellow-400/10 text-yellow-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl border-b border-l border-yellow-400/20 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> TOP MATCH
-                </div>
+                <Badge variant="brand" className="absolute top-3 right-3">
+                  <Sparkles className="w-3 h-3" aria-hidden="true" /> Top match
+                </Badge>
               )}
-              <div className="flex items-start gap-3 mb-3 mt-2">
-                <div className="w-10 h-10 rounded-xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link font-bold shrink-0">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link dark:text-primary-300 font-bold shrink-0">
                   {university.name?.charAt(0)}
                 </div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-sm line-clamp-2">{university.name}</p>
-                  <p className="text-xs text-light-muted flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3 h-3" />
+                <div className={`min-w-0 ${score > 60 ? 'pr-24' : ''}`}>
+                  <p className="text-card-title text-sm line-clamp-2">{university.name}</p>
+                  <p className="text-caption flex items-center gap-1 mt-0.5">
+                    <MapPin className="w-3 h-3" aria-hidden="true" />
                     {university.city}, {university.state}
                   </p>
                 </div>
               </div>
 
-              <div className="bg-light-bg dark:bg-dark-border/30 rounded-lg p-2 mb-3">
-                <p className="text-[10px] font-medium text-light-muted flex items-center gap-1">
-                  <Lightbulb className="w-3 h-3 text-yellow-500" /> {getReason(university)}
+              <div className="bg-light-card dark:bg-dark-border/30 rounded-lg p-2 mb-3">
+                <p className="text-caption flex items-center gap-1">
+                  <Lightbulb className="w-3 h-3 text-primary" aria-hidden="true" /> {getReason(university)}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-4">
-                <span className="badge badge-orange text-[10px]">{displayType}</span>
-                {university.naacGrade && <span className="badge badge-green text-[10px]">NAAC {university.naacGrade}</span>}
-                {university.nirfRank && <span className="badge badge-blue text-[10px]">NIRF #{university.nirfRank}</span>}
-                {university.stats?.avgPackageLPA && <span className="badge bg-purple-50 text-purple-700 text-[10px]">Rs. {university.stats.avgPackageLPA} LPA</span>}
+                <Badge variant="neutral">{displayType}</Badge>
+                {university.naacGrade && <span className="badge badge-green">NAAC {university.naacGrade}</span>}
+                {university.nirfRank && <span className="badge badge-blue tabular-nums">NIRF #{university.nirfRank}</span>}
+                {university.stats?.avgPackageLPA && <Badge variant="neutral" className="tabular-nums">Rs. {university.stats.avgPackageLPA} LPA</Badge>}
               </div>
               <div className="flex gap-2">
                 <button onClick={() => onSave(university)} className="btn-primary !py-1.5 !px-3 text-xs flex items-center gap-1 flex-1 justify-center">
-                  <Bookmark className="w-3 h-3" /> Save
+                  <Bookmark className="w-3 h-3" aria-hidden="true" /> Save
                 </button>
-                <Link to={`/universities/${university.slug}`} className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1">
-                  <ExternalLink className="w-3 h-3" />
+                <Link
+                  to={`/universities/${university.slug}`}
+                  aria-label={`View ${university.name}`}
+                  className="btn-outline !py-1.5 !px-3 text-xs flex items-center gap-1"
+                >
+                  <ExternalLink className="w-3 h-3" aria-hidden="true" />
                 </Link>
               </div>
             </div>

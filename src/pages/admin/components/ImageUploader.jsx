@@ -41,17 +41,18 @@ export default function ImageUploader({ value, onChange, folder = 'general', lab
 
   return (
     <div className="space-y-2">
-      <span className="text-sm font-medium block">{label}</span>
+      <span className="text-label block">{label}</span>
       <div className="flex items-start gap-3">
         {value ? (
           <div className="relative group">
-            <img src={value} alt="Preview" className="w-20 h-20 object-cover rounded-lg border border-light-border" />
+            <img src={value} alt="Preview" className="w-20 h-20 object-cover rounded-xl border border-light-border dark:border-dark-border" />
             <button
               type="button"
               onClick={() => onChange('')}
-              className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Remove image"
+              className="absolute -top-1.5 -right-1.5 bg-error text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-150"
             >
-              <X className="w-3 h-3" />
+              <X className="w-3 h-3" aria-hidden="true" />
             </button>
           </div>
         ) : null}

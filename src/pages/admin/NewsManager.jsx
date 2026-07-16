@@ -45,13 +45,13 @@ export default function NewsManager() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">News ({items.length})</h2>
+        <h2 className="text-h2">News ({items.length})</h2>
         <button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyForm()); }} className="btn-primary text-sm flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</button>
       </div>
 
       {showForm && (
         <form onSubmit={save} className="card p-6 space-y-4">
-          <h3 className="font-semibold">{editId ? 'Edit' : 'New'} Article</h3>
+          <h3 className="text-h3">{editId ? 'Edit' : 'New'} Article</h3>
           <div className="grid md:grid-cols-2 gap-4">
             <FormField label="Title *"><TextInput value={form.title} onChange={e => upd('title', e.target.value)} required /></FormField>
             <FormField label="Category"><TextInput value={form.category} onChange={e => upd('category', e.target.value)} placeholder="general, admission, result..." /></FormField>
@@ -75,8 +75,8 @@ export default function NewsManager() {
         { key: 'publishedAt', label: 'Published', render: n => n.publishedAt ? new Date(n.publishedAt).toLocaleDateString() : '—' },
       ]} searchFields={['title', 'source', 'category']} searchPlaceholder="Search news..."
         actions={n => (<>
-          <button onClick={() => edit(n)} className="p-1.5 rounded-lg hover:bg-light-card"><Pencil className="w-4 h-4" /></button>
-          {canDelete && <button onClick={() => del(n._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>}
+          <button onClick={() => edit(n)} aria-label="Edit" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Pencil className="w-4 h-4" aria-hidden="true" /></button>
+          {canDelete && <button onClick={() => del(n._id)} aria-label="Delete" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>}
         </>)}
       />
     </div>

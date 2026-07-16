@@ -139,22 +139,22 @@ export default function CoursesManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold">Courses ({items.length})</h2>
-          <p className="text-sm text-light-muted mt-1">Primary workflow is now university-first. Use this screen only for cross-catalog maintenance.</p>
+          <h2 className="text-h2">Courses ({items.length})</h2>
+          <p className="text-support mt-1">Primary workflow is now university-first. Use this screen only for cross-catalog maintenance.</p>
         </div>
         <button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyForm()); }} className="btn-primary text-sm flex items-center gap-1.5">
           <Plus className="w-4 h-4" /> Add
         </button>
       </div>
 
-      <div className="rounded-2xl border border-primary/20 bg-primary/5 p-4 text-sm text-link flex items-start gap-3">
-        <Info className="w-4 h-4 mt-0.5 shrink-0" />
+      <div className="rounded-card border border-primary/20 bg-primary/5 p-4 text-sm text-link dark:text-primary-300 flex items-start gap-3">
+        <Info className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
         <p>Best practice: create courses inside the university form so hierarchy stays synced. This page is still available for direct edits when needed.</p>
       </div>
 
       {showForm && (
         <form onSubmit={save} className="card p-6 space-y-4">
-          <h3 className="font-semibold">{editId ? 'Edit' : 'New'} Course</h3>
+          <h3 className="text-h3">{editId ? 'Edit' : 'New'} Course</h3>
           <div className="grid md:grid-cols-2 gap-4">
             <FormField label="University *">
               <SelectInput
@@ -182,13 +182,13 @@ export default function CoursesManager() {
             <FormField label="Total Seats">
               <div className="space-y-2">
                 <TextInput value={form.totalSeats} onChange={(event) => upd('totalSeats', event.target.value)} placeholder="e.g. 60 or 60-120" />
-                <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                <p className="text-caption">{RANGE_FIELD_HELP}</p>
               </div>
             </FormField>
             <FormField label="Fees Per Year">
               <div className="space-y-2">
                 <TextInput value={form.feesPerYear} onChange={(event) => upd('feesPerYear', event.target.value)} placeholder="e.g. 120000 or 120000-180000" />
-                <p className="text-xs text-light-muted dark:text-dark-muted">{RANGE_FIELD_HELP}</p>
+                <p className="text-caption">{RANGE_FIELD_HELP}</p>
               </div>
             </FormField>
           </div>
@@ -222,13 +222,13 @@ export default function CoursesManager() {
         searchPlaceholder="Search courses..."
         actions={(course) => (
           <>
-            <button onClick={() => edit(course)} className="p-1.5 rounded-lg hover:bg-light-card" title="Edit course">
+            <button onClick={() => edit(course)} className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150" title="Edit course">
               <Pencil className="w-4 h-4" />
             </button>
             <button
               onClick={() => del(course._id)}
               disabled={deletingId === course._id}
-              className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 disabled:opacity-50"
+              className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error disabled:opacity-50 transition-colors duration-150"
               title="Delete course"
             >
               <Trash2 className="w-4 h-4" />

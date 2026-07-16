@@ -34,7 +34,7 @@ export default function TestimonialsManager() {
   const columns = [
     { key: 'name', label: 'Name' },
     { key: 'university', label: 'University' },
-    { key: 'rating', label: 'Rating', render: t => <span className="flex items-center gap-1">{t.rating}<Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /></span> },
+    { key: 'rating', label: 'Rating', render: t => <span className="flex items-center gap-1 tabular-nums">{t.rating}<Star className="w-3 h-3 text-accent fill-accent" aria-hidden="true" /></span> },
     { key: 'isApproved', label: 'Status', render: t => t.isApproved ? <span className="badge badge-green">Approved</span> : <span className="badge badge-orange">Pending</span> },
     { key: 'isFeatured', label: 'Featured', render: t => t.isFeatured ? <span className="badge badge-blue">Yes</span> : '—' },
   ];
@@ -42,12 +42,12 @@ export default function TestimonialsManager() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Testimonials</h2>
+        <h2 className="text-h2">Testimonials</h2>
         <button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyForm()); }} className="btn-primary text-sm flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</button>
       </div>
       {showForm && (
         <form onSubmit={save} className="card p-6 space-y-4">
-          <h3 className="font-semibold">{editId ? 'Edit' : 'New'} Testimonial</h3>
+          <h3 className="text-h3">{editId ? 'Edit' : 'New'} Testimonial</h3>
           <div className="grid md:grid-cols-2 gap-4">
             <FormField label="Name"><TextInput value={form.name} onChange={e => upd('name', e.target.value)} required /></FormField>
             <FormField label="Role/Title"><TextInput value={form.role} onChange={e => upd('role', e.target.value)} /></FormField>
@@ -65,8 +65,8 @@ export default function TestimonialsManager() {
       )}
       <DataTable data={items} columns={columns} searchFields={['name', 'university', 'content']} searchPlaceholder="Search testimonials..."
         actions={(t) => (<>
-          <button onClick={() => edit(t)} className="p-1.5 rounded-lg hover:bg-light-card dark:hover:bg-dark-card"><Pencil className="w-4 h-4" /></button>
-          {canDelete && <button onClick={() => del(t._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>}
+          <button onClick={() => edit(t)} aria-label="Edit" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Pencil className="w-4 h-4" aria-hidden="true" /></button>
+          {canDelete && <button onClick={() => del(t._id)} aria-label="Delete" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>}
         </>)}
       />
     </div>

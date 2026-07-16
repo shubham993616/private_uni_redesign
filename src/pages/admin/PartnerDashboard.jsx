@@ -9,23 +9,23 @@ import toast from 'react-hot-toast';
 import api from '../../utils/api';
 
 const TIER_CONFIG = {
-  platinum: { label: 'Platinum', color: 'text-purple-500', bg: 'bg-purple-500/10', border: 'border-purple-400/30', icon: Crown },
+  platinum: { label: 'Platinum', color: 'text-ink-700 dark:text-slate-300', bg: 'bg-slate-500/10', border: 'border-slate-400/40', icon: Crown },
   gold:     { label: 'Gold',     color: 'text-amber-500',  bg: 'bg-amber-500/10',  border: 'border-amber-400/30',  icon: Medal },
   silver:   { label: 'Silver',   color: 'text-slate-400',  bg: 'bg-slate-400/10',  border: 'border-slate-400/30',  icon: Medal },
-  bronze:   { label: 'Bronze',   color: 'text-orange-500', bg: 'bg-orange-500/10', border: 'border-orange-400/30', icon: Medal },
+  bronze:   { label: 'Bronze',   color: 'text-link',       bg: 'bg-primary/10',    border: 'border-primary/30',    icon: Medal },
   none:     { label: 'Organic',  color: 'text-light-muted',bg: 'bg-light-bg',      border: 'border-light-border',  icon: ClipboardList },
 };
 
-function StatCard({ icon: Icon, label, value, sub, color = 'text-link', bg = 'bg-primary/10' }) {
+function StatCard({ icon: Icon, label, value, sub, color = 'text-primary', bg = 'bg-primary/10' }) {
   return (
-    <div className="card p-5 flex items-center gap-4 shadow-sm">
-      <div className={`p-3 rounded-2xl ${bg} ${color} shrink-0`}>
-        <Icon className="w-6 h-6" />
+    <div className="card p-5 flex items-center gap-4">
+      <div className={`p-3 rounded-xl ${bg} ${color} shrink-0`}>
+        <Icon className="w-6 h-6" aria-hidden="true" />
       </div>
       <div className="min-w-0">
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-light-muted dark:text-dark-muted">{label}</p>
-        <p className="text-2xl font-bold text-light-text dark:text-dark-text mt-0.5">{value}</p>
-        {sub && <p className="text-xs text-light-muted dark:text-dark-muted mt-0.5">{sub}</p>}
+        <p className="text-eyebrow !text-light-muted dark:!text-dark-muted">{label}</p>
+        <p className="text-stat mt-0.5">{value}</p>
+        {sub && <p className="text-caption mt-0.5">{sub}</p>}
       </div>
     </div>
   );
@@ -44,11 +44,11 @@ function MiniBarChart({ data }) {
     <div className="flex items-end gap-1 h-32">
       {data.map((d) => (
         <div key={d._id} className="flex-1 flex flex-col items-center gap-1 group" title={`${d._id}: ${d.count} leads`}>
-          <span className="text-[9px] text-light-muted dark:text-dark-muted opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
+          <span className="text-xs tabular-nums text-light-muted dark:text-dark-muted opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
             {d.count}
           </span>
           <div
-            className="w-full rounded-t-md bg-primary/70 hover:bg-primary transition-all"
+            className="w-full rounded-t-md bg-primary/70 hover:bg-primary transition-colors duration-150"
             style={{ height: `${(d.count / max) * 100}%`, minHeight: '4px' }}
           />
         </div>
@@ -106,33 +106,33 @@ export default function PartnerDashboard() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <Link to="/admin/leads" className="p-2 rounded-xl hover:bg-light-card dark:hover:bg-dark-card transition-colors">
-            <ArrowLeft className="w-5 h-5 text-light-muted dark:text-dark-muted" />
+          <Link to="/admin/leads" aria-label="Back to leads" className="p-2 rounded-btn hover:bg-light-card dark:hover:bg-dark-card transition-colors duration-150">
+            <ArrowLeft className="w-5 h-5 text-light-muted dark:text-dark-muted" aria-hidden="true" />
           </Link>
           <div className="flex items-center gap-3">
             {university.logoUrl ? (
               <img src={university.logoUrl} alt={university.name} className="w-12 h-12 rounded-xl object-contain border border-light-border dark:border-dark-border bg-white p-1" />
             ) : (
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-link" />
+                <Building2 className="w-6 h-6 text-primary" aria-hidden="true" />
               </div>
             )}
             <div>
-              <h2 className="text-xl font-bold text-light-text dark:text-dark-text leading-tight">{university.name}</h2>
-              <p className="text-sm text-light-muted dark:text-dark-muted">{university.city}, {university.state}</p>
+              <h2 className="text-h2 leading-tight">{university.name}</h2>
+              <p className="text-support">{university.city}, {university.state}</p>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
           {/* Tier badge */}
-          <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold border ${tier.bg} ${tier.color} ${tier.border}`}>
+          <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border ${tier.bg} ${tier.color} ${tier.border}`}>
             <tier.icon className="w-4 h-4" aria-hidden="true" /> {tier.label} Partner
           </span>
 
           {/* Expiry */}
-          <span className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-light-card dark:bg-dark-card text-xs text-light-muted dark:text-dark-muted border border-light-border dark:border-dark-border">
-            <Calendar className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-light-card dark:bg-dark-card text-caption border border-light-border dark:border-dark-border">
+            <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
             Expires: {expiryDate}
           </span>
         </div>
@@ -140,14 +140,14 @@ export default function PartnerDashboard() {
 
       {/* Date range selector */}
       <div className="flex items-center gap-2">
-        <span className="text-sm text-light-muted dark:text-dark-muted font-semibold">Period:</span>
+        <span className="text-label">Period:</span>
         {[7, 14, 30, 90].map(d => (
           <button
             key={d}
             onClick={() => setDays(d)}
-            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-1.5 rounded-btn text-xs font-semibold transition-colors duration-150 ${
               days === d
-                ? 'bg-primary text-white shadow-md'
+                ? 'bg-primary text-white'
                 : 'bg-light-card dark:bg-dark-card text-light-muted dark:text-dark-muted hover:text-link border border-light-border dark:border-dark-border'
             }`}
           >
@@ -158,25 +158,25 @@ export default function PartnerDashboard() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={Eye}       label="Profile Views"    value={profileViews.toLocaleString()}  color="text-blue-500"   bg="bg-blue-500/10" />
-        <StatCard icon={Users}     label="Total Leads"      value={totalLeads}                      color="text-link"    bg="bg-primary/10" />
-        <StatCard icon={CheckCircle2} label="Apply Now"     value={applyLeads}  sub="applications"  color="text-green-500"  bg="bg-green-500/10" />
-        <StatCard icon={FileText}  label="Brochure Reqs"   value={brochureLeads} sub="downloads"   color="text-amber-500"  bg="bg-amber-500/10" />
+        <StatCard icon={Eye}       label="Profile Views"    value={profileViews.toLocaleString()}  color="text-info"     bg="bg-info/10" />
+        <StatCard icon={Users}     label="Total Leads"      value={totalLeads}                      color="text-primary"  bg="bg-primary/10" />
+        <StatCard icon={CheckCircle2} label="Apply Now"     value={applyLeads}  sub="applications"  color="text-success"  bg="bg-success/10" />
+        <StatCard icon={FileText}  label="Brochure Reqs"   value={brochureLeads} sub="downloads"   color="text-warning"  bg="bg-warning/10" />
       </div>
 
       {/* Chart + Quick Actions */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Daily leads chart */}
-        <div className="lg:col-span-2 card p-6 space-y-4 shadow-sm">
+        <div className="lg:col-span-2 card p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-link" />
+            <h3 className="text-h3 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-primary" aria-hidden="true" />
               Lead Trend — Last {days} Days
             </h3>
-            <span className="text-xs text-light-muted dark:text-dark-muted">{dailyLeads.length} active days</span>
+            <span className="text-caption tabular-nums">{dailyLeads.length} active days</span>
           </div>
           <MiniBarChart data={dailyLeads} />
-          <div className="flex justify-between text-[10px] text-light-muted dark:text-dark-muted pt-1 border-t border-light-border dark:border-dark-border">
+          <div className="flex justify-between text-caption pt-1 border-t border-light-border dark:border-dark-border">
             {dailyLeads.length > 0 && (
               <>
                 <span>{dailyLeads[0]._id}</span>
@@ -187,40 +187,40 @@ export default function PartnerDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="card p-6 space-y-4 shadow-sm">
-          <h3 className="font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-amber-500" />
+        <div className="card p-6 space-y-4">
+          <h3 className="text-h3 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" aria-hidden="true" />
             Quick Actions
           </h3>
           <div className="space-y-3">
             <button
               onClick={handleCSVExport}
-              className="w-full flex items-center gap-3 p-3 rounded-xl bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 transition-all text-sm font-semibold border border-green-500/20"
+              className="w-full flex items-center gap-3 p-3 rounded-btn bg-success/10 text-success-text dark:text-green-400 hover:bg-success/20 transition-colors duration-150 text-sm font-semibold border border-success/20"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4" aria-hidden="true" />
               Export All Leads (CSV)
             </button>
             <Link
               to={`/universities/${university.slug}`}
               target="_blank"
-              className="w-full flex items-center gap-3 p-3 rounded-xl bg-primary/10 text-link hover:bg-primary/20 transition-all text-sm font-semibold border border-primary/20"
+              className="w-full flex items-center gap-3 p-3 rounded-btn bg-primary/10 text-link dark:text-primary-300 hover:bg-primary/20 transition-colors duration-150 text-sm font-semibold border border-primary/20"
             >
-              <Star className="w-4 h-4" />
+              <Star className="w-4 h-4" aria-hidden="true" />
               View Public Profile
             </Link>
             <Link
               to="/admin/leads"
-              className="w-full flex items-center gap-3 p-3 rounded-xl bg-light-card dark:bg-dark-card text-light-muted dark:text-dark-muted hover:text-light-text dark:hover:text-dark-text transition-all text-sm font-semibold border border-light-border dark:border-dark-border"
+              className="w-full flex items-center gap-3 p-3 rounded-btn bg-light-card dark:bg-dark-card text-light-muted dark:text-dark-muted hover:text-light-text dark:hover:text-dark-text transition-colors duration-150 text-sm font-semibold border border-light-border dark:border-dark-border"
             >
-              <Mail className="w-4 h-4" />
+              <Mail className="w-4 h-4" aria-hidden="true" />
               All Leads Registry
             </Link>
           </div>
 
           {/* Tier summary */}
           <div className={`mt-4 p-4 rounded-xl border ${tier.border} ${tier.bg}`}>
-            <p className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest ${tier.color}`}><tier.icon className="w-4 h-4" aria-hidden="true" /> {tier.label} Tier Benefits</p>
-            <ul className="mt-2 space-y-1 text-xs text-light-muted dark:text-dark-muted [&>li]:flex [&>li]:items-center [&>li]:gap-1.5 [&>li>svg]:w-3 [&>li>svg]:h-3 [&>li>svg]:shrink-0">
+            <p className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.06em] ${tier.color}`}><tier.icon className="w-4 h-4" aria-hidden="true" /> {tier.label} Tier Benefits</p>
+            <ul className="mt-2 space-y-1 text-caption [&>li]:flex [&>li]:items-center [&>li]:gap-1.5 [&>li>svg]:w-3 [&>li>svg]:h-3 [&>li>svg]:shrink-0">
               {university.sponsorTier === 'platinum' && <><li><Check aria-hidden="true" />Slot #1 in all listings</li><li><Check aria-hidden="true" />Hero banner slider placement</li><li><Check aria-hidden="true" />Homepage sponsored showcase</li><li><Check aria-hidden="true" />Sticky bottom & sidebar ads</li></>}
               {university.sponsorTier === 'gold'     && <><li><Check aria-hidden="true" />Top 3 state placement</li><li><Check aria-hidden="true" />Homepage sponsored section</li><li><Check aria-hidden="true" />Sidebar ad placement</li></>}
               {university.sponsorTier === 'silver'   && <><li><Check aria-hidden="true" />Medium ranking boost</li><li><Check aria-hidden="true" />Sidebar ad placement</li><li><Check aria-hidden="true" />Video/photo gallery</li></>}
@@ -232,54 +232,54 @@ export default function PartnerDashboard() {
       </div>
 
       {/* Recent Leads Table */}
-      <div className="card p-6 space-y-4 shadow-sm">
+      <div className="card p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-            <Mail className="w-5 h-5 text-link" />
+          <h3 className="text-h3 flex items-center gap-2">
+            <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
             Recent Student Leads
-            <span className="ml-2 text-xs font-normal text-light-muted dark:text-dark-muted">
+            <span className="ml-2 text-caption font-normal">
               (last {days} days — {recentLeads.length} shown)
             </span>
           </h3>
           <button
             onClick={handleCSVExport}
-            className="flex items-center gap-2 text-xs font-bold text-green-600 dark:text-green-400 hover:underline"
+            className="flex items-center gap-2 text-xs font-semibold text-success-text dark:text-green-400 hover:underline"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5" aria-hidden="true" />
             Export CSV
           </button>
         </div>
 
         {recentLeads.length === 0 ? (
-          <p className="text-sm text-light-muted dark:text-dark-muted">No leads captured in this period yet.</p>
+          <p className="text-support">No leads captured in this period yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm tabular-nums">
               <thead>
                 <tr className="border-b border-light-border dark:border-dark-border">
                   {['Student', 'Contact', 'State', 'Course', 'Type', 'Date'].map(h => (
-                    <th key={h} className="pb-3 text-left text-xs font-bold uppercase tracking-[0.15em] text-light-muted dark:text-dark-muted">{h}</th>
+                    <th key={h} className="pb-3 text-left text-eyebrow !text-light-muted dark:!text-dark-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-light-border dark:divide-dark-border">
                 {recentLeads.map(lead => (
-                  <tr key={lead._id} className="hover:bg-light-bg/50 dark:hover:bg-dark-bg/30 transition-colors">
+                  <tr key={lead._id} className="hover:bg-light-card dark:hover:bg-white/5 transition-colors duration-150">
                     <td className="py-3 pr-4 font-semibold text-light-text dark:text-dark-text">{lead.name}</td>
-                    <td className="py-3 pr-4 text-light-muted dark:text-dark-muted">
+                    <td className="py-3 pr-4 text-support">
                       <div>{lead.email}</div>
-                      <div className="text-xs">{lead.phone}</div>
+                      <div className="text-caption">{lead.phone}</div>
                     </td>
-                    <td className="py-3 pr-4 text-light-muted dark:text-dark-muted">{lead.state}</td>
-                    <td className="py-3 pr-4 text-light-muted dark:text-dark-muted">{lead.preferredCourse || '—'}</td>
+                    <td className="py-3 pr-4 text-support">{lead.state}</td>
+                    <td className="py-3 pr-4 text-support">{lead.preferredCourse || '—'}</td>
                     <td className="py-3 pr-4">
                       {lead.leadType === 'apply' ? (
-                        <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Apply</span>
+                        <span className="badge badge-green">Apply</span>
                       ) : (
-                        <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">Brochure</span>
+                        <span className="badge badge-blue">Brochure</span>
                       )}
                     </td>
-                    <td className="py-3 text-xs text-light-muted dark:text-dark-muted">
+                    <td className="py-3 text-caption">
                       {new Date(lead.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}
                     </td>
                   </tr>

@@ -34,7 +34,7 @@ export default function FAQManager() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">FAQs</h2>
+        <h2 className="text-h2">FAQs</h2>
         <button onClick={() => { setShow(!show); setEditId(null); setForm(empty()); }} className="btn-primary text-sm flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</button>
       </div>
       {show && (
@@ -55,8 +55,8 @@ export default function FAQManager() {
         { key: 'order', label: 'Order' },
         { key: 'isPublished', label: 'Status', render: f => f.isPublished ? <span className="badge badge-green">Published</span> : <span className="badge badge-orange">Draft</span> },
       ]} searchFields={['question', 'category']} actions={(f) => (<>
-        <button onClick={() => edit(f)} className="p-1.5 rounded-lg hover:bg-light-card"><Pencil className="w-4 h-4" /></button>
-        {canDelete && <button onClick={() => del(f._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>}
+        <button onClick={() => edit(f)} aria-label="Edit" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Pencil className="w-4 h-4" aria-hidden="true" /></button>
+        {canDelete && <button onClick={() => del(f._id)} aria-label="Delete" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>}
       </>)} />
     </div>
   );

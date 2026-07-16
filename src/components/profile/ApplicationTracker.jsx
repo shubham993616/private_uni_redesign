@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Briefcase, Clock, CheckCircle, XCircle, ChevronRight, MapPin, Calendar, ExternalLink } from 'lucide-react';
+import React from 'react';
+import { Briefcase, Clock, CheckCircle, XCircle, MapPin, Calendar, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Badge } from '../ui';
 
 export default function ApplicationTracker({ applications = [], onUpdateStatus }) {
-  const getStatusColor = (status) => {
+  const getStatusVariant = (status) => {
     switch (status) {
-      case 'accepted': return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
-      case 'rejected': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
-      case 'applied': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400';
-      default: return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400';
+      case 'accepted': return 'success';
+      case 'rejected': return 'error';
+      case 'applied': return 'info';
+      default: return 'warning';
     }
   };
 
@@ -25,8 +26,8 @@ export default function ApplicationTracker({ applications = [], onUpdateStatus }
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Application Tracker</h2>
-        <div className="badge badge-orange">{applications.length} Active Apps</div>
+        <h2 className="text-h2">Application tracker</h2>
+        <Badge variant="brand" className="tabular-nums">{applications.length} active</Badge>
       </div>
 
       <div className="grid grid-cols-1 gap-4">
@@ -35,54 +36,60 @@ export default function ApplicationTracker({ applications = [], onUpdateStatus }
           const uni = app.universityId || {};
 
           return (
-            <motion.div 
+            <motion.div
               key={app._id}
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: i * 0.1 }}
-              className="card p-6 flex flex-col md:flex-row items-center gap-6 group hover:border-primary/30"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: i * 0.08 }}
+              className="card p-6 flex flex-col md:flex-row items-center gap-6"
             >
-              <div className="w-16 h-16 rounded-2xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link font-bold text-2xl shrink-0 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link dark:text-primary-300 font-bold text-2xl shrink-0">
                 {uni.name?.charAt(0)}
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-1">
-                  <h3 className="font-bold text-lg truncate">{uni.name}</h3>
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${getStatusColor(app.status)}`}>
+                  <h3 className="text-h3 truncate">{uni.name}</h3>
+                  <Badge variant={getStatusVariant(app.status)}>
+                    <StatusIcon className="w-3 h-3" aria-hidden="true" />
                     {app.status}
-                  </span>
+                  </Badge>
                 </div>
-                <p className="text-sm text-light-muted flex items-center gap-1 mb-4">
-                  <MapPin className="w-3 h-3" /> {uni.city}, {uni.state}
+                <p className="text-support flex items-center gap-1 mb-4">
+                  <MapPin className="w-3 h-3" aria-hidden="true" /> {uni.city}, {uni.state}
                 </p>
                 <div className="flex flex-wrap gap-4">
-                   <div className="flex items-center gap-1.5 text-xs font-bold text-light-muted">
-                      <Calendar className="w-3 h-3" />
-                      Applied: {new Date(app.appliedDate).toLocaleDateString()}
-                   </div>
-                   {uni.admissions?.applicationEndDate && (
-                     <div className="flex items-center gap-1.5 text-xs font-bold text-orange-500">
-                        <Clock className="w-3 h-3" />
-                        Deadline: {new Date(uni.admissions.applicationEndDate).toLocaleDateString()}
-                     </div>
-                   )}
+                  <div className="flex items-center gap-1.5 text-caption">
+                    <Calendar className="w-3 h-3" aria-hidden="true" />
+                    Applied: <span className="tabular-nums">{new Date(app.appliedDate).toLocaleDateString()}</span>
+                  </div>
+                  {uni.admissions?.applicationEndDate && (
+                    <div className="flex items-center gap-1.5 text-caption font-semibold text-warning-text dark:text-amber-300">
+                      <Clock className="w-3 h-3" aria-hidden="true" />
+                      Deadline: <span className="tabular-nums">{new Date(uni.admissions.applicationEndDate).toLocaleDateString()}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="flex gap-2 w-full md:w-auto">
-                <select 
+                <select
                   value={app.status}
                   onChange={(e) => onUpdateStatus(app._id, e.target.value)}
-                  className="input-field !py-2 !px-3 text-xs font-bold !w-auto"
+                  aria-label={`Update status for ${uni.name}`}
+                  className="input-field !h-10 !px-3 text-sm !w-auto"
                 >
                   <option value="pending">Pending</option>
                   <option value="applied">Applied</option>
                   <option value="accepted">Accepted</option>
                   <option value="rejected">Rejected</option>
                 </select>
-                <Link to={`/universities/${uni.slug}`} className="btn-primary !p-3 rounded-xl flex items-center justify-center">
-                   <ExternalLink className="w-4 h-4" />
+                <Link
+                  to={`/universities/${uni.slug}`}
+                  aria-label={`View ${uni.name}`}
+                  className="btn-primary !p-0 w-10 h-10 flex items-center justify-center shrink-0"
+                >
+                  <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </Link>
               </div>
             </motion.div>
@@ -90,13 +97,15 @@ export default function ApplicationTracker({ applications = [], onUpdateStatus }
         })}
 
         {applications.length === 0 && (
-          <div className="card p-20 text-center border-dashed">
-            <Briefcase className="w-12 h-12 text-light-muted mx-auto mb-4 opacity-20" />
-            <h3 className="text-xl font-bold mb-2">No Applications Tracked</h3>
-            <p className="text-sm text-light-muted max-w-sm mx-auto">
+          <div className="card p-16 text-center border-dashed">
+            <div className="w-14 h-14 rounded-2xl bg-light-card dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
+              <Briefcase className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
+            </div>
+            <h3 className="text-h3 mb-2">No applications tracked</h3>
+            <p className="text-support max-w-sm mx-auto">
               Start applying to universities and track your progress here. You can mark colleges as "Applied", "Accepted", or "Rejected".
             </p>
-            <Link to="/universities" className="btn-primary mt-6 inline-block">Explore Universities</Link>
+            <Link to="/universities" className="btn-primary mt-6 inline-flex text-sm">Explore universities</Link>
           </div>
         )}
       </div>

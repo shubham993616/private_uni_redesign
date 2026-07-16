@@ -21,6 +21,7 @@ import {
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '../components/ui';
 import { getUniversityDisplayType } from '../utils/universityType';
 import useClickOutside from '../hooks/useClickOutside';
 
@@ -342,8 +343,8 @@ export default function Profile() {
   if (loading || !fullUser) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-light-bg dark:bg-dark-bg gap-4">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary shadow-lg" />
-        <p className="text-sm font-bold text-light-muted animate-pulse">Synchronizing your dashboard...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary" aria-hidden="true" />
+        <p className="text-support">Loading your dashboard...</p>
       </div>
     );
   }
@@ -365,15 +366,14 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] dark:bg-dark-bg flex flex-col md:flex-row relative selection:bg-primary/30 pb-20 md:pb-0">
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+    <div className="min-h-screen bg-light-bg dark:bg-dark-bg flex flex-col md:flex-row relative pb-20 md:pb-0">
+      <button
         onClick={() => setSidebarOpen(true)}
-        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg z-50 flex items-center justify-center"
+        aria-label="Open dashboard menu"
+        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary hover:bg-primary-dark text-white rounded-full shadow-card-hover z-50 flex items-center justify-center transition-colors duration-150 active:scale-[0.98]"
       >
-        <Menu className="w-6 h-6" />
-      </motion.button>
+        <Menu className="w-6 h-6" aria-hidden="true" />
+      </button>
 
       <AnimatePresence>
         {sidebarOpen && (
@@ -392,21 +392,22 @@ export default function Profile() {
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div className="h-full flex flex-col p-6">
-          <div className="flex items-center justify-between mb-10 px-2">
-            <Link to="/" className="text-xl font-bold text-link tracking-tighter hover:opacity-80 transition-opacity flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-sm">VM</div>
-              VIDYARTHI MITRA
+          <div className="flex items-center justify-between mb-8 px-2">
+            <Link to="/" className="flex items-center gap-2 font-bold text-light-text dark:text-dark-text hover:text-link transition-colors duration-150" aria-label="Vidyarthi Mitra home">
+              <span className="w-8 h-8 bg-primary rounded-btn flex items-center justify-center text-white text-sm font-semibold" aria-hidden="true">VM</span>
+              Vidyarthi Mitra
             </Link>
-            <button className="md:hidden p-2 hover:bg-light-bg rounded-full transition-colors" onClick={() => setSidebarOpen(false)}>
-              <X className="w-5 h-5" />
+            <button
+              className="md:hidden w-10 h-10 flex items-center justify-center hover:bg-light-card dark:hover:bg-dark-border rounded-btn transition-colors duration-150"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close dashboard menu"
+            >
+              <X className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
 
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent dark:from-primary/20 mb-8 border border-primary/10"
-          >
-            <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-primary/20 overflow-hidden shrink-0 border-2 border-white/50">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-light-card dark:bg-dark-border/40 border border-light-border dark:border-dark-border mb-8">
+            <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-xl overflow-hidden shrink-0">
               {fullUser.avatar ? (
                 <img src={fullUser.avatar} className="w-full h-full object-cover" alt="Profile" />
               ) : (
@@ -414,10 +415,10 @@ export default function Profile() {
               )}
             </div>
             <div className="min-w-0">
-              <p className="font-bold text-sm truncate">{fullUser.name}</p>
-              <p className="text-[10px] text-light-muted font-bold truncate uppercase tracking-tighter opacity-70">{fullUser.email}</p>
+              <p className="text-card-title truncate">{fullUser.name}</p>
+              <p className="text-caption truncate">{fullUser.email}</p>
             </div>
-          </motion.div>
+          </div>
 
           <nav className="flex-1 space-y-1">
             {tabs.map((tab) => (
@@ -425,13 +426,13 @@ export default function Profile() {
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
                 className={`
-                  w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200
+                  w-full flex items-center gap-3 px-4 py-2.5 rounded-btn text-sm font-semibold transition-colors duration-150
                   ${activeTab === tab.id
-                    ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                    : 'text-light-muted hover:bg-primary-50 dark:hover:bg-dark-border hover:text-link'}
+                    ? 'bg-primary text-white'
+                    : 'text-light-muted dark:text-dark-muted hover:bg-light-card dark:hover:bg-dark-border hover:text-light-text dark:hover:text-dark-text'}
                 `}
               >
-                <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'animate-pulse' : ''}`} />
+                <tab.icon className="w-4 h-4" aria-hidden="true" />
                 {tab.label}
               </button>
             ))}
@@ -440,54 +441,52 @@ export default function Profile() {
           <div className="pt-6 border-t border-light-border dark:border-dark-border mt-auto space-y-2">
             <button
               onClick={logout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all group"
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-btn text-sm font-semibold text-error-text dark:text-red-400 hover:bg-error-tint dark:hover:bg-red-900/10 transition-colors duration-150"
             >
-              <LogOut className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Logout
+              <LogOut className="w-4 h-4" aria-hidden="true" /> Logout
             </button>
           </div>
         </div>
       </aside>
 
       <main className="flex-1 p-6 md:p-10 max-w-7xl w-full md:h-[calc(100vh-4rem)] md:overflow-y-auto">
-        <header className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8">
-          <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-link uppercase tracking-[0.2em] mb-3">
-              <span className="w-10 h-[2px] bg-primary rounded-full" />
-              {getPageTitle()}
-            </div>
-            <h1 className="text-4xl font-bold mb-2 tracking-tight text-slate-900 dark:text-white">
-              Welcome back, <span className="text-link">{fullUser.name?.split(' ')[0]}!</span>
+        <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-light-border dark:border-dark-border">
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+            <p className="text-eyebrow mb-2">{getPageTitle()}</p>
+            <h1 className="text-h1 mb-1">
+              Welcome back, {fullUser.name?.split(' ')[0]}
             </h1>
-            <p className="text-sm text-light-muted font-medium max-w-md">
+            <p className="text-support max-w-md">
               Manage your applications, track progress, and find your dream university.
             </p>
           </motion.div>
 
-          <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="flex items-center gap-4">
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex items-center gap-3">
             <div ref={notifRef} className="relative">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+              <button
                 onClick={() => setShowNotifications((current) => !current)}
-                className="w-12 h-12 bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-light-border dark:border-dark-border flex items-center justify-center relative text-light-muted hover:text-link transition-colors"
+                aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+                className="w-10 h-10 bg-white dark:bg-dark-card rounded-btn shadow-card border border-light-border dark:border-dark-border flex items-center justify-center relative text-light-muted dark:text-dark-muted hover:text-light-text dark:hover:text-dark-text transition-colors duration-150"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-5 h-5" aria-hidden="true" />
                 {unreadCount > 0 ? (
-                  <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 border-2 border-white dark:border-dark-card rounded-full shadow-lg" />
+                  <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-error border-2 border-white dark:border-dark-card rounded-full" aria-hidden="true" />
                 ) : null}
-              </motion.button>
+              </button>
 
               <AnimatePresence>
                 {showNotifications && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute right-0 mt-4 w-80 bg-white dark:bg-dark-card rounded-3xl shadow-lg border border-light-border dark:border-dark-border z-[100] overflow-hidden"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute right-0 mt-3 w-80 bg-white dark:bg-dark-card rounded-card shadow-modal border border-light-border dark:border-dark-border z-[100] overflow-hidden"
                   >
-                    <div className="p-4 border-b border-light-border dark:border-dark-border flex items-center justify-between bg-primary/5">
-                      <span className="font-bold text-sm">Notifications</span>
-                      <span className="text-[10px] font-bold text-link uppercase">{unreadCount} New</span>
+                    <div className="p-4 border-b border-light-border dark:border-dark-border flex items-center justify-between">
+                      <span className="text-card-title">Notifications</span>
+                      {unreadCount > 0 && (
+                        <span className="text-caption font-semibold text-link dark:text-primary-300">{unreadCount} new</span>
+                      )}
                     </div>
                     <div className="max-h-[350px] overflow-y-auto">
                       {notifications.map((notification) => (
@@ -495,21 +494,21 @@ export default function Profile() {
                           key={notification._id}
                           type="button"
                           onClick={() => handleNotificationClick(notification)}
-                          className={`w-full text-left p-4 border-b border-light-border dark:border-dark-border last:border-0 hover:bg-light-bg dark:hover:bg-dark-border transition-colors ${!notification.isRead ? 'bg-primary/5' : ''}`}
+                          className={`w-full text-left p-4 border-b border-light-border dark:border-dark-border last:border-0 hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150 ${!notification.isRead ? 'bg-primary-50/60 dark:bg-primary/10' : ''}`}
                         >
-                          <p className="text-xs font-bold mb-1">{notification.title}</p>
-                          <p className="text-[10px] text-light-muted line-clamp-2">{notification.message}</p>
-                          <p className="text-[9px] text-light-muted mt-2 font-bold uppercase">{new Date(notification.createdAt).toLocaleString()}</p>
+                          <p className="text-sm font-semibold text-light-text dark:text-dark-text mb-1">{notification.title}</p>
+                          <p className="text-caption line-clamp-2">{notification.message}</p>
+                          <p className="text-caption mt-2">{new Date(notification.createdAt).toLocaleString()}</p>
                         </button>
                       ))}
                       {notifications.length === 0 ? (
-                        <div className="p-8 text-center text-light-muted text-xs italic">
+                        <div className="p-8 text-center text-support">
                           No new notifications
                         </div>
                       ) : null}
                     </div>
-                    <div className="p-3 text-center bg-light-bg dark:bg-dark-border/30">
-                      <button type="button" onClick={handleMarkAllNotificationsRead} className="text-[10px] font-bold uppercase text-link hover:underline">
+                    <div className="p-3 text-center bg-light-card dark:bg-dark-border/30">
+                      <button type="button" onClick={handleMarkAllNotificationsRead} className="text-sm font-semibold text-link dark:text-primary-300 hover:underline">
                         Mark all as read
                       </button>
                     </div>
@@ -518,12 +517,12 @@ export default function Profile() {
               </AnimatePresence>
             </div>
 
-            <button
+            <Button
+              size="md"
               onClick={() => handleShare({ name: 'My Dashboard', url: window.location.href })}
-              className="btn-primary !py-3 !px-6 text-xs flex items-center gap-2"
             >
-              <Share2 className="w-4 h-4" /> Share Dashboard
-            </button>
+              <Share2 className="w-4 h-4" aria-hidden="true" /> Share dashboard
+            </Button>
           </motion.div>
         </header>
 

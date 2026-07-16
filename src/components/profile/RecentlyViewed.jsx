@@ -1,49 +1,48 @@
-import { Clock, MapPin, ExternalLink, Trash2, LayoutDashboard, Bookmark, BookOpen, Activity, TrendingUp, TrendingDown, Users, Award, ChevronRight, Sparkles, Download, MessageSquare } from 'lucide-react';
+import { Clock, MapPin, ExternalLink, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export default function RecentlyViewed({ items = [], onClear }) {
   if (items.length === 0) return (
     <div className="card p-12 text-center">
-      <Clock className="w-12 h-12 text-light-muted mx-auto mb-4 opacity-20" />
-      <p className="text-light-muted">Your browsing history is empty. Start exploring universities!</p>
+      <div className="w-14 h-14 rounded-2xl bg-light-card dark:bg-dark-border flex items-center justify-center mx-auto mb-4">
+        <Clock className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
+      </div>
+      <p className="text-support">Your browsing history is empty. Start exploring universities!</p>
     </div>
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Browsing History</h2>
-        <button 
+        <h2 className="text-h2">Browsing history</h2>
+        <button
           onClick={onClear}
-          className="text-xs font-bold text-red-500 hover:underline flex items-center gap-1"
+          className="text-sm font-semibold text-error-text dark:text-red-400 hover:underline flex items-center gap-1"
         >
-          <Trash2 className="w-3 h-3" /> Clear History
+          <Trash2 className="w-4 h-4" aria-hidden="true" /> Clear history
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((u, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: i * 0.1 }}
-            className="card p-6 group relative overflow-hidden"
+            transition={{ delay: i * 0.08 }}
+            className="card p-6 transition-all duration-150 hover:shadow-card-hover hover:-translate-y-0.5 group"
           >
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-               <Clock className="w-20 h-20" />
-            </div>
-            <div className="w-14 h-14 rounded-2xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link font-bold text-2xl mb-4 group-hover:scale-110 transition-transform border border-primary/10">
+            <div className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-dark-border flex items-center justify-center text-link dark:text-primary-300 font-bold text-xl mb-4">
               {u.name?.charAt(0)}
             </div>
-            <h3 className="font-bold text-lg mb-1 group-hover:text-link transition-colors line-clamp-1">{u.name}</h3>
-            <p className="text-sm text-light-muted flex items-center gap-1 mb-6">
-              <MapPin className="w-4 h-4 text-link" /> {u.city}, {u.state}
+            <h3 className="text-card-title mb-1 group-hover:text-link dark:group-hover:text-primary-300 transition-colors line-clamp-1">{u.name}</h3>
+            <p className="text-support flex items-center gap-1 mb-6">
+              <MapPin className="w-4 h-4" aria-hidden="true" /> {u.city}, {u.state}
             </p>
             <div className="flex gap-2">
-              <Link to={`/universities/${u.slug}`} className="btn-primary !py-2.5 flex-1 text-center text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                <ExternalLink className="w-3 h-3" /> Revisit Profile
+              <Link to={`/universities/${u.slug}`} className="btn-primary !py-2 flex-1 text-sm flex items-center justify-center gap-2">
+                <ExternalLink className="w-4 h-4" aria-hidden="true" /> Revisit profile
               </Link>
             </div>
           </motion.div>

@@ -82,7 +82,7 @@ export default function LeadCaptureModal({ isOpen, onClose, university, leadType
       />
 
       {/* Modal box */}
-      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white dark:bg-dark-card border border-light-border dark:border-dark-border shadow-lg transition-all duration-300 transform scale-100 z-10">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-card bg-white dark:bg-dark-card border border-light-border dark:border-dark-border shadow-lg transition-all duration-300 transform scale-100 z-10">
         
         {/* Decorative Top Accent */}
         <div className="h-2 bg-gradient-to-r from-primary to-accent" />
@@ -121,7 +121,7 @@ export default function LeadCaptureModal({ isOpen, onClose, university, leadType
           <div className="p-8 space-y-6">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-link">
-                {leadType === 'apply' ? 'Direct Application' : 'Request Official Brochure'}
+                {leadType === 'apply' ? 'Direct Application' : leadType === 'counselling' ? 'Talk to a Counsellor' : 'Request Official Brochure'}
               </span>
               <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mt-1">
                 {university.name}
@@ -223,7 +223,7 @@ export default function LeadCaptureModal({ isOpen, onClose, university, leadType
                     </>
                   ) : (
                     <>
-                      {leadType === 'apply' ? 'Apply Now' : 'Download Brochure'}
+                      {leadType === 'apply' ? 'Apply Now' : leadType === 'counselling' ? 'Request a Call Back' : 'Download Brochure'}
                     </>
                   )}
                 </button>

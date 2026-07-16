@@ -45,12 +45,12 @@ export default function DataTable({
         {filters}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-light-border dark:border-dark-border">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-card border border-light-border dark:border-dark-border bg-white dark:bg-dark-card shadow-card">
+        <table className="w-full text-sm tabular-nums">
           <thead>
-            <tr className="bg-light-card dark:bg-dark-card border-b border-light-border dark:border-dark-border">
+            <tr className="bg-light-card dark:bg-white/5 border-b border-light-border dark:border-dark-border">
               {rowSelection && (
-                <th className="px-4 py-3 text-left font-medium text-light-muted dark:text-dark-muted whitespace-nowrap">
+                <th className="px-4 py-3 text-left whitespace-nowrap">
                   <input
                     type="checkbox"
                     checked={rowSelection.allSelected}
@@ -61,22 +61,22 @@ export default function DataTable({
                 </th>
               )}
               {columns.map(col => (
-                <th key={col.key} className="px-4 py-3 text-left font-medium text-light-muted dark:text-dark-muted whitespace-nowrap">
+                <th key={col.key} className="px-4 py-3 text-left text-eyebrow !text-light-muted dark:!text-dark-muted whitespace-nowrap">
                   {col.label}
                 </th>
               ))}
-              {actions && <th className="px-4 py-3 text-right font-medium text-light-muted">Actions</th>}
+              {actions && <th className="px-4 py-3 text-right text-eyebrow !text-light-muted dark:!text-dark-muted whitespace-nowrap">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-light-border dark:divide-dark-border">
             {paged.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (actions ? 1 : 0) + (rowSelection ? 1 : 0)} className="px-4 py-8 text-center text-light-muted">
+                <td colSpan={columns.length + (actions ? 1 : 0) + (rowSelection ? 1 : 0)} className="px-4 py-8 text-center text-support">
                   {emptyMessage}
                 </td>
               </tr>
             ) : paged.map((item, i) => (
-              <tr key={item._id || i} className="hover:bg-light-card/50 dark:hover:bg-dark-card/50 transition-colors">
+              <tr key={item._id || i} className="hover:bg-light-card dark:hover:bg-white/5 transition-colors duration-150">
                 {rowSelection && (
                   <td className="px-4 py-3 whitespace-nowrap">
                     <input
@@ -89,7 +89,7 @@ export default function DataTable({
                   </td>
                 )}
                 {columns.map(col => (
-                  <td key={col.key} className="px-4 py-3 whitespace-nowrap">
+                  <td key={col.key} className="px-4 py-3 whitespace-nowrap text-support">
                     {col.render ? col.render(item) : String(col.key.split('.').reduce((obj, key) => obj?.[key], item) ?? '')}
                   </td>
                 ))}
@@ -107,14 +107,14 @@ export default function DataTable({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-light-muted">{filtered.length} items | Page {page} of {totalPages}</span>
+        <div className="flex items-center justify-between">
+          <span className="text-support tabular-nums">{filtered.length} items | Page {page} of {totalPages}</span>
           <div className="flex gap-1">
-            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-30">
-              <ChevronLeft className="w-4 h-4" />
+            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} aria-label="Previous page" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-30 transition-colors duration-150">
+              <ChevronLeft className="w-4 h-4" aria-hidden="true" />
             </button>
-            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-1.5 rounded-lg hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-30">
-              <ChevronRight className="w-4 h-4" />
+            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} aria-label="Next page" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-card disabled:opacity-30 transition-colors duration-150">
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>

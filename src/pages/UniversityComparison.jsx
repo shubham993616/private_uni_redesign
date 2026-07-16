@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRightLeft, Check, GraduationCap, Search, Trash2, MapPin, X, Scale, Layers, Sparkles, GripVertical, AlertCircle, Loader2, Award, Star, ArrowUpRight, Trophy, TrendingUp, Crown } from 'lucide-react';
+import { ArrowRightLeft, Check, GraduationCap, Search, Trash2, MapPin, X, Scale, Layers, GripVertical, AlertCircle, Loader2, Award, Star, ArrowUpRight, Trophy, TrendingUp, Crown } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import api from '../utils/api';
 import Seo from '../components/common/Seo';
 import useClickOutside from '../hooks/useClickOutside';
+import Container from '../components/layout/Container';
+import { Button, Badge, EmptyState } from '../components/ui';
 
 const EXAMPLE_UNIVERSITIES = ['BITS Pilani', 'MAHE Manipal', 'Symbiosis International', 'Amity University'];
 
@@ -22,7 +24,7 @@ const HighlightMatch = ({ text = '', query = '' }) => {
   return (
     <span>
       {text.slice(0, idx)}
-      <mark className="bg-primary/20 text-link font-bold rounded px-0.5">{text.slice(idx, idx + query.trim().length)}</mark>
+      <mark className="bg-primary/20 text-link dark:text-primary-300 font-semibold rounded px-0.5">{text.slice(idx, idx + query.trim().length)}</mark>
       {text.slice(idx + query.trim().length)}
     </span>
   );
@@ -36,7 +38,7 @@ const MetricBar = ({ value, max, isWinner }) => {
     <div className="mt-1.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-dark-border overflow-hidden">
       <div
         className={`h-full rounded-full transition-all duration-700 ${
-          isWinner ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-slate-300 dark:bg-slate-600'
+          isWinner ? 'bg-success' : 'bg-slate-300 dark:bg-slate-600'
         }`}
         style={{ width: `${pct}%` }}
       />
@@ -176,42 +178,42 @@ export default function UniversityComparison() {
   };
 
   const summaryLabels = {
-    ranking: 'Best Ranking',
-    placements: 'Best Placements',
-    affordability: 'Most Affordable',
-    courseBreadth: 'Most Course Options',
+    ranking: 'Best ranking',
+    placements: 'Best placements',
+    affordability: 'Most affordable',
+    courseBreadth: 'Most course options',
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50/30 dark:from-dark-bg dark:via-dark-bg dark:to-slate-900/10 transition-colors duration-300">
+    <div>
       <Seo
         title="Compare Universities Side-by-Side | Fees, Rankings & Placements | Vidyarthi Mitra"
         description="Compare Indian universities side-by-side on fees, NAAC grade, NIRF rank, placements and courses to choose the right one for you."
         path="/compare-universities"
       />
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16 space-y-12">
+      <Container className="py-12 space-y-10">
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto">
-          <motion.div 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 dark:bg-slate-500/10 text-slate-600 dark:text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] border border-slate-100 dark:border-slate-500/20 mb-6"
+            className="text-eyebrow mb-3"
           >
-            Side-by-Side Comparison
-          </motion.div>
-          <motion.h1 
+            Side-by-side comparison
+          </motion.p>
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-serif font-bold mb-4 text-slate-900 dark:text-white"
+            className="text-h1 mb-3"
           >
-            Compare <span className="text-primary">Universities</span>
+            Compare universities
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-slate-500 dark:text-slate-400 text-lg"
+            className="text-body text-light-muted dark:text-dark-muted"
           >
             Make data-driven decisions. Compare up to 4 institutions side-by-side on fees, placements, rankings, and infrastructure.
           </motion.p>
@@ -222,8 +224,8 @@ export default function UniversityComparison() {
           <div className="space-y-6">
             {/* Search Bar */}
             <div ref={searchWrapRef} className="relative group z-40">
-              <div className="relative flex items-center bg-white dark:bg-dark-card border-2 border-light-border dark:border-dark-border group-focus-within:border-primary/40 rounded-[2rem] shadow-xl overflow-hidden transition-all duration-300">
-                <Search className="w-6 h-6 ml-6 text-slate-400 group-focus-within:text-link transition-colors" />
+              <div className="relative flex items-center h-12 bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-btn shadow-card focus-within:border-transparent focus-within:ring-2 focus-within:ring-primary transition-colors duration-150">
+                <Search className="w-5 h-5 ml-4 text-light-muted group-focus-within:text-primary transition-colors shrink-0" aria-hidden="true" />
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -231,11 +233,11 @@ export default function UniversityComparison() {
                   onChange={(event) => { setQuery(event.target.value); setShowSuggestions(true); }}
                   onFocus={() => setShowSuggestions(true)}
                   placeholder="Search university to add to comparison..."
-                  className="w-full pl-4 pr-6 py-5 bg-transparent border-none outline-none text-lg text-slate-800 dark:text-white font-semibold placeholder:font-normal placeholder:text-slate-400"
+                  className="w-full h-full pl-3 pr-4 bg-transparent border-none outline-none text-base text-light-text dark:text-dark-text placeholder:text-light-muted dark:placeholder:text-dark-muted"
                 />
                 {query && (
-                  <button onClick={() => setQuery('')} className="pr-6 text-slate-400 hover:text-slate-600 dark:hover:text-white">
-                    <X className="w-5 h-5" />
+                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search" className="pr-4 text-light-muted hover:text-light-text dark:hover:text-dark-text transition-colors">
+                    <X className="w-4 h-4" aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -243,100 +245,97 @@ export default function UniversityComparison() {
               {/* Suggestions Dropdown */}
               <AnimatePresence>
                 {showSuggestions && (query?.trim()?.length > 0 || (query === '' && recentSearches?.length > 0)) && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-3xl shadow-lg overflow-hidden z-50"
+                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-card shadow-modal overflow-hidden z-50"
                   >
                     {loadingResults ? (
-                      <div className="p-8 flex flex-col items-center justify-center text-slate-400">
-                        <Loader2 className="w-8 h-8 animate-spin text-link mb-3" />
-                        <p className="text-sm font-bold">Searching database...</p>
+                      <div className="p-8 flex flex-col items-center justify-center">
+                        <Loader2 className="w-7 h-7 animate-spin text-primary mb-3" aria-hidden="true" />
+                        <p className="text-support">Searching the catalogue…</p>
                       </div>
                     ) : query?.trim()?.length > 0 ? (
                       results?.length > 0 ? (
                         <div className="max-h-[400px] overflow-y-auto custom-scrollbar py-2">
-                          {results.map((university, ri) => (
+                          {results.map((university) => (
                             <button
                               key={university._id}
                               type="button"
                               onClick={() => addUniversity(university)}
                               disabled={selectedIds.has(university._id)}
-                              className="w-full flex items-center gap-4 px-6 py-4 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors border-b last:border-b-0 border-light-border dark:border-dark-border group/item text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="w-full flex items-center gap-4 px-4 py-3 hover:bg-light-card dark:hover:bg-white/5 transition-colors border-b last:border-b-0 border-light-border dark:border-dark-border group/item text-left disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              <div className="w-11 h-11 rounded-xl bg-slate-50 dark:bg-dark-bg flex items-center justify-center border border-slate-200 dark:border-dark-border shrink-0 p-1.5 overflow-hidden shadow-sm">
+                              <div className="w-10 h-10 rounded-xl bg-light-card dark:bg-dark-bg flex items-center justify-center border border-light-border dark:border-dark-border shrink-0 p-1.5 overflow-hidden">
                                 {university.logoUrl ? (
                                   <img src={university.logoUrl} alt="" className="w-full h-full object-contain" />
                                 ) : (
-                                  <span className="text-base font-bold text-link">{university.name?.[0]}</span>
+                                  <span className="text-base font-bold text-link dark:text-primary-300">{university.name?.[0]}</span>
                                 )}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <p className="font-bold text-slate-900 dark:text-white truncate group-hover/item:text-link transition-colors text-sm">
+                                <p className="text-sm font-semibold text-light-text dark:text-dark-text truncate group-hover/item:text-link dark:group-hover/item:text-primary-300 transition-colors">
                                   <HighlightMatch text={university.name} query={query} />
                                 </p>
                                 <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                  <span className="flex items-center gap-1 text-[10px] text-slate-400 font-semibold">
-                                    <MapPin className="w-3 h-3" />{university.city}, {university.state}
+                                  <span className="text-caption flex items-center gap-1">
+                                    <MapPin className="w-3 h-3" aria-hidden="true" />{university.city}, {university.state}
                                   </span>
-                                  {university.naacGrade && (
-                                    <span className="px-2 py-0.5 rounded-full bg-green-50 text-green-600 text-[9px] font-bold border border-green-100">NAAC {university.naacGrade}</span>
-                                  )}
-                                  {university.nirfRank && (
-                                    <span className="px-2 py-0.5 rounded-full bg-orange-50 text-orange-600 text-[9px] font-bold border border-orange-100"># {university.nirfRank} NIRF</span>
-                                  )}
+                                  {university.naacGrade && <Badge variant="success">NAAC {university.naacGrade}</Badge>}
+                                  {university.nirfRank && <Badge variant="brand" className="tabular-nums">NIRF #{university.nirfRank}</Badge>}
                                 </div>
                               </div>
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
                                 selectedIds.has(university._id)
-                                  ? 'bg-emerald-100 text-emerald-600'
-                                  : 'bg-primary/10 text-link opacity-0 group-hover/item:opacity-100'
+                                  ? 'bg-success-tint text-success-text dark:bg-success/15 dark:text-emerald-300'
+                                  : 'bg-primary/10 text-link dark:text-primary-300 opacity-0 group-hover/item:opacity-100'
                               }`}>
-                                <Check className="w-4 h-4" />
+                                <Check className="w-4 h-4" aria-hidden="true" />
                               </div>
                             </button>
                           ))}
                         </div>
                       ) : (
                         <div className="p-8 text-center">
-                          <div className="w-14 h-14 bg-slate-100 rounded-2xl mx-auto flex items-center justify-center mb-3">
-                            <AlertCircle className="w-7 h-7 text-slate-300" />
+                          <div className="w-14 h-14 bg-light-card dark:bg-dark-bg rounded-2xl mx-auto flex items-center justify-center mb-3">
+                            <AlertCircle className="w-7 h-7 text-light-muted dark:text-dark-muted" aria-hidden="true" />
                           </div>
-                          <p className="font-bold text-slate-600">No results for &ldquo;{query}&rdquo;</p>
-                          <p className="text-xs text-slate-400 mt-1">Try a shorter or different name</p>
+                          <p className="text-card-title">No results for &ldquo;{query}&rdquo;</p>
+                          <p className="text-caption mt-1">Try a shorter or different name</p>
                         </div>
                       )
                     ) : (
                       <div className="p-4">
                         <div className="flex items-center justify-between mb-3 px-2">
-                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Recent Searches</h4>
-                          <button 
+                          <h4 className="text-eyebrow">Recent searches</h4>
+                          <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); clearRecentSearches(); }}
-                            className="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors"
+                            className="text-caption font-semibold text-error-text hover:underline transition-colors"
                           >
-                            Clear All
+                            Clear all
                           </button>
                         </div>
                         <div className="space-y-1">
                           {recentSearches.map((u) => (
-                            <div key={u._id} className="flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition-colors group/recent">
+                            <div key={u._id} className="flex items-center justify-between hover:bg-light-card dark:hover:bg-white/5 rounded-btn transition-colors group/recent">
                               <button
                                 type="button"
                                 onClick={() => addUniversity(u)}
-                                className="flex-1 flex items-center gap-3 px-4 py-2 text-left"
+                                className="flex-1 flex items-center gap-3 px-3 py-2 text-left min-w-0"
                               >
-                                <Search className="w-4 h-4 text-slate-300 group-hover/recent:text-link shrink-0" />
-                                <span className="font-semibold text-sm text-slate-700 dark:text-slate-300 truncate">{u.name}</span>
+                                <Search className="w-4 h-4 text-light-muted group-hover/recent:text-link dark:group-hover/recent:text-primary-300 shrink-0" aria-hidden="true" />
+                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300 truncate">{u.name}</span>
                               </button>
                               <button
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); removeRecentSearch(u._id); }}
-                                className="p-2 text-slate-400 hover:text-red-500 mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                                className="p-2 text-light-muted hover:text-error-text mr-1 rounded-btn hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
                                 title="Remove from recents"
+                                aria-label={`Remove ${u.name} from recent searches`}
                               >
-                                <X className="w-3.5 h-3.5" />
+                                <X className="w-3.5 h-3.5" aria-hidden="true" />
                               </button>
                             </div>
                           ))}
@@ -350,69 +349,69 @@ export default function UniversityComparison() {
 
             {/* Selected Universities */}
             <div>
-              <div className="flex items-center justify-between mb-4 px-2">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-link" /> Comparison Bench
-                </h3>
-                <span className={`text-xs font-bold px-3 py-1 rounded-full ${selectedUniversities.length >= 4 ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 dark:bg-dark-card text-slate-500'}`}>
-                  {selectedUniversities.length} / 4 Added
-                </span>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-h3 flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-primary" aria-hidden="true" /> Comparison bench
+                </h2>
+                <Badge variant={selectedUniversities.length >= 4 ? 'warning' : 'neutral'} className="tabular-nums">
+                  {selectedUniversities.length}/4 added
+                </Badge>
               </div>
 
               {selectedUniversities.length === 0 ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm border-2 border-dashed border-slate-200 dark:border-dark-border rounded-[2rem] p-12 text-center"
+                  className="rounded-card border-2 border-dashed border-light-border dark:border-dark-border bg-white/60 dark:bg-dark-card/60"
                 >
-                  <div className="w-20 h-20 bg-slate-100 dark:bg-dark-bg rounded-3xl mx-auto flex items-center justify-center mb-6 shadow-inner">
-                    <Scale className="w-10 h-10 text-slate-300 dark:text-slate-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Bench is Empty</h3>
-                  <p className="text-sm text-slate-500 font-medium max-w-sm mx-auto">
-                    Search and add up to 4 universities to see a detailed head-to-head comparison.
-                  </p>
+                  <EmptyState
+                    icon={Scale}
+                    title="Your bench is empty"
+                    description="Search and add up to 4 universities to see a detailed head-to-head comparison."
+                  />
                 </motion.div>
               ) : (
-                <Reorder.Group 
-                  axis="y" 
-                  values={selectedUniversities} 
-                  onReorder={setSelectedUniversities} 
+                <Reorder.Group
+                  axis="y"
+                  values={selectedUniversities}
+                  onReorder={setSelectedUniversities}
                   className="space-y-3"
                 >
                   <AnimatePresence>
                     {selectedUniversities.map((university) => (
-                      <Reorder.Item 
-                        key={university._id} 
+                      <Reorder.Item
+                        key={university._id}
                         value={university}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                        className="bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-2xl p-4 shadow-sm flex items-center gap-4 group cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow relative"
+                        className="card p-4 flex items-center gap-4 group cursor-grab active:cursor-grabbing hover:shadow-card-hover relative"
                       >
-                        <div className="w-8 flex items-center justify-center text-slate-300 hover:text-slate-500">
-                          <GripVertical className="w-5 h-5" />
+                        <div className="w-8 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:text-slate-500 dark:hover:text-slate-400">
+                          <GripVertical className="w-5 h-5" aria-hidden="true" />
                         </div>
-                        <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-dark-border p-1.5 flex items-center justify-center shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-light-card dark:bg-dark-bg border border-light-border dark:border-dark-border p-1.5 flex items-center justify-center shrink-0">
                            {university.logoUrl ? (
                              <img src={university.logoUrl} alt="" className="w-full h-full object-contain" />
                            ) : (
-                             <span className="text-lg font-bold text-slate-400">{university.name[0]}</span>
+                             <span className="text-lg font-bold text-light-muted dark:text-dark-muted">{university.name[0]}</span>
                            )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-bold text-slate-900 dark:text-white truncate pr-4">{university.name}</p>
-                          <div className="flex items-center gap-2 text-xs text-slate-500 mt-1">
-                            <MapPin className="w-3.5 h-3.5" />
+                          <p className="text-card-title truncate pr-4">{university.name}</p>
+                          <p className="text-caption flex items-center gap-1.5 mt-0.5">
+                            <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
                             {university.city}, {university.state}
-                          </div>
+                          </p>
                         </div>
-                        <button 
+                        <button
+                          type="button"
                           onClick={() => removeUniversity(university._id)}
-                          className="w-10 h-10 rounded-full bg-slate-50 dark:bg-dark-bg text-slate-400 hover:text-error hover:bg-error/10 flex items-center justify-center transition-colors shrink-0"
+                          className="w-10 h-10 rounded-btn bg-light-card dark:bg-white/5 text-light-muted hover:text-error-text hover:bg-error-tint dark:hover:bg-error/15 flex items-center justify-center transition-colors shrink-0"
                           title="Remove from comparison"
+                          aria-label={`Remove ${university.name} from comparison`}
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" aria-hidden="true" />
                         </button>
                       </Reorder.Item>
                     ))}
@@ -424,40 +423,33 @@ export default function UniversityComparison() {
 
           {/* Right Column: Actions */}
           <div className="space-y-6">
-            <div className="relative bg-white dark:bg-dark-card rounded-[2rem] border border-light-border dark:border-dark-border p-8 shadow-xl sticky top-24 overflow-hidden">
-              {/* Decorative background orb */}
-              <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-primary/10 to-slate-500/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Scale className="w-4 h-4 text-link" />
+            <div className="card p-6 sticky top-24">
+              <div className="flex items-center gap-2.5 mb-2">
+                <div className="w-9 h-9 rounded-xl bg-primary/10 dark:bg-primary/15 flex items-center justify-center">
+                  <Scale className="w-4 h-4 text-primary" aria-hidden="true" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Ready to Compare?</h3>
+                <h2 className="text-h3">Ready to compare?</h2>
               </div>
-              <p className="text-sm text-slate-500 mb-6 font-medium">Add at least 2 universities to generate a comprehensive benchmark report.</p>
-              
-              <button
-                onClick={runComparison}
-                disabled={selectedUniversities.length < 2 || comparing}
-                className={`w-full py-5 rounded-2xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 ${
-                  selectedUniversities.length >= 2 && !comparing
-                    ? 'bg-primary text-white shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]'
-                    : 'bg-slate-100 dark:bg-dark-border text-slate-400 cursor-not-allowed'
-                }`}
-              >
-                {comparing ? (
-                  <><Loader2 className="w-5 h-5 animate-spin" /> Generating Report...</>
-                ) : (
-                  <><Scale className="w-5 h-5" /> Compare {selectedUniversities.length > 0 ? selectedUniversities.length : ''} Universities</>
-                )}
-              </button>
+              <p className="text-support mb-6">Add at least 2 universities to generate a comprehensive benchmark report.</p>
 
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-dark-border">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3 text-center">Popular Benchmarks</p>
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={runComparison}
+                disabled={selectedUniversities.length < 2}
+                loading={comparing}
+              >
+                <Scale className="w-4 h-4" aria-hidden="true" />
+                Compare{selectedUniversities.length > 0 ? ` ${selectedUniversities.length}` : ''} universities
+              </Button>
+
+              <div className="mt-6 pt-6 border-t border-light-border dark:border-dark-border">
+                <p className="text-eyebrow mb-3 text-center">Popular benchmarks</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {EXAMPLE_UNIVERSITIES.map((name) => (
                     <button
                       key={name}
+                      type="button"
                       onClick={() => {
                         setQuery(name);
                         // Scroll to top then focus the search input so dropdown appears
@@ -466,38 +458,35 @@ export default function UniversityComparison() {
                           searchInputRef.current?.focus();
                         }, 400);
                       }}
-                      className="px-4 py-2.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-50 to-white dark:from-dark-bg dark:to-dark-bg border border-slate-200 dark:border-dark-border text-slate-600 dark:text-slate-300 hover:border-primary hover:text-link hover:shadow-md hover:shadow-primary/10 active:scale-95 transition-all duration-200"
+                      className="px-3.5 py-2 rounded-full text-xs font-semibold bg-white dark:bg-dark-card border border-light-border dark:border-dark-border text-slate-600 dark:text-slate-300 hover:border-primary hover:text-link dark:hover:text-primary-300 transition-colors duration-150"
                     >
                       {name}
                     </button>
                   ))}
                 </div>
               </div>
-              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       <div id="comparison-results" className="scroll-mt-24">
         {comparison ? (
-          <div className="max-w-7xl mx-auto px-4 pb-20">
-            <motion.div 
+          <Container className="pb-16">
+            <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-8"
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                  <ArrowRightLeft className="w-8 h-8 text-link" />
-                  Comparison Results
+                <h2 className="text-h2 flex items-center gap-2.5">
+                  <ArrowRightLeft className="w-6 h-6 text-primary" aria-hidden="true" />
+                  Comparison results
                 </h2>
               </div>
 
               {/* Overall Verdict Banner */}
               {(() => {
-                const rankingWinnerIds = comparison?.summary?.bestFor?.ranking || [];
-                const placementWinnerIds = comparison?.summary?.bestFor?.placements || [];
                 const allWinnerCounts = {};
                 comparison?.universities?.forEach(u => { allWinnerCounts[u._id] = 0; });
                 Object.values(comparison?.summary?.bestFor || {}).forEach(ids => {
@@ -510,24 +499,22 @@ export default function UniversityComparison() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-amber-400 via-orange-500 to-primary p-px shadow-xl shadow-orange-200/40"
+                    className="card px-6 py-5 md:px-8 flex items-center gap-5"
                   >
-                    <div className="bg-white dark:bg-dark-card rounded-[calc(2rem-1px)] px-8 py-6 flex items-center gap-6">
-                      <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
-                        <Crown className="w-7 h-7 text-amber-500" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-amber-500 mb-1"><Trophy className="w-3.5 h-3.5" aria-hidden="true" /> Overall Top Pick</p>
-                        <p className="font-bold text-xl text-slate-900 dark:text-white">{topUni.name}</p>
-                        <p className="text-sm text-slate-500 mt-0.5">Leads in {allWinnerCounts[topId]} out of {Object.keys(summaryLabels).length} categories</p>
-                      </div>
-                      {topUni.naacGrade && (
-                        <div className="hidden md:flex flex-col items-center gap-1">
-                          <span className="text-2xl font-bold text-link">{topUni.naacGrade}</span>
-                          <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400">NAAC</span>
-                        </div>
-                      )}
+                    <div className="w-12 h-12 rounded-xl bg-accent-50 dark:bg-accent/15 flex items-center justify-center shrink-0">
+                      <Crown className="w-6 h-6 text-accent-700 dark:text-accent-300" aria-hidden="true" />
                     </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-eyebrow flex items-center gap-1.5 mb-1"><Trophy className="w-3.5 h-3.5" aria-hidden="true" /> Overall top pick</p>
+                      <p className="text-h3 truncate">{topUni.name}</p>
+                      <p className="text-support mt-0.5">Leads in {allWinnerCounts[topId]} out of {Object.keys(summaryLabels).length} categories</p>
+                    </div>
+                    {topUni.naacGrade && (
+                      <div className="hidden md:block text-center shrink-0">
+                        <p className="text-stat-sm text-link dark:text-primary-300">{topUni.naacGrade}</p>
+                        <p className="text-caption font-medium">NAAC</p>
+                      </div>
+                    )}
                   </motion.div>
                 );
               })()}
@@ -535,7 +522,12 @@ export default function UniversityComparison() {
               <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                 {Object.entries(summaryLabels).map(([key, label], idx) => {
                   const iconMap = { ranking: Trophy, placements: TrendingUp, affordability: Award, courseBreadth: Layers };
-                  const colorMap = { ranking: 'text-amber-500 bg-amber-50 border-amber-100', placements: 'text-emerald-500 bg-emerald-50 border-emerald-100', affordability: 'text-blue-500 bg-blue-50 border-blue-100', courseBreadth: 'text-purple-500 bg-purple-50 border-purple-100' };
+                  const toneMap = {
+                    ranking: 'bg-accent-50 text-accent-700 dark:bg-accent/15 dark:text-accent-300',
+                    placements: 'bg-success-tint text-success-text dark:bg-success/15 dark:text-emerald-300',
+                    affordability: 'bg-info-tint text-info-text dark:bg-info/15 dark:text-blue-300',
+                    courseBreadth: 'bg-primary/10 text-link dark:bg-primary/15 dark:text-primary-300',
+                  };
                   const IconComp = iconMap[key] || Award;
                   const winnerIds = comparison?.summary?.bestFor?.[key] || [];
                   const winnerNames = comparison?.universities
@@ -543,19 +535,18 @@ export default function UniversityComparison() {
                     .map((university) => university.name);
 
                   return (
-                    <motion.div 
-                      key={key} 
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="bg-white dark:bg-dark-card rounded-[2rem] p-6 border border-light-border dark:border-dark-border shadow-sm hover:shadow-xl transition-shadow relative overflow-hidden group"
+                    <motion.div
+                      key={key}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.08 }}
+                      className="card p-6"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-slate-500/3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <div className={`w-10 h-10 rounded-2xl border flex items-center justify-center mb-4 ${colorMap[key]}`}>
-                        <IconComp className="w-5 h-5" />
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${toneMap[key]}`}>
+                        <IconComp className="w-5 h-5" aria-hidden="true" />
                       </div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{label}</p>
-                      <p className="font-bold text-base text-slate-800 dark:text-white leading-tight">
+                      <p className="text-caption font-medium mb-1">{label}</p>
+                      <p className="text-card-title leading-tight">
                         {winnerNames?.length ? winnerNames.join(', ') : 'N/A'}
                       </p>
                     </motion.div>
@@ -564,20 +555,20 @@ export default function UniversityComparison() {
               </section>
 
               <section className="grid grid-cols-1 xl:grid-cols-[1.4fr_0.6fr] gap-8">
-                <div className="bg-white dark:bg-dark-card rounded-[2rem] border border-light-border dark:border-dark-border shadow-lg overflow-x-auto custom-scrollbar relative">
-                  <div className="p-8 border-b border-light-border dark:border-dark-border flex items-center justify-between bg-slate-50/50 dark:bg-white/5">
-                    <h3 className="font-bold text-lg">Detailed Metrics</h3>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Head to Head</span>
+                <div className="card overflow-x-auto custom-scrollbar relative">
+                  <div className="p-6 border-b border-light-border dark:border-dark-border flex items-center justify-between bg-light-card/50 dark:bg-white/5">
+                    <h3 className="text-h3">Detailed metrics</h3>
+                    <span className="text-eyebrow">Head to head</span>
                   </div>
                   <table className="w-full min-w-[760px] text-sm">
                     <thead>
-                      <tr className="border-b border-light-border dark:border-dark-border bg-slate-50/50 dark:bg-dark-bg/50">
-                        <th className="text-left py-5 px-8 font-bold text-slate-400 text-[11px] uppercase tracking-widest">Metric</th>
+                      <tr className="border-b border-light-border dark:border-dark-border bg-light-card/50 dark:bg-dark-bg/50">
+                        <th className="text-left py-4 px-6 text-eyebrow">Metric</th>
                         {comparison.universities.map((university) => (
-                          <th key={university._id} className="text-left py-5 px-6 font-bold text-slate-900 dark:text-white w-48">
-                            <div className="flex items-center gap-3">
+                          <th key={university._id} className="text-left py-4 px-6 w-48">
+                            <div className="flex items-center gap-2.5">
                               {university.logoUrl && <img src={university.logoUrl} className="w-6 h-6 object-contain" alt="" />}
-                              <span className="truncate">{university.name}</span>
+                              <span className="text-sm font-semibold text-light-text dark:text-dark-text truncate">{university.name}</span>
                             </div>
                           </th>
                         ))}
@@ -590,23 +581,23 @@ export default function UniversityComparison() {
                         const maxVal = numericVals.length ? Math.max(...numericVals) : 0;
                         return (
                           <tr key={row.key} className={`border-b last:border-b-0 border-light-border dark:border-dark-border transition-colors ${
-                            rowIdx % 2 === 0 ? 'bg-white dark:bg-dark-card' : 'bg-slate-50/60 dark:bg-white/[0.02]'
+                            rowIdx % 2 === 0 ? 'bg-white dark:bg-dark-card' : 'bg-light-card/60 dark:bg-white/[0.02]'
                           } hover:bg-primary/5 dark:hover:bg-primary/5`}>
-                            <td className="py-5 px-8">
-                              <span className="font-bold text-slate-700 dark:text-slate-300 text-sm">{row.label}</span>
+                            <td className="py-4 px-6">
+                              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{row.label}</span>
                             </td>
                             {row.values.map((entry) => {
                               const isWinner = row.bestUniversityIds.includes(entry.universityId);
                               const numEntry = Number(entry.value);
                               return (
                                 <td key={`${row.key}-${entry.universityId}`} className="py-4 px-6 align-top">
-                                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl ${
+                                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-btn ${
                                     isWinner
-                                      ? 'bg-emerald-50 text-emerald-700 font-bold border border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800'
-                                      : 'text-slate-600 dark:text-slate-400 font-semibold'
+                                      ? 'bg-success-tint text-success-text font-semibold dark:bg-success/15 dark:text-emerald-300'
+                                      : 'text-slate-600 dark:text-slate-400 font-medium'
                                   }`}>
-                                    {isWinner && <Crown className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
-                                    <span className="text-sm">{formatValue(row.type, entry.value)}</span>
+                                    {isWinner && <Crown className="w-3.5 h-3.5 text-accent shrink-0" aria-hidden="true" />}
+                                    <span className="text-sm tabular-nums">{formatValue(row.type, entry.value)}</span>
                                   </div>
                                   {maxVal > 0 && !isNaN(numEntry) && numEntry > 0 && (
                                     <MetricBar value={numEntry} max={maxVal} isWinner={isWinner} />
@@ -622,134 +613,136 @@ export default function UniversityComparison() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-dark-card rounded-[2rem] border border-light-border dark:border-dark-border shadow-lg p-8">
-                    <h3 className="font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-link" /> Common Course Categories
+                  <div className="card p-6">
+                    <h3 className="text-h3 mb-4 flex items-center gap-2">
+                      <Layers className="w-5 h-5 text-primary" aria-hidden="true" /> Common course categories
                     </h3>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {(comparison?.summary?.commonCourseCategories || []).length
                         ? comparison?.summary?.commonCourseCategories.map((category) => (
-                          <span key={category} className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-50 text-slate-600 border border-slate-100">
+                          <span key={category} className="badge bg-light-card dark:bg-white/5 border border-light-border dark:border-dark-border text-slate-600 dark:text-slate-300">
                             {category}
                           </span>
                         ))
-                        : <span className="text-sm text-slate-500 font-medium">No common categories found.</span>}
+                        : <span className="text-support">No common categories found.</span>}
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-dark-card rounded-[2rem] border border-light-border dark:border-dark-border shadow-lg p-8">
-                    <h3 className="font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
-                      <Check className="w-5 h-5 text-orange-500" /> Common Entrance Exams
+                  <div className="card p-6">
+                    <h3 className="text-h3 mb-4 flex items-center gap-2">
+                      <Check className="w-5 h-5 text-primary" aria-hidden="true" /> Common entrance exams
                     </h3>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {(comparison?.summary?.commonEntranceExams || []).length
                         ? comparison?.summary?.commonEntranceExams.map((exam) => (
-                          <span key={exam} className="px-4 py-2 rounded-xl text-xs font-bold bg-orange-50 text-orange-600 border border-orange-100">
+                          <span key={exam} className="badge bg-info-tint text-info-text dark:bg-info/15 dark:text-blue-300">
                             {exam}
                           </span>
                         ))
-                        : <span className="text-sm text-slate-500 font-medium">No common exams found.</span>}
+                        : <span className="text-support">No common exams found.</span>}
                     </div>
                   </div>
                 </div>
               </section>
 
-              <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {comparison.universities.map((university, idx) => (
-                  <motion.div 
-                    key={university._id} 
+                  <motion.div
+                    key={university._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-white dark:bg-dark-card rounded-[2rem] border border-light-border dark:border-dark-border shadow-lg p-8 group relative overflow-hidden"
+                    transition={{ delay: idx * 0.08 }}
+                    className="card p-6 md:p-8"
                   >
-                    <div className="absolute top-0 left-0 w-full h-2 bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                    
                     <div className="flex items-start justify-between gap-4 mb-8">
-                      <div className="flex gap-5">
-                        <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-dark-border flex items-center justify-center p-2 shrink-0">
+                      <div className="flex gap-5 min-w-0">
+                        <div className="w-16 h-16 rounded-card bg-light-card dark:bg-dark-bg border border-light-border dark:border-dark-border flex items-center justify-center p-2 shrink-0">
                            {university.logoUrl ? (
                              <img src={university.logoUrl} alt="" className="w-full h-full object-contain" />
                            ) : (
-                             <GraduationCap className="w-8 h-8 text-link" />
+                             <GraduationCap className="w-8 h-8 text-primary" aria-hidden="true" />
                            )}
                         </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1 line-clamp-2">{university.name}</h3>
-                          <p className="text-xs font-bold text-slate-400 flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5" /> {university.city}, {university.state}
+                        <div className="min-w-0">
+                          <h3 className="text-h3 mb-1 line-clamp-2">{university.name}</h3>
+                          <p className="text-caption flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5" aria-hidden="true" /> {university.city}, {university.state}
                           </p>
                         </div>
                       </div>
                       {university.slug && (
-                        <a href={`/universities/${university.slug}`} className="w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 hover:text-link hover:bg-primary/10 transition-colors shrink-0">
-                          <ArrowUpRight className="w-5 h-5" />
+                        <a
+                          href={`/universities/${university.slug}`}
+                          aria-label={`View ${university.name}`}
+                          className="w-10 h-10 rounded-btn bg-light-card dark:bg-white/5 flex items-center justify-center text-light-muted hover:text-link hover:bg-primary/10 transition-colors shrink-0"
+                        >
+                          <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
                         </a>
                       )}
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-8">
-                      <div className="rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-dark-border p-4">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">NAAC Grade</p>
-                        <p className="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
+                      <div className="rounded-xl bg-light-card dark:bg-dark-bg border border-light-border dark:border-dark-border p-4">
+                        <p className="text-caption font-medium mb-1">NAAC grade</p>
+                        <p className="text-stat-sm flex items-center gap-2">
                            {university.naacGrade || 'N/A'}
-                           {university.naacGrade && <Award className="w-4 h-4 text-green-500" />}
+                           {university.naacGrade && <Award className="w-4 h-4 text-success" aria-hidden="true" />}
                         </p>
                       </div>
-                      <div className="rounded-2xl bg-slate-50 dark:bg-dark-bg border border-slate-100 dark:border-dark-border p-4">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">NIRF Rank</p>
-                        <p className="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
+                      <div className="rounded-xl bg-light-card dark:bg-dark-bg border border-light-border dark:border-dark-border p-4">
+                        <p className="text-caption font-medium mb-1">NIRF rank</p>
+                        <p className="text-stat-sm flex items-center gap-2">
                            {university.nirfRank ? `#${university.nirfRank}` : 'N/A'}
-                           {university.nirfRank && <Star className="w-4 h-4 text-orange-500 fill-orange-500" />}
+                           {university.nirfRank && <Star className="w-4 h-4 text-accent fill-accent" aria-hidden="true" />}
                         </p>
                       </div>
                     </div>
 
                     <div className="space-y-6">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Key Approvals</p>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="text-eyebrow mb-3">Key approvals</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {(university.approvals || []).length
                             ? university.approvals.map((approval) => (
-                              <span key={approval} className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-green-50 text-green-700 border border-green-100">{approval}</span>
+                              <span key={approval} className="badge bg-success-tint text-success-text dark:bg-success/15 dark:text-emerald-300">{approval}</span>
                             ))
-                            : <span className="text-sm font-medium text-slate-400">N/A</span>}
+                            : <span className="text-support">N/A</span>}
                         </div>
                       </div>
 
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Top Recruiters</p>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="text-eyebrow mb-3">Top recruiters</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {(university.topRecruiters || []).length
                             ? university.topRecruiters.slice(0, 5).map((recruiter) => (
-                              <span key={recruiter} className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100">{recruiter}</span>
+                              <span key={recruiter} className="badge bg-white dark:bg-white/5 border border-light-border dark:border-dark-border text-slate-600 dark:text-slate-300">{recruiter}</span>
                             ))
-                            : <span className="text-sm font-medium text-slate-400">N/A</span>}
+                            : <span className="text-support">N/A</span>}
                           {(university.topRecruiters || []).length > 5 && (
-                             <span className="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500">+{university.topRecruiters.length - 5} more</span>
+                             <span className="text-caption self-center font-medium">+{university.topRecruiters.length - 5} more</span>
                           )}
                         </div>
                       </div>
 
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Popular Courses</p>
+                        <p className="text-eyebrow mb-3">Popular courses</p>
                         <div className="space-y-3">
                           {(university.featuredCourses || []).length
                             ? university.featuredCourses.slice(0, 3).map((course) => (
-                              <div key={`${university._id}-${course.name}`} className="flex items-center justify-between pb-3 border-b last:border-0 border-slate-100 dark:border-dark-border">
-                                <div>
-                                  <p className="font-bold text-sm text-slate-800 dark:text-white line-clamp-1">{course.name}</p>
-                                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">
-                                    {course.category} • {course.duration ? `${course.duration}YRS` : 'N/A'}
+                              <div key={`${university._id}-${course.name}`} className="flex items-center justify-between gap-4 pb-3 border-b last:border-0 border-light-border dark:border-dark-border">
+                                <div className="min-w-0">
+                                  <p className="text-sm font-semibold text-light-text dark:text-dark-text line-clamp-1">{course.name}</p>
+                                  <p className="text-caption mt-0.5">
+                                    {[course.category, course.duration ? `${course.duration} yr` : null].filter(Boolean).join(' · ')}
                                   </p>
                                 </div>
-                                <div className="text-right">
-                                   <p className="font-bold text-sm text-link">{course.feesPerYearLabel ? `₹${course.feesPerYearLabel}` : course.feesPerYear ? `₹${(course.feesPerYear/100000).toFixed(1)}L` : 'N/A'}</p>
-                                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Per Year</p>
+                                <div className="text-right shrink-0">
+                                   <p className="text-data text-sm">{course.feesPerYearLabel ? `₹${course.feesPerYearLabel}` : course.feesPerYear ? `₹${(course.feesPerYear/100000).toFixed(1)}L` : 'N/A'}</p>
+                                   <p className="text-caption">per year</p>
                                 </div>
                               </div>
                             ))
-                            : <p className="text-sm font-medium text-slate-400">No course data available.</p>}
+                            : <p className="text-support">No course data available.</p>}
                         </div>
                       </div>
                     </div>
@@ -757,7 +750,7 @@ export default function UniversityComparison() {
                 ))}
               </section>
             </motion.div>
-          </div>
+          </Container>
         ) : null}
       </div>
     </div>

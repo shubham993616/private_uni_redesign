@@ -19,7 +19,7 @@ export default function ContactManager() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold">Contact Submissions</h2>
+      <h2 className="text-h2">Contact Submissions</h2>
       <DataTable data={items} columns={[
         { key: 'name', label: 'Name', render: c => <span className="font-medium">{c.name}</span> },
         { key: 'email', label: 'Email' },
@@ -31,10 +31,10 @@ export default function ContactManager() {
         { key: 'createdAt', label: 'Date', render: c => new Date(c.createdAt).toLocaleDateString() },
       ]} searchFields={['name', 'email', 'subject']} searchPlaceholder="Search contacts..."
         actions={(c) => (<>
-          <button onClick={() => updateStatus(c._id, 'read')} title="Mark Read" className="p-1.5 rounded-lg hover:bg-light-card"><Eye className="w-4 h-4" /></button>
-          <button onClick={() => updateStatus(c._id, 'replied')} title="Mark Replied" className="p-1.5 rounded-lg hover:bg-light-card"><Mail className="w-4 h-4" /></button>
-          <button onClick={() => updateStatus(c._id, 'archived')} title="Archive" className="p-1.5 rounded-lg hover:bg-light-card"><Archive className="w-4 h-4" /></button>
-          {canDelete && <button onClick={() => del(c._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500"><Trash2 className="w-4 h-4" /></button>}
+          <button onClick={() => updateStatus(c._id, 'read')} title="Mark Read" aria-label="Mark read" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Eye className="w-4 h-4" aria-hidden="true" /></button>
+          <button onClick={() => updateStatus(c._id, 'replied')} title="Mark Replied" aria-label="Mark replied" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Mail className="w-4 h-4" aria-hidden="true" /></button>
+          <button onClick={() => updateStatus(c._id, 'archived')} title="Archive" aria-label="Archive" className="p-1.5 rounded-btn hover:bg-light-card dark:hover:bg-dark-border transition-colors duration-150"><Archive className="w-4 h-4" aria-hidden="true" /></button>
+          {canDelete && <button onClick={() => del(c._id)} aria-label="Delete submission" className="p-1.5 rounded-btn hover:bg-error-tint dark:hover:bg-red-900/20 text-error transition-colors duration-150"><Trash2 className="w-4 h-4" aria-hidden="true" /></button>}
         </>)}
       />
     </div>

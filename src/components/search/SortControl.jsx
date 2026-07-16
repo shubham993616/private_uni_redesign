@@ -5,13 +5,16 @@ import { ArrowUpDown } from 'lucide-react';
  * Exposes the API's full sort vocabulary (previously only 2 of 7 were in the UI).
  */
 export const UNIVERSITY_SORTS = [
+  { value: 'popularity', label: 'Most popular' },
   { value: 'ranking', label: 'By ranking (NIRF)' },
-  { value: 'name', label: 'Name A–Z' },
-  { value: 'name_desc', label: 'Name Z–A' },
+  { value: 'placement', label: 'Best placements' },
+  { value: 'rating', label: 'Highest rated' },
   { value: 'fees_asc', label: 'Fees: low to high' },
   { value: 'fees_desc', label: 'Fees: high to low' },
-  { value: 'package', label: 'Best avg package' },
+  { value: 'newest', label: 'Newest first' },
   { value: 'established', label: 'Oldest first' },
+  { value: 'name', label: 'Name A–Z' },
+  { value: 'name_desc', label: 'Name Z–A' },
 ];
 
 export default function SortControl({ value, onChange, options = UNIVERSITY_SORTS, className = '' }) {
