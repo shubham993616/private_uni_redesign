@@ -125,26 +125,34 @@ export default function About() {
             {
               icon: Rocket,
               title: 'Mission',
-              panel: 'bg-primary-dark',
+              panel: 'border border-primary-200 bg-primary-50 dark:border-primary-900/40 dark:bg-primary-900/20',
+              iconWrap: 'bg-primary/15',
+              iconColor: 'text-primary-600 dark:text-primary-300',
+              heading: '!text-slate-900 dark:!text-white',
+              body: '!text-slate-600 dark:!text-white/80',
               text: 'We believe to provide students, parents, teachers and all other interested segments of the society with the most authentic, precise and up-to-date information about education & career in India and Abroad — genuine educational updates, career counselling and unmitigated news — thereby empowering them to make wiser decisions.',
             },
             {
               icon: TrendingUp,
               title: 'Vision',
               panel: 'bg-ink',
+              iconWrap: 'bg-white/15',
+              iconColor: 'text-white',
+              heading: '!text-white',
+              body: '!text-white/80',
               text: 'We aim to transform the current educational scenario and to empower students to reach their maximum potential and make lifelong, responsible and meaningful career choices in a global and dynamic world.',
             },
           ].map((item) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className={`${item.panel} rounded-card p-8 text-white shadow-card`}
+              className={`${item.panel} rounded-card p-8 shadow-card`}
             >
-              <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-6">
-                <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
+              <div className={`w-12 h-12 rounded-xl ${item.iconWrap} flex items-center justify-center mb-6`}>
+                <item.icon className={`w-6 h-6 ${item.iconColor}`} aria-hidden="true" />
               </div>
-              <h3 className="text-h3 !text-white mb-3">{item.title}</h3>
-              <p className="text-body !text-white/80">{item.text}</p>
+              <h3 className={`text-h3 ${item.heading} mb-3`}>{item.title}</h3>
+              <p className={`text-body ${item.body}`}>{item.text}</p>
             </motion.div>
           ))}
         </div>
@@ -166,8 +174,8 @@ export default function About() {
                   <div className="flex flex-col md:flex-row gap-8">
                     {/* Avatar */}
                     <div className="shrink-0 flex flex-col items-center gap-4">
-                      <div className="w-24 h-24 rounded-card bg-primary flex items-center justify-center shadow-card">
-                        <span className="text-4xl font-serif font-bold text-white">{member.initial}</span>
+                      <div className="w-24 h-24 rounded-card bg-primary-100 dark:bg-primary-900/40 border border-primary-200 dark:border-primary-900/40 flex items-center justify-center shadow-card">
+                        <span className="text-4xl font-serif font-bold text-primary-700 dark:text-primary-200">{member.initial}</span>
                       </div>
                       <div className="text-center">
                         <p className="text-card-title">{member.name}</p>
@@ -215,7 +223,7 @@ export default function About() {
                   </Card>
 
                   {/* Year bubble — center */}
-                  <div className="shrink-0 z-10 w-20 h-20 rounded-full border-4 border-white dark:border-dark-bg bg-primary-dark flex items-center justify-center shadow-card text-white font-semibold text-xs text-center leading-tight px-1 tabular-nums">
+                  <div className="shrink-0 z-10 w-20 h-20 rounded-full border-4 border-white dark:border-dark-bg bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center shadow-card text-primary-800 dark:text-primary-200 font-bold text-xs text-center leading-tight px-1 tabular-nums">
                     {m.year}
                   </div>
 

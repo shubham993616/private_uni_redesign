@@ -45,7 +45,7 @@ export default function DashboardOverview({ stats = {}, recentlyViewed = [], ful
   }, {});
 
   const pieData = Object.entries(stateDistribution || {}).map(([name, value]) => ({ name, value }));
-  const PIE_COLORS = ['#EA580C', '#3B82F6', '#10B981', '#64748B', '#F59E0B'];
+  const PIE_COLORS = ['#F97316', '#3B82F6', '#10B981', '#64748B', '#F59E0B'];
 
   return (
     <div className="space-y-8">
@@ -151,7 +151,7 @@ export default function DashboardOverview({ stats = {}, recentlyViewed = [], ful
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
                 <RechartsTooltip cursor={{ fill: 'rgba(241, 245, 249, 0.4)' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 30px -10px rgba(15,23,42,0.15)' }} />
                 <Bar dataKey="views" name="Profiles Viewed" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={12} />
-                <Bar dataKey="saves" name="Colleges Saved" fill="#EA580C" radius={[4, 4, 0, 0]} barSize={12} />
+                <Bar dataKey="saves" name="Colleges Saved" fill="#F97316" radius={[4, 4, 0, 0]} barSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </div>

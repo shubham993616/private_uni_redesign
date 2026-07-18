@@ -44,9 +44,9 @@ function NotificationsRail() {
   };
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center justify-between bg-primary-dark px-5 py-4 text-white">
+      <div className="flex items-center justify-between border-b border-primary-200 bg-primary-100 px-5 py-4 text-slate-900 dark:border-primary-900/40 dark:bg-primary-900/25 dark:text-white">
         <h2 className="text-base font-bold">Exam Notifications</h2>
-        <Bell className="h-4 w-4" aria-hidden="true" />
+        <Bell className="h-4 w-4 text-primary-600 dark:text-primary-300" aria-hidden="true" />
       </div>
       <div className="divide-y divide-light-border dark:divide-dark-border">
         {EXAM_NOTIFICATIONS.slice(0, 6).map((n) => {
@@ -71,9 +71,9 @@ function NotificationsRail() {
 function DeadlinesRail() {
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center justify-between bg-primary-dark px-5 py-4 text-white">
+      <div className="flex items-center justify-between border-b border-primary-200 bg-primary-100 px-5 py-4 text-slate-900 dark:border-primary-900/40 dark:bg-primary-900/25 dark:text-white">
         <h2 className="text-base font-bold">Upcoming Deadlines</h2>
-        <Clock3 className="h-4 w-4" aria-hidden="true" />
+        <Clock3 className="h-4 w-4 text-primary-600 dark:text-primary-300" aria-hidden="true" />
       </div>
       <div className="divide-y divide-light-border dark:divide-dark-border">
         {UPCOMING_DEADLINES.slice(0, 6).map((d) => {
@@ -445,9 +445,9 @@ export default function Exams() {
 
           {/* Latest education news (incl. government updates) */}
           <Card className="overflow-hidden">
-            <div className="flex items-center justify-between bg-primary-dark px-5 py-4 text-white">
+            <div className="flex items-center justify-between border-b border-primary-200 bg-primary-100 px-5 py-4 text-slate-900 dark:border-primary-900/40 dark:bg-primary-900/25 dark:text-white">
               <h2 className="text-base font-bold">Latest Education News</h2>
-              <Newspaper className="h-4 w-4" aria-hidden="true" />
+              <Newspaper className="h-4 w-4 text-primary-600 dark:text-primary-300" aria-hidden="true" />
             </div>
             <div className="divide-y divide-light-border dark:divide-dark-border">
               {EDUCATION_NEWS.slice(0, 6).map((n) => (

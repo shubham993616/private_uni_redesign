@@ -144,16 +144,16 @@ export default function WelcomeSearchModal() {
             transition={{ type: 'spring', damping: 26, stiffness: 300 }}
             className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-card bg-white shadow-modal dark:bg-dark-card"
           >
-            {/* Header — ink panel, matching the homepage CTA panels */}
-            <div className="relative overflow-hidden bg-primary-dark px-6 py-7 text-white md:px-8">
-              <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-orange-500/30 blur-2xl" aria-hidden="true" />
+            {/* Header — soft brand panel, matching the homepage CTA panels */}
+            <div className="relative overflow-hidden bg-primary-50 px-6 py-7 text-slate-900 dark:bg-primary-900/20 dark:text-white md:px-8">
+              <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-primary/15 blur-2xl" aria-hidden="true" />
               <div className="relative flex items-start justify-between gap-4">
                 <div>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.06em]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.06em] text-primary-700 dark:bg-white/15 dark:text-primary-300">
                     <Sparkles className="h-3 w-3" aria-hidden="true" /> Your AI counsellor
                   </span>
                   <h2 className="mt-3 font-serif text-2xl font-bold leading-tight md:text-3xl">Find Your Perfect University</h2>
-                  <p className="mt-2 max-w-lg text-sm text-white/80">
+                  <p className="mt-2 max-w-lg text-sm text-slate-600 dark:text-white/80">
                     Answer as much or as little as you like — I’ll match universities to your course,
                     budget, rank and lifestyle. You can always skip and explore freely.
                   </p>
@@ -162,7 +162,7 @@ export default function WelcomeSearchModal() {
                   type="button"
                   onClick={() => dismiss('closed')}
                   aria-label="Close"
-                  className="rounded-full p-1.5 text-white/70 transition-colors duration-150 hover:bg-white/10 hover:text-white"
+                  className="rounded-full p-1.5 text-slate-500 transition-colors duration-150 hover:bg-primary-100 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
                 >
                   <X className="h-6 w-6" aria-hidden="true" />
                 </button>

@@ -7,17 +7,28 @@
    ========================================================================== */
 
 :root {
-  /* ── Brand (one orange, rationed to ~5% of any viewport) ── */
-  --brand-50:  #FFF7ED;
-  --brand-100: #FFEDD5;
-  --brand-200: #FED7AA;
+  /* ── Brand (one orange, rationed to ~5% of any viewport) ──
+     Role map (refined): 500 is THE action color — a clean, premium orange.
+     600 is hover/pressed. 50/100/200 are the light surfaces that carry card
+     headers and highlights; headings on them are always ink, never orange. */
+  --brand-50:  #FFF7ED; /* very light — background highlights, badges */
+  --brand-100: #FFEDD5; /* light — card headers (pair with ink headings) */
+  --brand-200: #FED7AA; /* light borders / dividers */
   --brand-300: #FDBA74;
-  --brand-400: #FB923C;
-  --brand-500: #F97316; /* graphic accents only — never text on white */
-  --brand-600: #EA580C; /* THE action color: primary buttons, active states */
-  --brand-700: #C2410C; /* hover/pressed + the only orange allowed as text on white */
+  --brand-400: #FB923C; /* graphic accents only — never text on white */
+  --brand-500: #F97316; /* THE action color: primary buttons, active states */
+  --brand-600: #EA580C; /* hover / pressed */
+  --brand-700: #C2410C; /* the only orange allowed as small text on white (≥4.5:1) */
   --brand-800: #9A3412;
   --brand-900: #7C2D12;
+
+  /* Semantic aliases — reference these, not the raw steps */
+  --brand-primary: var(--brand-500);
+  --brand-hover:   var(--brand-600);
+  --brand-surface: var(--brand-50);
+  --brand-tint:    var(--brand-100);
+  --brand-border:  var(--brand-200);
+  --brand-text:    var(--brand-700);
 
   /* ── Amber — the commerce channel (Sponsored, tiers, stars). Never CTAs. ── */
   --amber-graphic: #F59E0B;

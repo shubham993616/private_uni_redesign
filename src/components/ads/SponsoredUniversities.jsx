@@ -51,7 +51,7 @@ export default function SponsoredUniversities({ page = 'home' }) {
                     )}
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-sm flex items-center gap-1">
+                    <span className="bg-gradient-to-r from-amber-500 to-primary-dark text-white px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-sm flex items-center gap-1">
                       <Star className="w-3 h-3" aria-hidden="true" /> {tier} Partner
                     </span>
                     {u?.naacGrade && (

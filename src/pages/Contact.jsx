@@ -191,11 +191,11 @@ export default function Contact() {
           <Card className="overflow-hidden">
             <div className="grid md:grid-cols-5">
               {/* Left panel */}
-              <div className="md:col-span-2 bg-primary-dark p-8 md:p-10 flex flex-col justify-between text-white">
+              <div className="md:col-span-2 border-primary-200 bg-primary-50 max-md:border-b md:border-r dark:border-primary-900/40 dark:bg-primary-900/20 p-8 md:p-10 flex flex-col justify-between text-slate-900 dark:text-white">
                 <div>
-                  <p className="text-eyebrow !text-white/80 mb-4">Send a message</p>
-                  <h3 className="text-h2 !text-white mb-3">Let's talk about your future</h3>
-                  <p className="text-support !text-white/75">
+                  <p className="text-eyebrow !text-primary-700 dark:!text-primary-300 mb-4">Send a message</p>
+                  <h3 className="text-h2 !text-slate-900 dark:!text-white mb-3">Let's talk about your future</h3>
+                  <p className="text-support !text-slate-600 dark:!text-white/75">
                     Whether you need help choosing a course, understanding admission processes, or finding the right university — we're just a message away.
                   </p>
                 </div>
@@ -205,9 +205,9 @@ export default function Contact() {
                     { icon: Mail, text: 'contact@vidyarthimitra.org' },
                     { icon: MapPin, text: 'Pune & Mumbai, Maharashtra' },
                   ].map(({ icon: Icon, text }) => (
-                    <div key={text} className="flex items-center gap-3 text-support !text-white/85">
-                      <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4 text-white" aria-hidden="true" />
+                    <div key={text} className="flex items-center gap-3 text-support !text-slate-700 dark:!text-white/85">
+                      <div className="w-9 h-9 rounded-xl bg-primary/15 dark:bg-white/15 flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4 text-primary-600 dark:text-primary-300" aria-hidden="true" />
                       </div>
                       {text}
                     </div>

@@ -321,7 +321,7 @@ export default function Navbar() {
                       {l.label}
                       {l.hasDropdown && (
                         <ChevronDown
-                          className={`w-3.5 h-3.5 transition-transform duration-200 ${isMenuOpen ? 'rotate-180 text-orange-500' : ''}`}
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${isMenuOpen ? 'rotate-180 text-primary' : ''}`}
                           aria-hidden="true"
                         />
                       )}
@@ -352,7 +352,7 @@ export default function Navbar() {
                                 /* Column Type: Featured Marketing Layout Block */
                                 <Link
                                   to={col.to}
-                                  className="group/card block relative overflow-hidden rounded-xl border border-light-border dark:border-dark-border bg-slate-50 dark:bg-white/5 p-3 transition-all hover:border-orange-500"
+                                  className="group/card block relative overflow-hidden rounded-xl border border-light-border dark:border-dark-border bg-slate-50 dark:bg-white/5 p-3 transition-all hover:border-primary"
                                 >
                                   <img
                                     src={col.image}
@@ -360,10 +360,10 @@ export default function Navbar() {
                                     loading="lazy"
                                     className="h-28 w-full object-cover rounded-lg mb-3 grayscale group-hover/card:grayscale-0 transition-all duration-300"
                                   />
-                                  <span className="inline-block bg-orange-500 text-white text-[9px] font-bold px-2 py-0.5 rounded mb-1">{col.badge}</span>
-                                  <h5 className="text-sm font-bold text-slate-900 dark:text-white group-hover/card:text-orange-500">{col.name}</h5>
+                                  <span className="inline-block bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded mb-1">{col.badge}</span>
+                                  <h5 className="text-sm font-bold text-slate-900 dark:text-white group-hover/card:text-primary">{col.name}</h5>
                                   <p className="text-[11px] text-slate-400 mt-0.5">{col.meta}</p>
-                                  <span className="mt-3 inline-flex items-center text-xs font-bold text-orange-500 gap-1">
+                                  <span className="mt-3 inline-flex items-center text-xs font-bold text-primary gap-1">
                                     View Portfolio
                                     <ArrowRight className="w-3 h-3 group-hover/card:translate-x-0.5 transition-transform" aria-hidden="true" />
                                   </span>
@@ -380,20 +380,20 @@ export default function Navbar() {
                                         role="menuitem"
                                         className={`group/item flex items-start gap-3 p-2 rounded-xl transition-all ${
                                           item.isAction
-                                            ? 'text-orange-500 font-bold hover:bg-orange-500/5'
+                                            ? 'text-primary font-bold hover:bg-primary/5'
                                             : 'hover:bg-slate-50 dark:hover:bg-white/5'
                                         }`}
                                       >
                                         {ItemIcon && (
                                           <ItemIcon
                                             className={`w-4 h-4 mt-0.5 transition-colors ${
-                                              item.isAction ? 'text-orange-500' : 'text-slate-400 group-hover/item:text-orange-500'
+                                              item.isAction ? 'text-primary' : 'text-slate-400 group-hover/item:text-primary'
                                             }`}
                                             aria-hidden="true"
                                           />
                                         )}
                                         <div>
-                                          <p className={`text-sm font-semibold transition-colors ${item.isAction ? 'text-orange-500' : 'text-slate-700 dark:text-slate-200 group-hover/item:text-orange-500'}`}>
+                                          <p className={`text-sm font-semibold transition-colors ${item.isAction ? 'text-primary' : 'text-slate-700 dark:text-slate-200 group-hover/item:text-primary'}`}>
                                             {item.label}
                                           </p>
                                           {item.desc && <p className="text-[12px] text-slate-400 mt-0.5 group-hover/item:text-slate-500">{item.desc}</p>}
@@ -412,7 +412,7 @@ export default function Navbar() {
                           <div className="mt-6 pt-4 border-t border-light-border dark:border-dark-border flex justify-end">
                             <Link
                               to={menuData.footerCTA.to}
-                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-600 transition-colors"
+                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-primary-dark transition-colors"
                             >
                               {menuData.footerCTA.label}
                               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -532,7 +532,7 @@ export default function Navbar() {
                           aria-expanded={isAccordionOpen}
                           className="w-11 h-11 shrink-0 flex items-center justify-center rounded-btn text-slate-500 dark:text-slate-300 hover:bg-light-card dark:hover:bg-dark-card transition-colors"
                         >
-                          <ChevronDown className={`w-4 h-4 transition-transform ${isAccordionOpen ? 'rotate-180 text-orange-500' : ''}`} aria-hidden="true" />
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isAccordionOpen ? 'rotate-180 text-primary' : ''}`} aria-hidden="true" />
                         </button>
                       </div>
 
@@ -544,7 +544,7 @@ export default function Navbar() {
                                 {col.title}
                               </h5>
                               {col.isFeaturedCard ? (
-                                <Link to={col.to} className="block p-2 text-xs font-semibold text-orange-500">
+                                <Link to={col.to} className="block p-2 text-xs font-semibold text-primary">
                                   {col.name} →
                                 </Link>
                               ) : (
@@ -552,7 +552,7 @@ export default function Navbar() {
                                   <Link
                                     key={iIdx}
                                     to={item.to}
-                                    className="flex items-center h-8 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-orange-500 transition-colors"
+                                    className="flex items-center h-8 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
                                   >
                                     {item.label}
                                   </Link>

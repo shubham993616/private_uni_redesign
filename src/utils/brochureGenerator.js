@@ -4,7 +4,7 @@ import { getUniversityDisplayType } from './universityType';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const PC  = [13, 148, 136];   // primary teal  #0d9488
-const ACC = [234, 88,  12];   // accent orange #ea580c
+const ACC = [249, 115, 22];   // accent orange #f97316
 const DARK= [15,  23,  42];   // slate-900
 const MID = [100, 116, 139];  // slate-500
 const LIGHT=[248, 250, 252];  // slate-50

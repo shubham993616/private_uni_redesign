@@ -4,7 +4,9 @@
  * Token names are PRESERVED from the previous config (primary, accent, link,
  * light-*, dark-*, success/warning/error) so every existing className keeps
  * compiling — but the VALUES now come from the approved palette:
- *   · one brand orange  (primary.DEFAULT #EA580C, hover/pressed #C2410C)
+ *   · one brand orange  (primary.DEFAULT #F97316, hover #EA580C, pressed #C2410C)
+ *   · light-orange surfaces (primary-50/100) carry card headers — headings on
+ *     them are always dark ink, never orange-on-orange
  *   · amber reserved for the commerce channel (sponsored/tiers/ratings)
  *   · ink/slate surfaces for structure, full dark-theme parity
  * Do not add colors here without updating styles/tokens.css and the design
@@ -18,11 +20,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand orange — THE action color. DEFAULT is brand-600.
+        // Brand orange — THE action color. DEFAULT is brand-500 (clean, premium).
         primary: {
-          DEFAULT: "#EA580C",
-          light: "#F97316",   // graphic accents only — never text on white
-          dark: "#C2410C",    // hover / pressed / accessible text
+          DEFAULT: "#F97316", // CTA buttons, active states, accents
+          light: "#FB923C",   // graphic accents only — never text on white
+          dark: "#EA580C",    // hover / pressed
+          hover: "#EA580C",   // semantic alias — interactive hover states
+          surface: "#FFF7ED", // very light orange — background highlights
+          tint: "#FFEDD5",    // light orange — card headers (pair with ink headings)
+          border: "#FED7AA",  // light orange borders / dividers
+          text: "#C2410C",    // the only orange allowed as small text on white (≥4.5:1)
           50: "#FFF7ED", 100: "#FFEDD5", 200: "#FED7AA", 300: "#FDBA74",
           400: "#FB923C", 500: "#F97316", 600: "#EA580C", 700: "#C2410C",
           800: "#9A3412", 900: "#7C2D12",

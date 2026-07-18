@@ -53,11 +53,11 @@ export default function RangeSlider({ min = 0, max = 100, step = 1, value = [min
         .range-thumb::-webkit-slider-thumb {
           -webkit-appearance: none; appearance: none; pointer-events: auto;
           width: 18px; height: 18px; border-radius: 9999px; background: #fff;
-          border: 2px solid #EA580C; box-shadow: 0 1px 3px rgba(15,23,42,.2); cursor: pointer;
+          border: 2px solid #F97316; box-shadow: 0 1px 3px rgba(15,23,42,.2); cursor: pointer;
         }
         .range-thumb::-moz-range-thumb {
           pointer-events: auto; width: 18px; height: 18px; border-radius: 9999px;
-          background: #fff; border: 2px solid #EA580C; box-shadow: 0 1px 3px rgba(15,23,42,.2); cursor: pointer;
+          background: #fff; border: 2px solid #F97316; box-shadow: 0 1px 3px rgba(15,23,42,.2); cursor: pointer;
         }
       `}} />
     </div>

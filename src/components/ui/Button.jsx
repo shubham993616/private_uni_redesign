@@ -10,7 +10,7 @@ import { Loader2 } from 'lucide-react';
  * Renders <button>, <a> (href) or any component via `as` (e.g. router Link).
  */
 const VARIANTS = {
-  primary: 'bg-primary text-white hover:bg-primary-dark active:bg-primary-800 shadow-card',
+  primary: 'bg-primary text-white hover:bg-primary-dark active:bg-primary-700 shadow-card hover:shadow-card-hover',
   secondary: 'bg-slate-900 text-white hover:bg-slate-800 active:bg-slate-950 dark:bg-white/10 dark:hover:bg-white/20',
   outline: 'border border-primary/40 text-link dark:text-primary-300 hover:bg-primary hover:border-primary hover:text-white',
   ghost: 'text-slate-600 dark:text-dark-muted hover:bg-light-card dark:hover:bg-dark-card hover:text-light-text dark:hover:text-dark-text',

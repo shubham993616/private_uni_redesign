@@ -48,11 +48,20 @@ All values come from `styles/tokens.css` — **no raw hex in components.**
 
 | Token | Value | Role |
 |---|---|---|
-| `primary` (brand-600) | `#EA580C` | THE action color: primary buttons, active states |
-| `primary-dark` (brand-700) | `#C2410C` | Hover/pressed; the only orange allowed as text on white (`text-link`) |
-| `primary-light` (brand-500) | `#F97316` | Graphic accents only — never text on white |
+| `primary` (brand-500) | `#F97316` | THE action color: primary buttons, active states, accents |
+| `primary-dark` / `primary-hover` (brand-600) | `#EA580C` | Hover/pressed states |
+| `primary-light` (brand-400) | `#FB923C` | Graphic accents only — never text on white |
+| `primary-surface` (brand-50) | `#FFF7ED` | Very light orange — background highlights, soft CTA panels |
+| `primary-tint` (brand-100) | `#FFEDD5` | Light orange — card headers. Pair with **ink headings**, never orange text |
+| `primary-border` (brand-200) | `#FED7AA` | Light orange borders/dividers on tinted surfaces |
+| `link` / `primary-text` (brand-700) | `#C2410C` | The only orange allowed as small text on white (≥4.5:1) |
 | `accent` (amber-500) | `#F59E0B` | Commerce channel: Sponsored, tiers, rating stars. **Never CTAs** |
-| `ink` 900/800/700 | `#0F172A / #1E293B / #334155` | Headings, dark panels (`bg-primary-dark` hero panels use brand-700) |
+| `ink` 900/800/700 | `#0F172A / #1E293B / #334155` | Headings and dark statement panels |
+
+**Card-header recipe** (Admission Updates, Latest News, Feedback, Stay Ahead,
+Need Help Choosing…): `bg-primary-100`/`bg-primary-50` surface + `border-primary-200`
++ bold ink heading + slate-600 support text + one orange CTA. Dark-orange panels
+with white or dark text are retired — headings must be the focal point.
 | Neutrals | slate 50–500 ramp | Surfaces `#F8FAFC`, borders `#E2E8F0`, muted text `#64748B` (minimum on white) |
 | Semantic | success `#10B981` · warning `#F59E0B` · error `#EF4444` · info `#3B82F6` | Each with `-text` and `-tint` pairs for badges |
 | Dark theme | page `#020817`, card `#0F172A`, border `#1E293B` | Class-based (`.dark`), full parity required |
@@ -129,6 +138,7 @@ overlays 400ms, ease `cubic-bezier(0.4,0,0.2,1)`. Cards lift on hover
 
 - Focus visible everywhere: global 2px amber `:focus-visible` outline.
 - Touch targets ≥ 40px (icon buttons `w-10 h-10`).
-- Text on white ≥ slate-500; orange text on white only `#C2410C`.
+- Text on white ≥ slate-500; orange text on white only `#C2410C`. Headings on
+  light-orange surfaces are always ink (`slate-900`) — never orange-on-orange.
 - All interactive icons have `aria-label`s; decorative icons `aria-hidden`.
 - Dark mode is first-class: every surface/border/text pairs a `dark:` value.
